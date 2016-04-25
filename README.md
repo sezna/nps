@@ -2,13 +2,13 @@
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
 
-[![Build Status](https://img.shields.io/travis/kentcdodds/p-s.svg?style=flat-square)](https://travis-ci.org/kentcdodds/p-s)
-[![Code Coverage](https://img.shields.io/codecov/c/github/kentcdodds/p-s.svg?style=flat-square)](https://codecov.io/github/kentcdodds/p-s)
-[![version](https://img.shields.io/npm/v/p-s.svg?style=flat-square)](http://npm.im/p-s)
-[![downloads](https://img.shields.io/npm/dm/p-s.svg?style=flat-square)](http://npm-stat.com/charts.html?package=p-s&from=2016-04-01)
-[![MIT License](https://img.shields.io/npm/l/p-s.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
+[![Build Status][build-badge]][build]
+[![Code Coverage][coverage-badge]][coverage]
+[![version][version-badge]][package]
+[![downloads][downloads-badge]][npm-stat]
+[![MIT License][license-badge]][LICENSE]
+[![PRs Welcome][prs-badge]](http://makeapullrequest.com)
+[![Commitizen friendly][commitizen-badge]][commitizen]
 
 ## The problem
 
@@ -64,7 +64,7 @@ But the fun doesn't end there! You can use a prefix:
 npm start b # will run the build script
 ```
 
-And if you want to speed things up even more, you can install [`npm-quick-run`](http://npm.im/npm-quick-run) and then:
+And if you want to speed things up even more, you can install [`npm-quick-run`][quick-run] and then:
 
 ```console
 nr s build.prod
@@ -77,7 +77,7 @@ this for starting your server. You could easily create a `p-s` script and do: `n
 
 ## Installation
 
-This module is distributed via [npm](https://www.npmjs.com/) which is bundled with [node](https://nodejs.org) and should
+This module is distributed via [npm][npm] which is bundled with [node][node] and should
 be installed as one of your project's `devDependencies`:
 
 ```
@@ -175,7 +175,7 @@ module.exports = {
 }
 ```
 
-Remember, I find it considerably nicer to just use [`npm-quick-run`](http://npm.im/npm-quick-run) and then I can do:
+Remember, I find it considerably nicer to just use [`npm-quick-run`][quick-run] and then I can do:
 
 ```console
 nr k # runs npm start kebab-case
@@ -194,6 +194,22 @@ indicating the command that's being executed).
 
 MIT
 
-[scripts-advantages]: [https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9]
-[mess]: [https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96]
-[roadmap]: [https://github.com/kentcdodds/p-s/blob/master/ROADMAP.md]
+[scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
+[mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
+[roadmap]: https://github.com/kentcdodds/p-s/blob/master/ROADMAP.md
+[quick-run]: https://npmjs.com/package/npm-quick-run
+[npm]: https://www.npmjs.com/
+[node]: https://nodejs.org
+[build-badge]: https://img.shields.io/travis/kentcdodds/p-s.svg?style=flat-square
+[build]: https://travis-ci.org/kentcdodds/p-s
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/p-s.svg?style=flat-square
+[coverage]: https://codecov.io/github/kentcdodds/p-s
+[version-badge]: https://img.shields.io/npm/v/p-s.svg?style=flat-square
+[package]: https://www.npmjs.com/package/p-s
+[downloads-badge]: https://img.shields.io/npm/dm/p-s.svg?style=flat-square
+[npm-stat]: http://npm-stat.com/charts.html?package=p-s&from=2016-04-01
+[license-badge]: https://img.shields.io/npm/l/p-s.svg?style=flat-square
+[license]: https://github.com/kentcdodds/p-s/blob/master/LICENSE
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[commitizen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square
+[commitizen]: http://commitizen.github.io/cz-cli/
