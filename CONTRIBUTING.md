@@ -24,7 +24,7 @@ You can use `commitizen` to help you to follow [the convention](https://github.c
 Once you are ready to commit the changes, please use the below commands
 
 1. `git add <files to be comitted>`
-2. `$ npm run commit`
+2. `$ npm start commit`
 
 ... and follow the instruction of the interactive prompt.
 

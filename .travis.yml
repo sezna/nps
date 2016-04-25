@@ -22,5 +22,5 @@ after_success:
   - npm start report-coverage
   - npm run release
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+  only:
+    - master

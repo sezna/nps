@@ -5,9 +5,7 @@
   "main": "dist/index",
   "scripts": {
     "start": "p-s",
-    "test": "cross-env NODE_ENV=test ava ./src/**/*.test.js",
-    "validate": "p-s -p lint,build,cover && p-s check-coverage",
-    "release": "semantic-release pre && npm publish && semantic-release post"
+    "test": "p-s test"
   },
   "bin": {
     "p-s": "./bin/p-s.js"
@@ -80,7 +78,7 @@
   "config": {
     "ghooks": {
       "commit-msg": "opt --in commit-msg --exec \"validate-commit-msg\"",
-      "pre-commit": "opt --in pre-commit --exec \"npm run validate -s\""
+      "pre-commit": "opt --in pre-commit --exec \"npm start validate\""
     },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
