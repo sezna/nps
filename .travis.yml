@@ -20,7 +20,7 @@ after_success:
   - python travis_after_all.py
   - export $(cat .to_export_back) &> /dev/null
   - npm start report-coverage
-  - npm run release
+  - npm start release
 branches:
   only:
     - master
