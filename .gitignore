@@ -1,0 +1,6 @@
+node_modules
+.nyc_output
+coverage
+dist
+.opt-in
+.opt-out
