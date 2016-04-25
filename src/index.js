@@ -13,10 +13,10 @@ const noop = () => {} // eslint-disable-line func-style
 
 export default runPackageScripts
 
-function runPackageScripts(psConfig, scriptNames, argsToPassOn, callback = noop) {
-  scriptNames = arrify(scriptNames)
+function runPackageScripts({scriptConfig, scripts, args, options}, callback = noop) {
+  const scriptNames = arrify(scripts)
   async.map(scriptNames, (scriptName, cb) => {
-    const child = runPackageScript(psConfig, scriptName, argsToPassOn)
+    const child = runPackageScript({scriptConfig, options, scriptName, args})
     if (child instanceof Error) {
       cb(child)
     } else {
@@ -33,14 +33,13 @@ function runPackageScripts(psConfig, scriptNames, argsToPassOn, callback = noop)
   })
 }
 
-function runPackageScript(psConfig, scriptName, argsToPassOn) {
-  const {options = {}} = psConfig
-  const scripts = getScriptsFromConfig(psConfig, scriptName)
+function runPackageScript({scriptConfig, options = {}, scriptName, args}) {
+  const scripts = getScriptsFromConfig(scriptConfig, scriptName)
   const script = getScriptToRun(scripts, scriptName)
   if (!isString(script)) {
     return new Error('scripts must resolve to strings')
   }
-  const command = [script, argsToPassOn].join(' ').trim()
+  const command = [script, args].join(' ').trim()
   if (!options.silent) {
     console.log(colors.gray('p-s executing: ') + colors.green(command))
   }

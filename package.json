@@ -25,6 +25,7 @@
     "commander": "2.9.0",
     "find-up": "1.1.2",
     "lodash.camelcase": "4.1.1",
+    "lodash.contains": "2.4.3",
     "lodash.find": "4.3.0",
     "lodash.get": "4.2.1",
     "lodash.isfunction": "3.0.8",
@@ -32,6 +33,8 @@
     "lodash.isstring": "4.0.1",
     "lodash.isundefined": "3.0.1",
     "lodash.kebabcase": "4.0.1",
+    "lodash.remove": "4.3.0",
+    "shell-escape": "0.2.0",
     "spawn-command": "0.0.2-1"
   },
   "devDependencies": {

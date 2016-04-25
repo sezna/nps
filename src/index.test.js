@@ -19,9 +19,9 @@ test('spawn.on called with "exit"', t => {
 })
 
 test.cb('throws when the script is not a string', t => {
-  const argsToPassOn = undefined
   rewireDeps()
-  runPackageScript({lint: {script: 42}}, 'lint', argsToPassOn, ({error}) => {
+  const scriptConfig = {lint: {script: 42}}
+  runPackageScript({scriptConfig, scripts: ['lint']}, ({error}) => {
     if (!error || !(error instanceof Error) || error.message !== 'scripts must resolve to strings') {
       t.end('Error is not the expected error: ' + JSON.stringify(error))
     }
@@ -31,7 +31,7 @@ test.cb('throws when the script is not a string', t => {
 
 test('options: silent disables console output', t => {
   const options = {silent: true}
-  const {consoleStub} = testSpawnCallWithDefaults(t, {options})
+  const {consoleStub} = testSpawnCallWithDefaults(t, options)
   t.false(consoleStub.log.called)
 })
 
@@ -45,13 +45,11 @@ test('passes on additional arguments', t => {
 test.cb('runs scripts in parallel if given an array of input', t => {
   const lintCommand = 'eslint'
   const buildCommand = 'babel'
-  const argsToPassOn = 'src/ scripts/'
+  const args = 'src/ scripts/'
   const {spawnStubSpy} = rewireDeps()
-  const input = ['lint', 'build']
-  const config = {
-    scripts: {build: buildCommand, lint: lintCommand},
-  }
-  runPackageScript(config, input, argsToPassOn, () => {
+  const scripts = ['lint', 'build']
+  const scriptConfig = {build: buildCommand, lint: lintCommand}
+  runPackageScript({scriptConfig, scripts, args}, () => {
     t.true(spawnStubSpy.calledTwice)
     const [command1] = spawnStubSpy.firstCall.args
     const [command2] = spawnStubSpy.secondCall.args
@@ -63,12 +61,12 @@ test.cb('runs scripts in parallel if given an array of input', t => {
 
 // util functions
 
-function testSpawnCallWithDefaults(t, {scripts, input, options} = {}) {
-  return testSpawnCall(t, scripts, input, options)
+function testSpawnCallWithDefaults(t, options) {
+  return testSpawnCall(t, undefined, undefined, options)
 }
-function testSpawnCall(t, scripts = {build: 'webpack'}, input = 'build', psOptions, argsToPassOn) {
+function testSpawnCall(t, scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions, args) {
   const {spawnStubSpy, ...otherRet} = rewireDeps()
-  runPackageScript({scripts, options: psOptions}, input, argsToPassOn)
+  runPackageScript({scriptConfig, options: psOptions, scripts, args})
   t.true(spawnStubSpy.calledOnce)
   const [command, options] = spawnStubSpy.firstCall.args
   return {command, options, spawnStubSpy, ...otherRet}
