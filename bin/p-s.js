@@ -8,6 +8,7 @@ var remove = require('lodash.remove')
 var contains = require('lodash.contains')
 var shellEscape = require('shell-escape')
 var runPackageScript = require('../dist').default
+var getScriptsAndArgs = require('../dist/bin-utils').getScriptsAndArgs
 var program = require('commander')
 
 program
@@ -18,7 +19,7 @@ program
   .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.js)')
   .parse(process.argv)
 
-var scriptsAndArgs = getScriptsAndArgs()
+var scriptsAndArgs = getScriptsAndArgs(program)
 
 var psConfigFilename = program.config || findUp.sync('package-scripts.js')
 var psConfig = require(psConfigFilename)
@@ -40,32 +41,3 @@ runPackageScript({
   }
   process.exit(result.code)
 })
-
-function getScriptsAndArgs() {
-  var scripts, args, parallel
-  if (!isEmpty(program.parallel)) {
-    scripts = program.parallel.split(',')
-    args = getArgs(program.args, program.rawArgs)
-    parallel = true
-  } else {
-    scripts = program.args[0].split(',')
-    args = getArgs(program.args.slice(1), program.rawArgs)
-    parallel = false
-  }
-  return {scripts: scripts, args: args, parallel: parallel}
-}
-
-function getArgs(args, rawArgs) {
-  var allArgs = rawArgs.slice(2)
-  var psArgs = ['-p', '--parallel', '-c', '--config']
-  var psFlags = ['-s', '--silent']
-  var cleanedArgs = remove(allArgs, function(item, index, arry) {
-    if (contains(psArgs, item) || contains(psFlags, item)) {
-      return false
-    } else if (contains(psArgs, arry[index - 1])) {
-      return false
-    }
-    return true
-  })
-  return shellEscape(cleanedArgs)
-}
