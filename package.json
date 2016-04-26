@@ -9,7 +9,8 @@
     "localstart": "npm start build && ./bin/p-s.js"
   },
   "bin": {
-    "p-s": "./bin/p-s.js"
+    "p-s": "./bin/p-s.js",
+    "package-scripts": "./bin/p-s.js"
   },
   "files": [
     "bin",
