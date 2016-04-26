@@ -138,6 +138,14 @@ You can pass additional arguments to the script(s) that are being spawned:
 npm start lint --fix # --fix will be passed on to the lint script
 ```
 
+#### scripts
+
+If you don't use `-p` (because you don't need parallelism) then you can simply provide the name of the script like so:
+
+```console
+npm start cover
+```
+
 That's all for the CLI.
 
 ### package-scripts.js
