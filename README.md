@@ -9,6 +9,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![MIT License][license-badge]][LICENSE]
 [![PRs Welcome][prs-badge]](http://makeapullrequest.com)
 [![Commitizen friendly][commitizen-badge]][commitizen]
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 ## The problem
 
@@ -194,6 +195,18 @@ indicating the command that's being executed).
 
 This was inspired by [a tweet][tweet] [@sindresorhus][sindre].
 
+## Contributors
+
+Thanks goes to these people ([emoji key][emojis]):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [![Kent C. Dodds](https://avatars.githubusercontent.com/u/1500684?v=3&s=100)<br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) 🚇 |
+| :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors][all-contributors] specification.
+Contributions of any kind welcome!
+
 ## LICENSE
 
 MIT
@@ -219,3 +232,5 @@ MIT
 [commitizen]: http://commitizen.github.io/cz-cli/
 [tweet]: https://twitter.com/sindresorhus/status/724259780676575232
 [sindre]: https://github.com/sindresorhus
+[emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
+[all-contributors]: https://github.com/kentcdodds/all-contributors
