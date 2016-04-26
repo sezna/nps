@@ -82,7 +82,7 @@
   "release": {
     "verifyConditions": {
       "path": "condition-node-version",
-      "node": "4",
+      "node": "4.3.2",
       "verbose": true
     }
   },
