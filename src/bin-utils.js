@@ -3,6 +3,7 @@ import contains from 'lodash.contains'
 import isPlainObject from 'lodash.isplainobject'
 import shellEscape from 'shell-escape'
 import isEmpty from 'lodash.isempty'
+import colors from 'colors/safe'
 
 import {resolveScriptObjectToScript} from './resolve-script-object-to-string'
 
@@ -38,10 +39,11 @@ function getArgs(args, rawArgs, scripts) {
 function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
   const scriptLines = availableScripts.map(({name, description}) => {
+    const coloredName = colors.green(name)
     if (!description) {
-      return name
+      return coloredName
     } else {
-      return [name, description].join(' - ').trim()
+      return [coloredName, colors.white(description)].join(' - ').trim()
     }
   })
   const topMessage = 'Available scripts (camel or kebab case accepted)'

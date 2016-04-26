@@ -1,4 +1,5 @@
 import test from 'ava'
+import colors from 'colors/safe'
 import {getScriptsAndArgs, help} from './bin-utils'
 
 test('getScriptsAndArgs: gets scripts', t => {
@@ -52,11 +53,11 @@ test('help: formats a nice message', t => {
   const expected = `
 Available scripts (camel or kebab case accepted)
 
-foo - the foo script
-bar - stuff
-bar.baz
-bar.barBub
-foobar
+${colors.green('foo')} - ${colors.white('the foo script')}
+${colors.green('bar')} - ${colors.white('stuff')}
+${colors.green('bar.baz')}
+${colors.green('bar.barBub')}
+${colors.green('foobar')}
   `.trim()
 
   t.is(message, expected)
