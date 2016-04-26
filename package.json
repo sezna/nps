@@ -48,6 +48,7 @@
     "babel-register": "6.7.2",
     "codecov": "1.0.1",
     "commitizen": "2.8.1",
+    "condition-node-version": "1.2.0",
     "cross-env": "1.0.7",
     "cz-conventional-changelog": "1.1.6",
     "eslint": "2.8.0",
@@ -77,6 +78,13 @@
       "text",
       "html"
     ]
+  },
+  "release": {
+    "verifyConditions": {
+      "path": "condition-node-version",
+      "node": "4",
+      "verbose": true
+    }
   },
   "config": {
     "ghooks": {
