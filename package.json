@@ -20,6 +20,7 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
+    "arrify": "1.0.1",
     "async": "2.0.0-rc.3",
     "colors": "1.1.2",
     "commander": "2.9.0",
@@ -38,7 +39,6 @@
     "spawn-command": "0.0.2-1"
   },
   "devDependencies": {
-    "arrify": "1.0.1",
     "ava": "0.14.0",
     "babel-cli": "6.7.7",
     "babel-eslint": "6.0.3",
@@ -54,8 +54,6 @@
     "eslint": "2.8.0",
     "eslint-config-kentcdodds": "6.2.0",
     "ghooks": "1.2.1",
-    "lodash.isempty": "4.2.1",
-    "lodash.merge": "4.3.5",
     "nyc": "6.4.0",
     "opt-cli": "1.4.2",
     "p-s": "*",

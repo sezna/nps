@@ -190,6 +190,10 @@ This object is used to configure `p-s` with the following options:
 Setting this to `true` will prevent `p-s` from outputting anything for your script (normally you'll get simple output
 indicating the command that's being executed).
 
+## Inspiration
+
+This was inspired by [a tweet][tweet] [@sindresorhus][sindre].
+
 ## LICENSE
 
 MIT
@@ -213,3 +217,5 @@ MIT
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [commitizen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square
 [commitizen]: http://commitizen.github.io/cz-cli/
+[tweet]: https://twitter.com/sindresorhus/status/724259780676575232
+[sindre]: https://github.com/sindresorhus
