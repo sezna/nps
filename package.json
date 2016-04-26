@@ -5,7 +5,8 @@
   "main": "dist/index",
   "scripts": {
     "start": "p-s",
-    "test": "p-s test"
+    "test": "p-s test",
+    "localstart": "npm start build && ./bin/p-s.js"
   },
   "bin": {
     "p-s": "./bin/p-s.js"

@@ -75,8 +75,8 @@ function testSpawnCall(t, scriptConfig = {build: 'webpack'}, scripts = 'build', 
 function rewireDeps() {
   const onSpy = spy((event, cb) => cb())
   // const logSpy = spy(function log() {console.log(...arguments)}) // comment this back in while debugging
-  const logSpy = spy()
   const spawnStub = () => ({on: onSpy}) // eslint-disable-line func-style
+  const logSpy = spy()
   const consoleStub = {log: logSpy}
   const spawnStubSpy = spy(spawnStub)
   runPackageScript.__Rewire__('spawn', spawnStubSpy)

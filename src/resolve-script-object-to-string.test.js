@@ -31,3 +31,8 @@ test('resolves default to the script if it is a string', t => {
   const result = resolveScriptObjectToString({default: 'string'})
   t.is(result, 'string')
 })
+
+test('does not resolve a script object without a script or defualt', t => {
+  const result = resolveScriptObjectToString({foo: 'bar'})
+  t.is(result, undefined)
+})
