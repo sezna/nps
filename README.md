@@ -105,11 +105,20 @@ $ p-s --help
     -s, --silent                                Silent p-s output
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
+
+Available scripts (camel or kebab case accepted)
+
+lint - Lint all files with eslint. Configuration is in package.json - eslint .
+test - Run tests with AVA. See package.json for config - ava
+test.watch - Run in the amazingly intelligent AVA watch mode - ava -w
+build - The normal webpack UMD build for development - webpack
+build.prod - The production webpack build - webpack -p
 ```
 
 #### help
 
-Will print out the help you see above as well as all available scripts with script descriptions.
+Will print out the help you see above (the available scripts are colored 🌈 and come from the config specified/default
+config).
 
 #### silent
 
@@ -207,7 +216,13 @@ indicating the command that's being executed).
 
 ## Inspiration
 
-This was inspired by [a tweet][tweet] [@sindresorhus][sindre].
+This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
+
+## Other Solutions
+
+- [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
+a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
+benefits of npm scripts I wanted to keep).
 
 ## Contributors
 
@@ -249,3 +264,4 @@ MIT
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [clarity]: https://github.com/kentcdodds/p-s/issues/1
+[scripty]: https://npmjs.com/package/scripty
