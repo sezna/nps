@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable */ // this file is not transpiled (maybe it should be?) so make sure it supports Node 0.10.0
 
+var resolve = require('path').resolve
 var findUp = require('find-up')
 var isEmpty = require('lodash.isempty')
 var merge = require('lodash.merge')
@@ -8,6 +9,7 @@ var remove = require('lodash.remove')
 var contains = require('lodash.contains')
 var shellEscape = require('shell-escape')
 var program = require('commander')
+var colors = require('colors/safe')
 
 var runPackageScript = require('../dist').default
 var binUtils = require('../dist/bin-utils')
@@ -41,8 +43,13 @@ runPackageScript({
 })
 
 function getPSConfig() {
-  var psConfigFilename = program.config || findUp.sync('package-scripts.js')
-  return require(psConfigFilename)
+  var psConfigFilename = program.config ? resolve(process.cwd(), program.config) : findUp.sync('package-scripts.js')
+  try {
+    return require(psConfigFilename)
+  } catch(e) {
+    console.warn(colors.yellow('Unable to find config at ' + psConfigFilename))
+    return {scripts: {}, options: {}}
+  }
 }
 
 function onHelp() {
