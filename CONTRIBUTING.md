@@ -12,12 +12,23 @@ Thanks for being willing to contribute!
 3. `$ npm start validate` to validate you've got it working
 4. Create a branch for your PR
 
+## Add yourself as a contributor
+
+This project follows the [all contributors][all-contributors] specification. To add yourself to the table of
+contributors on the README.md, please use the automated script as part of your PR:
+
+```console
+npm start addContributor <YOUR_GITHUB_USERNAME>
+```
+
+Follow the prompt. If you've already added yourself to the list and are making a new type of contribution, you can run
+it again and select the added contribution type.
+
 ## Committing and Pushing changes
 
-This project uses (or soon will) [`semantic-release`](http://npm.im/semantic-release)
-to do automatic releases and generate a changelog based on the commit history. So we
-follow [a convention](https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md)
-for commit messages. Please follow this convention for your commit messages.
+This project uses [`semantic-release`][semantic-release] to do automatic releases and generate a changelog based on the
+commit history. So we follow [a convention][convention] for commit messages. Please follow this convention for your
+commit messages.
 
 You can use `commitizen` to help you to follow [the convention](https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md)
 
@@ -34,3 +45,7 @@ Please checkout the [ROADMAP.md](https://github.com/kentcdodds/p-s/blob/master/R
 any of the items in the want to do or might do list.
 
 Also, please watch the repo and respond to questions/bug reports/feature requests! Thanks!
+
+[semantic-release]: https://npmjs.com/package/semantic-release
+[convention]: https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md
+[all-contributors]: https://github.com/kentcdodds/all-contributors
