@@ -9,7 +9,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![MIT License][license-badge]][LICENSE]
 [![PRs Welcome][prs-badge]](http://makeapullrequest.com)
 [![Commitizen friendly][commitizen-badge]][commitizen]
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 ## The problem
 
@@ -89,7 +89,9 @@ npm install --save-dev p-s
 
 ### CLI
 
-The CLI is fairly simple:
+The CLI is fairly simple. It allows for a few options. The `p-s` binary is available in your `node_modules/.bin`
+directory when you install it locally in a project so you can use it in your `npm` scripts. We also expose a
+`package-scripts` alias binary so you can use that as well if you'd like the script to be [more clear][clarity].
 
 ```console
 $ p-s --help
@@ -104,6 +106,10 @@ $ p-s --help
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
 ```
+
+#### help
+
+Will print out the help you see above as well as all available scripts with script descriptions.
 
 #### silent
 
@@ -208,8 +214,8 @@ This was inspired by [a tweet][tweet] [@sindresorhus][sindre].
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [![Kent C. Dodds](https://avatars.githubusercontent.com/u/1500684?v=3&s=100)<br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) 🚇 |
-| :---: |
+| [![Kent C. Dodds](https://avatars.githubusercontent.com/u/1500684?v=3&s=100)<br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) 🚇 | [![David Wells](https://avatars.githubusercontent.com/u/532272?v=3&s=100)<br /><sub>David Wells</sub>](http://davidwells.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=DavidWells) |
+| :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -242,3 +248,4 @@ MIT
 [sindre]: https://github.com/sindresorhus
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
+[clarity]: https://github.com/kentcdodds/p-s/issues/1

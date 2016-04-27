@@ -17,6 +17,15 @@
         "doc",
         "infra"
       ]
+    },
+    {
+      "login": "DavidWells",
+      "name": "David Wells",
+      "avatar_url": "https://avatars.githubusercontent.com/u/532272?v=3",
+      "profile": "http://davidwells.io",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
