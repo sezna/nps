@@ -53,12 +53,19 @@ test('help: formats a nice message', t => {
   const expected = `
 Available scripts (camel or kebab case accepted)
 
-${colors.green('foo')} - ${colors.white('the foo script')}
-${colors.green('bar')} - ${colors.white('stuff')}
-${colors.green('bar.baz')}
-${colors.green('bar.barBub')}
-${colors.green('foobar')}
+${colors.green('foo')} - ${colors.white('the foo script')} - ${colors.gray('echo "foo"')}
+${colors.green('bar')} - ${colors.white('stuff')} - ${colors.gray('echo "bar default"')}
+${colors.green('bar.baz')} - ${colors.gray('echo "baz"')}
+${colors.green('bar.barBub')} - ${colors.gray('echo "barBub"')}
+${colors.green('foobar')} - ${colors.gray('echo "foobar"')}
   `.trim()
 
+  t.is(message, expected)
+})
+
+test('help: returns no scripts available', t => {
+  const config = {scripts: {}}
+  const message = help(config)
+  const expected = colors.yellow('There are no scripts available')
   t.is(message, expected)
 })

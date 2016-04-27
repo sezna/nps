@@ -38,17 +38,24 @@ function getArgs(args, rawArgs, scripts) {
 
 function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
-  const scriptLines = availableScripts.map(({name, description}) => {
+  const scriptLines = availableScripts.map(({name, description, script}) => {
     const coloredName = colors.green(name)
-    if (!description) {
-      return coloredName
+    const coloredScript = colors.gray(script)
+    let line
+    if (description) {
+      line = [coloredName, colors.white(description), coloredScript]
     } else {
-      return [coloredName, colors.white(description)].join(' - ').trim()
+      line = [coloredName, coloredScript]
     }
+    return line.join(' - ').trim()
   })
-  const topMessage = 'Available scripts (camel or kebab case accepted)'
-  const message = `${topMessage}\n\n${scriptLines.join('\n')}`
-  return message
+  if (!scriptLines.length) {
+    return colors.yellow('There are no scripts available')
+  } else {
+    const topMessage = 'Available scripts (camel or kebab case accepted)'
+    const message = `${topMessage}\n\n${scriptLines.join('\n')}`
+    return message
+  }
 }
 
 function getAvailableScripts(config, prefix) {
@@ -58,11 +65,11 @@ function getAvailableScripts(config, prefix) {
     if (contains(excluded, key)) {
       return scripts
     }
-    const script = resolveScriptObjectToScript(val)
-    if (script) {
-      const {description} = script
+    const scriptObj = resolveScriptObjectToScript(val)
+    if (scriptObj) {
+      const {description, script} = scriptObj
       const prefixed = prefix ? [prefix, key] : [key]
-      scripts = [...scripts, {name: prefixed.join('.'), description}]
+      scripts = [...scripts, {name: prefixed.join('.'), description, script}]
     }
     if (isPlainObject(val)) {
       return [...scripts, ...getAvailableScripts(val, key)]
