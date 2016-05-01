@@ -24,6 +24,10 @@ program
   .on('--help', onHelp)
   .parse(process.argv)
 
+if (process.argv.length < 3) {
+  program.help()
+}
+
 var scriptsAndArgs = getScriptsAndArgs(program)
 var psConfig = getPSConfig()
 
