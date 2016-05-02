@@ -1,8 +1,37 @@
-# p-s examples
+# package-scripts examples
 
+## Links to projects
 Examples of how people us `p-s`:
 
 - **[p-s](https://github.com/kentcdodds/p-s):** [scripts](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package.json#L6-L10), [`package-scripts.js`](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package-scripts.js)
+
+## Inline Examples
+
+### cross platform scripts
+
+One of the big challenges with open source projects is that users and contributors have varying platforms. Because you
+can't determine the platform in the `package.json`, you have to either have to duplicate scripts (like having a
+`build:windows` and `build:unix` script), find CLIs that are cross platform (like
+[`cross-env`](http://npm.im/cross-env)), or write your logic in a separate file to handle the platform.
+
+With `package-scripts`, you can really easily have a single script that uses the platform to determine what should be
+run. For example:
+
+```javascript
+var isWindows = require('is-os').isWindows
+var removeDist = isWindows ? 'rmdir ./dist' : 'rm ./dist'
+module.exports = {
+  scripts: {
+    build: {
+      description: 'Build the project (built based on the platform)',
+      script: removeDist + ' && babel --copy-files --out-dir dist src'
+    }
+  }
+}
+```
+
+Note, in this specific scenario, I'd recommend that you actually use [`rimraf`](http://npm.im/rimraf), but I think you
+get the idea 😄. This is a pretty nice win over traditional npm scripts 👍
 
 ## Instructions
 

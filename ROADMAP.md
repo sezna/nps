@@ -2,10 +2,9 @@
 
 ## Want to do
 
-- Add something like `p-s help` that will log out how to use the cli and available scripts to run in the project
 - Add improved prefixing. Right now you can prefix the entire name of a script, but you couldn't prefix something like
 `test.watch` as `t.w` and I think that'd be sweet
-- Add the ability to specify multiple scripts that run in series
+- Add the ability to specify multiple scripts that run in series (right now the solution is to just `&&`)
 
 ## Might do
 

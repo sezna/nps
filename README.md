@@ -73,6 +73,9 @@ nr s build.prod
 
 Cool stuff right? And there's more on [the roadmap][roadmap].
 
+**Also** check out the [examples][examples]. You'll find some good stuff in there (including how to deal with windows
+and other cross-platform issues).
+
 **Note:** You don't have to use the `start` script of course. If you're writing a node application, you're likely using
 this for starting your server. You could easily create a `p-s` script and do: `npm run p-s b`.
 
@@ -243,6 +246,7 @@ MIT
 [scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
 [roadmap]: https://github.com/kentcdodds/p-s/blob/master/ROADMAP.md
+[examples]: https://github.com/kentcdodds/p-s/blob/master/EXAMPLES.md
 [quick-run]: https://npmjs.com/package/npm-quick-run
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
