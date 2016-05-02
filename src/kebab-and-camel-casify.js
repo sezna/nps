@@ -18,5 +18,5 @@ function kebabAndCamelCasify(obj) {
       result[key] = val
     }
     return result
-  }, {})
+  }, obj)
 }
