@@ -30,7 +30,6 @@
     "lodash.camelcase": "4.1.1",
     "lodash.contains": "2.4.3",
     "lodash.find": "4.3.0",
-    "lodash.get": "4.2.1",
     "lodash.isempty": "4.2.1",
     "lodash.isfunction": "3.0.8",
     "lodash.isplainobject": "4.0.4",
