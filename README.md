@@ -205,7 +205,7 @@ module.exports = {
 Remember, I find it considerably nicer to just use [`npm-quick-run`][quick-run] and then I can do:
 
 ```console
-nr k # runs npm start kebab-case
+nr s k # runs npm start kebab-case
 ```
 
 #### options
