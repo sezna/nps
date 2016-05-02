@@ -1,4 +1,4 @@
-# p-s
+# package-scripts (aka p-s)
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
 
@@ -21,6 +21,16 @@ which has fundamental issues (like no comments).
 
 Put all of your scripts in a file called `package-scripts.js` and use `p-s` in a single `package.json` script:
 
+**package.json**
+
+```json
+{
+  "scripts": {
+    "start": "package-scripts"
+  }
+}
+```
+
 **package-scripts.js**
 
 ```javascript
@@ -38,16 +48,6 @@ module.exports = {
       default: 'webpack',
       prod: 'webpack -p',
     }
-  }
-}
-```
-
-**package.json**
-
-```json
-{
-  "scripts": {
-    "start": "p-s"
   }
 }
 ```
