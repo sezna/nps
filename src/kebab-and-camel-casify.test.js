@@ -4,7 +4,7 @@ import kebabAndCamelCasify from './kebab-and-camel-casify'
 testUnchanged({boo: 'baz'})
 testUnchanged({boo: {bar: 'baz', foo: 'bar'}})
 
-test({e2e: 'foo'}, {e2E:'foo','e-2-e':'foo', e2e: 'foo'}, 'shallow objects')
+test({e2e: 'foo'}, {e2E: 'foo', 'e-2-e': 'foo', e2e: 'foo'}, 'shallow objects')
 test({fooBar: 'baz'}, {fooBar: 'baz', 'foo-bar': 'baz'}, 'shallow objects')
 
 test({
