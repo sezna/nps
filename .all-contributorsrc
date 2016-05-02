@@ -1,41 +1,41 @@
 {
-  "projectName": "p-s"
-, "projectOwner": "kentcdodds"
-, "files": [
+  "projectName": "p-s",
+  "projectOwner": "kentcdodds",
+  "files": [
     "README.md"
-  ]
-, "imageSize": 100
-, "commit": false
-, "contributors": [
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
     {
-      "login": "kentcdodds"
-    , "name": "Kent C. Dodds"
-    , "avatar_url": "https://avatars.githubusercontent.com/u/1500684?v=3"
-    , "profile": "http://kent.doddsfamily.us"
-    , "contributions": [
-        "code"
-      , "doc"
-      , "infra"
-      , "example"
+      "login": "kentcdodds",
+      "name": "Kent C. Dodds",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1500684?v=3",
+      "profile": "http://kent.doddsfamily.us",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "example"
       ]
-    }
-  , {
-      "login": "DavidWells"
-    , "name": "David Wells"
-    , "avatar_url": "https://avatars.githubusercontent.com/u/532272?v=3"
-    , "profile": "http://davidwells.io"
-    , "contributions": [
+    },
+    {
+      "login": "DavidWells",
+      "name": "David Wells",
+      "avatar_url": "https://avatars.githubusercontent.com/u/532272?v=3",
+      "profile": "http://davidwells.io",
+      "contributions": [
         "code"
       ]
-    }
-  , {
-      "login": "abhishekisnot"
-    , "name": "Abhishek Shende"
-    , "avatar_url": "https://avatars.githubusercontent.com/u/802242?v=3"
-    , "html_url": "https://github.com/abhishekisnot"
-    , "contributions": [
-        "code"
-      , "test"
+    },
+    {
+      "login": "abhishekisnot",
+      "name": "Abhishek Shende",
+      "avatar_url": "https://avatars.githubusercontent.com/u/802242?v=3",
+      "profile": "https://twitter.com/abhishekisnot",
+      "contributions": [
+        "code",
+        "test"
       ]
     }
   ]
