@@ -38,7 +38,7 @@
     "lodash.kebabcase": "4.0.1",
     "lodash.merge": "4.3.5",
     "lodash.remove": "4.3.0",
-    "prefix-matches": "0.0.7",
+    "prefix-matches": "0.0.9",
     "shell-escape": "0.2.0",
     "spawn-command": "0.0.2"
   },
