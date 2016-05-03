@@ -65,6 +65,12 @@ But the fun doesn't end there! You can use a prefix:
 npm start b # will run the build script
 ```
 
+And these prefixes can go as deep as you like!
+
+```console
+npm start b.p # will run the production build script
+```
+
 And if you want to speed things up even more, you can install [`npm-quick-run`][quick-run] and then:
 
 ```console
