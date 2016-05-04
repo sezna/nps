@@ -30,7 +30,6 @@
     "lodash.camelcase": "4.1.1",
     "lodash.contains": "2.4.3",
     "lodash.find": "4.3.0",
-    "lodash.get": "4.2.1",
     "lodash.isempty": "4.2.1",
     "lodash.isfunction": "3.0.8",
     "lodash.isplainobject": "4.0.4",
@@ -39,6 +38,7 @@
     "lodash.kebabcase": "4.0.1",
     "lodash.merge": "4.3.5",
     "lodash.remove": "4.3.0",
+    "prefix-matches": "0.0.9",
     "shell-escape": "0.2.0",
     "spawn-command": "0.0.2"
   },
