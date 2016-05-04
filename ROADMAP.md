@@ -3,8 +3,6 @@
 ## Want to do
 
 - Add the ability to specify multiple scripts that run in series (right now the solution is to just `&&`)
-- Add something like `p-s help` that will log out how to use the cli and available scripts to run in the project
-- Add the ability to specify multiple scripts that run in series
 
 ## Might do
 
