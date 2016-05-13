@@ -14,13 +14,16 @@ module.exports = {
         script: 'p-s test -w',
       },
     },
-    build: 'rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js src',
+    build: {
+      description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
+      script: 'rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js src',
+    },
     lint: {
-      description: 'this does stuff',
+      description: 'lint the code with eslint',
       script: 'eslint .',
     },
     checkCoverage: {
-      description: 'We want to keep 100% code coverage on this project because, reasons',
+      description: 'We want to keep 100% code coverage on this project because... reasons',
       script: 'nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100',
     },
     cover: {
@@ -28,7 +31,7 @@ module.exports = {
       script: 'nyc npm t',
     },
     reportCoverage: {
-      description: 'Report coverage stats to codecov. This should be run after the `cover` script',
+      description: 'Report coverage stats to codecov. This should be run after the `cover` script and only on travis',
       script: 'codecov',
     },
     release: {
