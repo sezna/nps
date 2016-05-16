@@ -7,9 +7,13 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
-[![PRs Welcome][prs-badge]](http://makeapullrequest.com)
-[![Donate][donate-badge]][donate]
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+
+[![PRs Welcome][prs-badge]][prs]
+[![Donate][donate-badge]][donate]
+[![Code of Conduct][coc-badge]][coc]
+[![Roadmap][roadmap-badge]][roadmap]
+[![Examples][examples-badge]][examples]
 
 ## The problem
 
@@ -251,8 +255,8 @@ MIT
 
 [scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
-[roadmap]: https://github.com/kentcdodds/p-s/blob/master/ROADMAP.md
-[examples]: https://github.com/kentcdodds/p-s/blob/master/EXAMPLES.md
+[roadmap]: https://github.com/kentcdodds/p-s/blob/master/other/ROADMAP.md
+[examples]: https://github.com/kentcdodds/p-s/blob/master/other/EXAMPLES.md
 [quick-run]: https://npmjs.com/package/npm-quick-run
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
@@ -267,8 +271,13 @@ MIT
 [license-badge]: https://img.shields.io/npm/l/p-s.svg?style=flat-square
 [license]: https://github.com/kentcdodds/p-s/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
+[prs]: http://makeapullrequest.com
+[donate-badge]: https://img.shields.io/badge/%EF%BC%84-support-green.svg?style=flat-square
 [donate]: http://kcd.im/donate
+[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[coc]: https://github.com/kentcdodds/p-s/blob/master/other/CODE_OF_CONDUCT.md
+[roadmap-badge]: https://img.shields.io/badge/%F0%9F%93%94-roadmap-CD9523.svg?style=flat-square
+[examples-badge]: https://img.shields.io/badge/%F0%9F%92%A1-examples-8C8E93.svg?style=flat-square
 [tweet]: https://twitter.com/sindresorhus/status/724259780676575232
 [sindre]: https://github.com/sindresorhus
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
