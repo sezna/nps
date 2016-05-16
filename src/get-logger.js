@@ -1,5 +1,4 @@
 import arrify from 'arrify'
-import process from 'process' // eslint-disable-line import/no-unresolved
 import console from 'console'
 import isPlainObject from 'lodash.isplainobject'
 
@@ -38,7 +37,7 @@ function getMessage(first, ...rest) {
 
 function getLink(ref) {
   const {version} = require('../package.json')
-  return `https://github.com/kentcdodds/p-s/blob/${version}/other/ERRORS_AND_WARNINGS.md#${ref}`
+  return `https://github.com/kentcdodds/p-s/blob/v${version}/other/ERRORS_AND_WARNINGS.md#${ref}`
 }
 
 function getShouldLogFn(...acceptableValues) {

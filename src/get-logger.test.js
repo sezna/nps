@@ -1,6 +1,5 @@
 import test from 'ava'
 import {spy} from 'sinon'
-import merge from 'lodash.merge'
 import proxyquire from 'proxyquire'
 
 test('allows you to log errors', t => {
@@ -27,24 +26,28 @@ test('allows you to log warnings/errors with a ref', t => {
   t.true(warn.calledOnce)
   t.true(warn.calledWith(
     ...message,
-    'https://github.com/kentcdodds/p-s/blob/0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#han-solo',
+    'https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#han-solo',
     'this is extra',
     'stuff',
   ))
 })
 
 test('allows you to disable warnings', t => {
-  const processStub = {env: {LOG_LEVEL: 'disable'}}
-  const {log, console: {warn}} = setup({processStub})
+  const {LOG_LEVEL} = process.env
+  process.env.LOG_LEVEL = 'disable'
+  const {log, console: {warn}} = setup()
   log.warn('hi')
   t.false(warn.called)
+  process.env.LOG_LEVEL = LOG_LEVEL
 })
 
 test('allows you to disable errors', t => {
-  const processStub = {env: {LOG_LEVEL: 'warn'}}
-  const {log, console: {error}} = setup({processStub})
+  const {LOG_LEVEL} = process.env
+  process.env.LOG_LEVEL = 'disable'
+  const {log, console: {error}} = setup()
   log.error('hi')
   t.false(error.called)
+  process.env.LOG_LEVEL = LOG_LEVEL
 })
 
 test('allows you to specify a logLevel of your own for errors/warnings/info', t => {
@@ -55,14 +58,12 @@ test('allows you to specify a logLevel of your own for errors/warnings/info', t 
   t.true(info.calledWith('sup'))
 })
 
-function setup({consoleStub, processStub, logLevel} = {}) {
+function setup({consoleStub, logLevel} = {}) {
   consoleStub = getConsoleStub(consoleStub)
-  processStub = getProcessStub(processStub)
   const getLogger = proxyquire('./get-logger', {
     console: consoleStub,
-    process: processStub,
   }).default
-  return {console: consoleStub, process: processStub, log: getLogger(logLevel)}
+  return {console: consoleStub, log: getLogger(logLevel)}
 }
 
 function getConsoleStub(overrides = {}) {
@@ -72,10 +73,4 @@ function getConsoleStub(overrides = {}) {
     info: spy(),
     ...overrides,
   }
-}
-
-function getProcessStub(overrides = {}) {
-  return merge({
-    env: {LOG_LEVEL: undefined},
-  }, overrides)
 }
