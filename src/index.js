@@ -37,7 +37,7 @@ function runPackageScript({scriptConfig, options = {}, scriptName, args}) {
   const scripts = getScriptsFromConfig(scriptConfig, scriptName)
   const script = getScriptToRun(scripts, scriptName)
   if (!isString(script)) {
-    return new Error('scripts must resolve to strings')
+    return new Error('Scripts must resolve to strings. Is there a script named \'' + scriptName + '\'?')
   }
   const command = [script, args].join(' ').trim()
   if (!options.silent) {

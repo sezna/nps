@@ -48,6 +48,13 @@
         "doc",
         "test"
       ]
+    },
+    {
+      "login": "giladgo",
+      "name": "Gilad Goldberg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1915716?v=3",
+      "profile": "https://github.com/giladgo",
+      "contributions": []
     }
   ]
 }

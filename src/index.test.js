@@ -22,7 +22,8 @@ test.cb('throws when the script is not a string', t => {
   rewireDeps()
   const scriptConfig = {lint: {script: 42}}
   runPackageScript({scriptConfig, scripts: ['lint']}, ({error}) => {
-    if (!error || !(error instanceof Error) || error.message !== 'scripts must resolve to strings') {
+    if (!error || !(error instanceof Error) ||
+      error.message !== 'Scripts must resolve to strings. Is there a script named \'lint\'?') {
       t.end('Error is not the expected error: ' + JSON.stringify(error))
     }
     t.end()
