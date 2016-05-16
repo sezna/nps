@@ -267,8 +267,6 @@ MIT
 [license-badge]: https://img.shields.io/npm/l/p-s.svg?style=flat-square
 [license]: https://github.com/kentcdodds/p-s/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[commitizen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square
-[commitizen]: http://commitizen.github.io/cz-cli/
 [donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
 [donate]: http://kcd.im/donate
 [tweet]: https://twitter.com/sindresorhus/status/724259780676575232
