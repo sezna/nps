@@ -6,8 +6,8 @@ module.exports = {
     },
     test: {
       default: {
-        description: 'the NODE_ENV is needed by babel to add the rewire plugin',
-        script: 'cross-env NODE_ENV=test ava ./src/**/*.test.js',
+        description: 'Run all test files in the src directory',
+        script: 'ava ./src/**/*.test.js',
       },
       watch: {
         description: 'pass the -w flag on to the npm t command so ava will watch stuff',

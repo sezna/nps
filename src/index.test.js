@@ -1,6 +1,8 @@
 import test from 'ava'
 import {spy} from 'sinon'
-import runPackageScript from './index'
+import color from 'colors/safe'
+import proxyquire from 'proxyquire'
+proxyquire.noCallThru()
 
 test('spawn called with the parent process.env', t => {
   const {options: {env}} = testSpawnCallWithDefaults(t)
@@ -18,22 +20,30 @@ test('spawn.on called with "exit"', t => {
   t.true(onSpy.calledOnce)
 })
 
-test.cb('throws when the script is not a string', t => {
-  rewireDeps()
+test.cb('returns a log object when no script is found', t => {
+  const {runPackageScript} = setup()
   const scriptConfig = {lint: {script: 42}}
   runPackageScript({scriptConfig, scripts: ['lint']}, ({error}) => {
-    if (!error || !(error instanceof Error) ||
-      error.message !== 'Scripts must resolve to strings. Is there a script named \'lint\'?') {
-      t.end('Error is not the expected error: ' + JSON.stringify(error))
-    }
+    t.deepEqual(error, {
+      message: color.red('Scripts must resolve to strings. There is no script that can be resolved from "lint"'),
+      ref: 'missing-script',
+    })
     t.end()
   })
 })
 
-test('options: silent disables console output', t => {
+test('options: silent sets the logLevel to disable', t => {
   const options = {silent: true}
-  const {consoleStub} = testSpawnCallWithDefaults(t, options)
-  t.false(consoleStub.log.called)
+  const {getLoggerSpy} = testSpawnCallWithDefaults(t, options)
+  t.true(getLoggerSpy.calledOnce)
+  t.true(getLoggerSpy.calledWith('disable'))
+})
+
+test('options: logLevel sets the log level', t => {
+  const options = {logLevel: 'warn'}
+  const {getLoggerSpy} = testSpawnCallWithDefaults(t, options)
+  t.true(getLoggerSpy.calledOnce)
+  t.true(getLoggerSpy.calledWith('warn'))
 })
 
 test('passes on additional arguments', t => {
@@ -47,7 +57,7 @@ test.cb('runs scripts in parallel if given an array of input', t => {
   const lintCommand = 'eslint'
   const buildCommand = 'babel'
   const args = 'src/ scripts/'
-  const {spawnStubSpy} = rewireDeps()
+  const {runPackageScript, spawnStubSpy} = setup()
   const scripts = ['lint', 'build']
   const scriptConfig = {build: buildCommand, lint: lintCommand}
   runPackageScript({scriptConfig, scripts, args}, () => {
@@ -66,21 +76,22 @@ function testSpawnCallWithDefaults(t, options) {
   return testSpawnCall(t, undefined, undefined, options)
 }
 function testSpawnCall(t, scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions, args) {
-  const {spawnStubSpy, ...otherRet} = rewireDeps()
+  const {runPackageScript, spawnStubSpy, ...otherRet} = setup()
   runPackageScript({scriptConfig, options: psOptions, scripts, args})
   t.true(spawnStubSpy.calledOnce)
   const [command, options] = spawnStubSpy.firstCall.args
   return {command, options, spawnStubSpy, ...otherRet}
 }
 
-function rewireDeps() {
+function setup() {
   const onSpy = spy((event, cb) => cb())
-  // const logSpy = spy(function log() {console.log(...arguments)}) // comment this back in while debugging
   const spawnStub = () => ({on: onSpy}) // eslint-disable-line func-style
-  const logSpy = spy()
-  const consoleStub = {log: logSpy}
+  const infoSpy = spy()
+  const getLoggerSpy = spy(() => ({info: infoSpy}))
   const spawnStubSpy = spy(spawnStub)
-  runPackageScript.__Rewire__('spawn', spawnStubSpy)
-  runPackageScript.__Rewire__('console', consoleStub)
-  return {spawnStubSpy, consoleStub, onSpy}
+  const runPackageScript = proxyquire('./index', {
+    'spawn-command': spawnStubSpy,
+    './get-logger': getLoggerSpy,
+  }).default
+  return {spawnStubSpy, infoSpy, getLoggerSpy, onSpy, runPackageScript}
 }

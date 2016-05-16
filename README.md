@@ -118,6 +118,7 @@ $ p-s --help
     -s, --silent                                Silent p-s output
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
+    -l, --log-level <level>                     The log level to use (error, warn, info [default])
 
 Available scripts (camel or kebab case accepted)
 
@@ -157,6 +158,11 @@ npm start -c ./other/package-scripts.js lint
 Normally, `p-s` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
 have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `p-s` will
 use that file instead.
+
+
+#### log-level
+
+Specify the log level to use
 
 #### args
 
@@ -225,7 +231,25 @@ This object is used to configure `p-s` with the following options:
 ##### silent
 
 Setting this to `true` will prevent `p-s` from outputting anything for your script (normally you'll get simple output
-indicating the command that's being executed).
+indicating the command that's being executed). This effectively sets the `logLevel` to `disable`.
+
+##### logLevel
+
+This sets the logLevel of `p-s`.
+
+## ENV variables
+
+### LOG_LEVEL
+
+By setting `LOG_LEVEL` environment variable you can control the log level for `p-s`
+
+## Log level
+
+Log levels available:
+
+- `error` - errors only
+- `warn` - errors and warnings only
+- `info` - info, errors, and warnings (default)
 
 ## Inspiration
 

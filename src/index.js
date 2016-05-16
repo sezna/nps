@@ -1,5 +1,3 @@
-/* eslint no-console:0 */
-import console from 'console' // to allow easy rewiring
 import spawn from 'spawn-command'
 import async from 'async'
 import colors from 'colors/safe'
@@ -8,6 +6,7 @@ import find from 'lodash.find'
 import arrify from 'arrify'
 import getScriptToRun from './get-script-to-run'
 import getScriptsFromConfig from './get-scripts-from-config'
+import getLogger from './get-logger'
 
 const noop = () => {} // eslint-disable-line func-style
 
@@ -17,10 +16,10 @@ function runPackageScripts({scriptConfig, scripts, args, options}, callback = no
   const scriptNames = arrify(scripts)
   async.map(scriptNames, (scriptName, cb) => {
     const child = runPackageScript({scriptConfig, options, scriptName, args})
-    if (child instanceof Error) {
-      cb(child)
-    } else {
+    if (child.on) {
       child.on('exit', exitCode => cb(null, exitCode))
+    } else {
+      cb(child)
     }
   }, (err, results) => {
     if (err) {
@@ -37,11 +36,25 @@ function runPackageScript({scriptConfig, options = {}, scriptName, args}) {
   const scripts = getScriptsFromConfig(scriptConfig, scriptName)
   const script = getScriptToRun(scripts, scriptName)
   if (!isString(script)) {
-    return new Error('Scripts must resolve to strings. Is there a script named \'' + scriptName + '\'?')
+    return {
+      message: colors.red(
+        `Scripts must resolve to strings. There is no script that can be resolved from "${scriptName}"`
+      ),
+      ref: 'missing-script',
+    }
   }
   const command = [script, args].join(' ').trim()
-  if (!options.silent) {
-    console.log(colors.gray('p-s executing: ') + colors.green(command))
-  }
+  const log = getLogger(getLogLevel(options))
+  log.info(colors.gray('p-s executing: ') + colors.green(command))
   return spawn(command, {stdio: 'inherit', env: process.env})
+}
+
+function getLogLevel({silent, logLevel}) {
+  if (logLevel) {
+    return logLevel
+  } else if (silent) {
+    return 'disable'
+  } else {
+    return undefined
+  }
 }

@@ -13,6 +13,7 @@ var colors = require('colors/safe')
 
 var runPackageScript = require('../dist').default
 var binUtils = require('../dist/bin-utils')
+var log = require('../dist/get-logger').default()
 var getScriptsAndArgs = binUtils.getScriptsAndArgs
 
 program
@@ -21,6 +22,7 @@ program
   .option('-s, --silent', 'Silent p-s output')
   .option('-p, --parallel <script-name1,script-name2>', 'Scripts to run in parallel (comma seprated)')
   .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.js)')
+  .option('-l, --log-level <level>', 'The log level to use (error, warn, info [default])')
   .on('--help', onHelp)
   .parse(process.argv)
 
@@ -39,10 +41,13 @@ runPackageScript({
   options: merge(psConfig.options, {
     silent: program.silent,
     parallel: scriptsAndArgs.parallel,
+    logLevel: program.logLevel,
   })
 }, function(result) {
   if (result.error) {
-    throw result.error
+    log.error(result.error)
+    const FAIL_CODE = 1
+    process.exit(FAIL_CODE)
   }
   process.exit(result.code)
 })
@@ -52,11 +57,14 @@ function getPSConfig() {
   try {
     return require(psConfigFilename)
   } catch(e) {
-    console.warn(colors.yellow('Unable to find config at ' + psConfigFilename))
+    log.warn({
+      message: colors.yellow('Unable to find config at ' + psConfigFilename),
+      ref: 'unable-to-find-config'
+    })
     return {scripts: {}, options: {}}
   }
 }
 
 function onHelp() {
-  console.log(binUtils.help(getPSConfig()))
+  log.info(binUtils.help(getPSConfig()))
 }
