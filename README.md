@@ -251,6 +251,21 @@ Log levels available:
 - `warn` - errors and warnings only
 - `info` - info, errors, and warnings (default)
 
+## FAQ
+
+### Why `npm start`?
+
+_Just to be clear:_ You do **not** have to use the `start` script. You can use whatever you like. But I recommend using
+the `start`. [npm scripts][npm scripts] are generally run with `npm run <script-name>`. There are some exceptions to
+this. For example:
+
+1. `npm run test` === `npm test` === `npm t`
+2. `npm run start` === `npm start`
+
+So, while you could use a script called `script` and run `npm run script build`, I just think it reads more clearly to
+just use the `start` script and run `npm start build`. It's also nice that it's fewer things to type. You could also use
+the `test` script and then type even less: `npm t build`, but thats just... odd.
+
 ## Inspiration
 
 This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
@@ -308,3 +323,4 @@ MIT
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [clarity]: https://github.com/kentcdodds/p-s/issues/1
 [scripty]: https://npmjs.com/package/scripty
+[npm scripts]: https://docs.npmjs.com/misc/scripts
