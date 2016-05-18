@@ -2,17 +2,29 @@ import test from 'ava'
 import {spy} from 'sinon'
 import color from 'colors/safe'
 import proxyquire from 'proxyquire'
+import assign from 'lodash.assign'
 proxyquire.noCallThru()
 
 test('spawn called with the parent process.env', t => {
   const {options: {env}} = testSpawnCallWithDefaults(t)
-  t.is(env, process.env)
+  t.deepEqual(env, process.env)
 })
 
 test('spawn called with the expected command', t => {
   const lintCommand = 'eslint .'
-  const {command} = testSpawnCall(t, {lint: lintCommand}, 'lint')
+  const {command} = testSpawnCall(t, {scriptConfig: {lint: lintCommand}, scripts: 'lint'})
   t.is(command, lintCommand)
+})
+
+test('spawn called with the expected command and env vars', t => {
+  const lintCommand = 'eslint .'
+  const {command, options: {env}} = testSpawnCall(t, {
+    scriptConfig: {lint: lintCommand},
+    envConfig: {lint: {foo: 'bar'}},
+    scripts: 'lint',
+  })
+  t.is(command, lintCommand)
+  t.deepEqual(env, assign({}, process.env, {foo: 'bar'}))
 })
 
 test('spawn.on called with "exit"', t => {
@@ -49,7 +61,12 @@ test('options: logLevel sets the log level', t => {
 test('passes on additional arguments', t => {
   const lintCommand = 'eslint'
   const argsToPassOn = 'src/ scripts/'
-  const {command} = testSpawnCall(t, {lint: lintCommand}, 'lint', {}, argsToPassOn)
+  const {command} = testSpawnCall(t, {
+    scriptConfig: {lint: lintCommand},
+    scripts: 'lint',
+    psOptions: {},
+    args: argsToPassOn,
+  })
   t.is(command, `${lintCommand} ${argsToPassOn}`)
 })
 
@@ -73,11 +90,11 @@ test.cb('runs scripts in parallel if given an array of input', t => {
 // util functions
 
 function testSpawnCallWithDefaults(t, options) {
-  return testSpawnCall(t, undefined, undefined, options)
+  return testSpawnCall(t, {psOptions: options})
 }
-function testSpawnCall(t, scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions, args) {
+function testSpawnCall(t, {scriptConfig = {build: 'webpack'}, envConfig, scripts = 'build', psOptions, args}) {
   const {runPackageScript, spawnStubSpy, ...otherRet} = setup()
-  runPackageScript({scriptConfig, options: psOptions, scripts, args})
+  runPackageScript({scriptConfig, envConfig, options: psOptions, scripts, args})
   t.true(spawnStubSpy.calledOnce)
   const [command, options] = spawnStubSpy.firstCall.args
   return {command, options, spawnStubSpy, ...otherRet}

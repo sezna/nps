@@ -36,6 +36,7 @@ var psConfig = getPSConfig()
 
 runPackageScript({
   scriptConfig: getPSConfig().scripts,
+  envConfig: getPSConfig().env,
   scripts: scriptsAndArgs.scripts,
   args: scriptsAndArgs.args,
   options: merge(psConfig.options, {
