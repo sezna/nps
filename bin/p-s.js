@@ -57,7 +57,7 @@ function getPSConfig() {
   try {
     return require(psConfigFilename)
   } catch(e) {
-    log.warn({
+    log.error({
       message: colors.yellow('Unable to find config at ' + psConfigFilename),
       ref: 'unable-to-find-config'
     })
