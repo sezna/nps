@@ -67,8 +67,9 @@ function getPSConfig() {
         })
       }
     }
+
     var config = require(psConfigFilename)
-    if (programm.resolve === 'babel-register') {
+    if (program.require === 'babel-register') {
       config = config.default
     }
     return config
