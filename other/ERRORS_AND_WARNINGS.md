@@ -21,8 +21,9 @@ define scripts and how they can be referenced.
 
 ## Unable to preload module
 
-This happens the module which you try to preload couldn't be resolved.
+This happens when you use the `--require` flag and the module you specify cannot be resolved.
 
 ### To fix:
 
-Check if you spelled the module correctly.
+1. Check that you spelled the module correctly
+2. Check that the module you wish to require is require-able
