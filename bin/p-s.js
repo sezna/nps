@@ -63,13 +63,15 @@ function getPSConfig() {
       } catch (e) {
         log.warn({
           message: colors.yellow('Unable to preload ' + program.require),
-          ref: 'preload-module'
+          ref: 'unable-to-preload-module'
         })
       }
     }
 
     var config = require(psConfigFilename)
-    if (program.require === 'babel-register') {
+    // babel-register is loading the default package into a object with the prop
+    // default so if it exist use it as the config
+    if (config.default) {
       config = config.default
     }
     return config

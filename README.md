@@ -119,6 +119,7 @@ $ p-s --help
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
     -l, --log-level <level>                     The log level to use (error, warn, info [default])
+    -r, --require <module>                      Module to preload
 
 Available scripts (camel or kebab case accepted)
 
@@ -163,6 +164,10 @@ use that file instead.
 #### log-level
 
 Specify the log level to use
+
+#### require
+
+You can specify a module which will be loaded before the config file is loaded. This allows you to preload for example babel-register so you can use all babel presets you like.
 
 #### args
 

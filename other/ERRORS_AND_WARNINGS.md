@@ -18,3 +18,11 @@ point to a file that actually exists.
 
 This happens if you specify a script name that can't be resolved to a script. See the docs/examples for how you can
 define scripts and how they can be referenced.
+
+## Unable to preload module
+
+This happens the module which you try to preload couldn't be resolved.
+
+### To fix:
+
+Check if you spelled the module correctly.
