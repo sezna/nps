@@ -276,6 +276,15 @@ This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
 a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
 benefits of npm scripts I wanted to keep).
 
+## In the wild
+
+- [react-component-template](https://github.com/nkbt/react-component-template) uses `p-s` to implement shareable npm scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them. 
+
+  GOTCHAS:
+    - use `process.cwd()` as the base for all paths
+    - you cannot recursively call `p-s` and need to use `npm start <whatever>`
+
+
 ## Contributors
 
 Thanks goes to these people ([emoji key][emojis]):
