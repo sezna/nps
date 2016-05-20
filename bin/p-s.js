@@ -75,7 +75,7 @@ function getPSConfig() {
     var config = require(psConfigFilename)
     // babel-register is loading the default package into a object with the prop
     // default so if it exist use it as the config
-    if (config.default) {
+    if (config.__esModule) {
       config = config.default
     }
     return config
