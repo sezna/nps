@@ -6,11 +6,11 @@
   "scripts": {
     "start": "p-s",
     "test": "p-s test",
-    "localstart": "npm start build && ./bin/p-s.js"
+    "localstart": "npm start build && ./dist/bin/p-s.js"
   },
   "bin": {
-    "p-s": "./bin/p-s.js",
-    "package-scripts": "./bin/p-s.js"
+    "p-s": "./dist/bin/p-s.js",
+    "package-scripts": "./dist/bin/p-s.js"
   },
   "files": [
     "bin",

@@ -1,6 +1,11 @@
 import test from 'ava'
+import {resolve} from 'path'
 import colors from 'colors/safe'
-import {getScriptsAndArgs, help} from './bin-utils'
+import {spy} from 'sinon'
+import proxyquire from 'proxyquire'
+import {getScriptsAndArgs, help, preloadModule, loadConfig} from './bin-utils'
+
+proxyquire.noCallThru()
 
 test('getScriptsAndArgs: gets scripts', t => {
   const {scripts} = getScriptsAndArgs({
@@ -25,6 +30,59 @@ test('getScriptsAndArgs: passes args to scripts', t => {
   })
   t.deepEqual(scripts, ['boo'])
   t.is(args, '--watch --verbose')
+})
+
+test('preloadModule: resolves a relative path', t => {
+  const relativePath = '../test/fixtures/my-module'
+  const val = preloadModule(relativePath)
+  t.is(val, 'hello')
+})
+
+test('preloadModule: resolves an absolute path', t => {
+  const relativePath = '../test/fixtures/my-module'
+  const absolutePath = resolve(__dirname, relativePath)
+  const val = preloadModule(absolutePath)
+  t.is(val, 'hello')
+})
+
+test('preloadModule: resolves a node_module', t => {
+  const val = preloadModule('colors/safe')
+  t.is(val, colors)
+})
+
+test('preloadModule: logs a warning when the module cannot be required', t => {
+  const warn = spy()
+  const proxiedPreloadModule = proxyquire('./bin-utils', {
+    './get-logger': () => ({warn}),
+  }).preloadModule
+  const val = proxiedPreloadModule('./module-that-does-exist')
+  t.is(val, undefined)
+  t.true(warn.calledOnce)
+  const [{message}] = warn.firstCall.args
+  t.regex(message, /Unable to preload "\.\/module-that-does-exist\"/)
+})
+
+test('loadConfig: logs a warning when the module cannot be required', t => {
+  const error = spy()
+  const proxiedReloadConfig = proxyquire('./bin-utils', {
+    './get-logger': () => ({error}),
+  }).loadConfig
+  const val = proxiedReloadConfig('./config-that-does-exist')
+  t.is(val, undefined)
+  t.true(error.calledOnce)
+  const [{message}] = error.firstCall.args
+  t.regex(message, /Unable to find config at "\.\/config-that-does-exist\"/)
+})
+
+test('loadConfig: can load ES6 module', t => {
+  const relativePath = '../test/fixtures/fake-es6-module'
+  const val = loadConfig(relativePath)
+  t.deepEqual(val, {
+    scripts: {
+      skywalker: `echo "That's impossible!!"`,
+    },
+    options: {},
+  })
 })
 
 test('help: formats a nice message', t => {

@@ -1,3 +1,4 @@
+import {resolve} from 'path'
 import remove from 'lodash.remove'
 import contains from 'lodash.contains'
 import isPlainObject from 'lodash.isplainobject'
@@ -5,9 +6,41 @@ import shellEscape from 'shell-escape'
 import isEmpty from 'lodash.isempty'
 import colors from 'colors/safe'
 
+import getLogger from './get-logger'
 import {resolveScriptObjectToScript} from './resolve-script-object-to-string'
 
-export {getScriptsAndArgs, help}
+const log = getLogger()
+
+/**
+ * Attempts to load the given module. This is used for the --require functionality of the CLI
+ * @param  {String} moduleName The module to attempt to require
+ * @return {*} The required module
+ */
+const preloadModule = getAttemptModuleRequireFn((moduleName, requirePath) => {
+  log.warn({
+    message: colors.yellow(`Unable to preload "${moduleName}". Attempted to require as "${requirePath}"`),
+    ref: 'unable-to-preload-module',
+  })
+  return undefined
+})
+
+/**
+ * Attempts to load the config and logs an error if there's a problem
+ * @param  {String} configPath The path to attempt to require the config from
+ * @return {*} The required module
+ */
+const loadConfig = getAttemptModuleRequireFn(function onFail(configPath, requirePath) {
+  log.error({
+    message: colors.red(`Unable to find config at "${configPath}". Attempted to require as "${requirePath}"`),
+    ref: 'unable-to-find-config',
+  })
+  return undefined
+})
+
+export {getScriptsAndArgs, help, getModuleRequirePath, preloadModule, loadConfig}
+
+
+/****** implementations ******/
 
 function getScriptsAndArgs(program) {
   let scripts, args, parallel
@@ -34,6 +67,40 @@ function getArgs(args, rawArgs, scripts) {
     return !isArgOrFlag && !isArgValue && !isInScripts
   })
   return shellEscape(cleanedArgs)
+}
+
+/**
+ * Determines the proper require path for a module. If the path starts with `.` then it is resolved with process.cwd()
+ * @param  {String} moduleName The module path
+ * @return {String} the module path to require
+ */
+function getModuleRequirePath(moduleName) {
+  return moduleName[0] === '.' ? resolve(process.cwd(), moduleName) : moduleName
+}
+
+function getAttemptModuleRequireFn(onFail) {
+  return function attemptModuleRequire(moduleName) {
+    const requirePath = getModuleRequirePath(moduleName)
+    try {
+      return requireDefaultFromModule(requirePath)
+    } catch (e) {
+      return onFail(moduleName, requirePath)
+    }
+  }
+}
+
+/**
+ * Requires the given module and returns the `default` if it's an `__esModule`
+ * @param  {String} modulePath The module to require
+ * @return {*} The required module (or it's `default` if it's an `__esModule`)
+ */
+function requireDefaultFromModule(modulePath) {
+  const mod = require(modulePath)
+  if (mod.__esModule) {
+    return mod.default
+  } else {
+    return mod
+  }
 }
 
 function help({scripts}) {
