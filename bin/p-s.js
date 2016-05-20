@@ -33,6 +33,7 @@ if (process.argv.length < 3) {
 
 var scriptsAndArgs = getScriptsAndArgs(program)
 var psConfig = getPSConfig()
+var FAIL_CODE = 1
 
 runPackageScript({
   scriptConfig: getPSConfig().scripts,
@@ -46,7 +47,6 @@ runPackageScript({
 }, function(result) {
   if (result.error) {
     log.error(result.error)
-    const FAIL_CODE = 1
     process.exit(FAIL_CODE)
   }
   process.exit(result.code)
@@ -61,7 +61,7 @@ function getPSConfig() {
       message: colors.yellow('Unable to find config at ' + psConfigFilename),
       ref: 'unable-to-find-config'
     })
-    return {scripts: {}, options: {}}
+    process.exit(FAIL_CODE)
   }
 }
 
