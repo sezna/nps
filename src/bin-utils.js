@@ -25,7 +25,7 @@ function getScriptsAndArgs(program) {
 
 function getArgs(args, rawArgs, scripts) {
   const allArgs = rawArgs.slice(2)
-  const psArgs = ['-p', '--parallel', '-c', '--config']
+  const psArgs = ['-p', '--parallel', '-c', '--config', '-r', '--require']
   const psFlags = ['-s', '--silent']
   const cleanedArgs = remove(allArgs, (item, index, arry) => {
     const isArgOrFlag = contains(psArgs, item) || contains(psFlags, item)

@@ -23,6 +23,7 @@ program
   .option('-p, --parallel <script-name1,script-name2>', 'Scripts to run in parallel (comma seprated)')
   .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.js)')
   .option('-l, --log-level <level>', 'The log level to use (error, warn, info [default])')
+  .option('-r, --require <module>', 'Module to preload')
   .on('--help', onHelp)
   .parse(process.argv)
 
@@ -55,7 +56,29 @@ runPackageScript({
 function getPSConfig() {
   var psConfigFilename = program.config ? resolve(process.cwd(), program.config) : findUp.sync('package-scripts.js')
   try {
-    return require(psConfigFilename)
+    // Require a module like babel-register
+    if (program.require) {
+      var requirePath = (program.require[0] === '.'
+        ? resolve(process.cwd(), program.require)
+        : program.require)
+
+      try {
+        require(requirePath)
+      } catch (e) {
+        log.warn({
+          message: colors.yellow('Unable to preload ' + program.require),
+          ref: 'unable-to-preload-module'
+        })
+      }
+    }
+
+    var config = require(psConfigFilename)
+    // babel-register is loading the default package into a object with the prop
+    // default so if it exist use it as the config
+    if (config.__esModule) {
+      config = config.default
+    }
+    return config
   } catch(e) {
     log.error({
       message: colors.yellow('Unable to find config at ' + psConfigFilename),

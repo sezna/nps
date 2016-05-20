@@ -18,3 +18,12 @@ point to a file that actually exists.
 
 This happens if you specify a script name that can't be resolved to a script. See the docs/examples for how you can
 define scripts and how they can be referenced.
+
+## Unable to preload module
+
+This happens when you use the `--require` flag and the module you specify cannot be resolved.
+
+### To fix:
+
+1. Check that you spelled the module correctly
+2. Check that the module you wish to require is require-able
