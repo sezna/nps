@@ -58,8 +58,12 @@ function getPSConfig() {
   try {
     // Require a module like babel-register
     if (program.require) {
+      var requirePath = (program.require.substr(0, 1) === '.'
+        ? resolve(process.cwd(), program.require)
+        : program.require)
+
       try {
-        require(program.require)
+        require(requirePath)
       } catch (e) {
         log.warn({
           message: colors.yellow('Unable to preload ' + program.require),
