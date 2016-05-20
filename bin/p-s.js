@@ -58,7 +58,7 @@ function getPSConfig() {
   try {
     // Require a module like babel-register
     if (program.require) {
-      var requirePath = (program.require.substr(0, 1) === '.'
+      var requirePath = (program.require[0] === '.'
         ? resolve(process.cwd(), program.require)
         : program.require)
 
