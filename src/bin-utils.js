@@ -125,7 +125,7 @@ function help({scripts}) {
   }
 }
 
-function getAvailableScripts(config, prefix) {
+function getAvailableScripts(config, prefix = []) {
   const excluded = ['description', 'script', 'default']
   return Object.keys(config).reduce((scripts, key) => {
     const val = config[key]
@@ -133,13 +133,13 @@ function getAvailableScripts(config, prefix) {
       return scripts
     }
     const scriptObj = resolveScriptObjectToScript(val)
+    const prefixed = [...prefix, key]
     if (scriptObj) {
       const {description, script} = scriptObj
-      const prefixed = prefix ? [prefix, key] : [key]
       scripts = [...scripts, {name: prefixed.join('.'), description, script}]
     }
     if (isPlainObject(val)) {
-      return [...scripts, ...getAvailableScripts(val, key)]
+      return [...scripts, ...getAvailableScripts(val, prefixed)]
     }
     return scripts
   }, [])
