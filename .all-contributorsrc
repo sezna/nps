@@ -76,6 +76,17 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "tleunen",
+      "name": "Tommy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1972567?v=3",
+      "profile": "http://www.tommyleunen.com",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }

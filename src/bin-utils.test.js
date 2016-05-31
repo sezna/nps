@@ -102,6 +102,14 @@ test('help: formats a nice message', t => {
           script: 'echo \"barBub\"',
         },
       },
+      build: {
+        x: {
+          y: {
+            description: 'build X-Y',
+            script: 'echo \"build x-y\"',
+          },
+        },
+      },
       foobar: 'echo \"foobar\"',
       extra: 42,
     },
@@ -115,6 +123,7 @@ ${colors.green('foo')} - ${colors.white('the foo script')} - ${colors.gray('echo
 ${colors.green('bar')} - ${colors.white('stuff')} - ${colors.gray('echo "bar default"')}
 ${colors.green('bar.baz')} - ${colors.gray('echo "baz"')}
 ${colors.green('bar.barBub')} - ${colors.gray('echo "barBub"')}
+${colors.green('build.x.y')} - ${colors.white('build X-Y')} - ${colors.gray('echo "build x-y"')}
 ${colors.green('foobar')} - ${colors.gray('echo "foobar"')}
   `.trim()
 
