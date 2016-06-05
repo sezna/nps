@@ -289,6 +289,7 @@ benefits of npm scripts I wanted to keep).
     - use `process.cwd()` as the base for all paths
     - you cannot recursively call `p-s` and need to use `npm start <whatever>`
 
+- [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob patterns.
 
 ## Contributors
 
