@@ -84,6 +84,9 @@ function getAttemptModuleRequireFn(onFail) {
     try {
       return requireDefaultFromModule(requirePath)
     } catch (e) {
+      if (e instanceof SyntaxError) {
+        throw e
+      }
       return onFail(moduleName, requirePath)
     }
   }

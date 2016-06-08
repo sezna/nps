@@ -74,6 +74,11 @@ test('loadConfig: logs a warning when the module cannot be required', t => {
   t.regex(message, /Unable to find config at "\.\/config-that-does-exist\"/)
 })
 
+test('loadConfig: does not swallow syntax errors', t => {
+  const relativePath = '../test/fixtures/syntax-error-module'
+  t.throws(() => loadConfig(relativePath), SyntaxError)
+})
+
 test('loadConfig: can load ES6 module', t => {
   const relativePath = '../test/fixtures/fake-es6-module'
   const val = loadConfig(relativePath)
