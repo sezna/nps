@@ -43,15 +43,15 @@ export {getScriptsAndArgs, help, getModuleRequirePath, preloadModule, loadConfig
 /****** implementations ******/
 
 function getScriptsAndArgs(program) {
-  let scripts, args, parallel
-  if (isEmpty(program.parallel)) {
-    scripts = program.args[0].split(',')
-    args = getArgs(program.args.slice(1), program.rawArgs, scripts)
-    parallel = false
-  } else {
+  let scripts = []
+  let args = ''
+  const parallel = !isEmpty(program.parallel)
+  if (parallel) {
     scripts = program.parallel.split(',')
     args = getArgs(program.args, program.rawArgs, scripts)
-    parallel = true
+  } else if (!isEmpty(program.args)) {
+    scripts = program.args[0].split(',')
+    args = getArgs(program.args.slice(1), program.rawArgs, scripts)
   }
   return {scripts, args, parallel}
 }

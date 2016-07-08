@@ -15,7 +15,7 @@ before_install:
 before_script:
   - npm prune
 script:
-  - npm start validate
+  - npm run localstart validate
 after_success:
   - 'curl -Lo travis_after_all.py https://git.io/travis_after_all'
   - python travis_after_all.py
