@@ -1,8 +1,8 @@
-/* eslint prefer-template:"off" */ // this file runs in node 0.10.0
-const nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
-const validate = ['lint', 'build', 'cover']
+/* eslint prefer-template:"off", no-var:"off" */ // this file runs in node 0.10.0
+var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
+var validate = ['lint', 'build', 'cover']
 if (nodeVersion < 4) {
-  validate.slice(1)
+  validate = validate.slice(1)
 }
 module.exports = {
   scripts: {
