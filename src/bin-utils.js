@@ -44,14 +44,14 @@ export {getScriptsAndArgs, help, getModuleRequirePath, preloadModule, loadConfig
 
 function getScriptsAndArgs(program) {
   let scripts, args, parallel
-  if (!isEmpty(program.parallel)) {
-    scripts = program.parallel.split(',')
-    args = getArgs(program.args, program.rawArgs, scripts)
-    parallel = true
-  } else {
+  if (isEmpty(program.parallel)) {
     scripts = program.args[0].split(',')
     args = getArgs(program.args.slice(1), program.rawArgs, scripts)
     parallel = false
+  } else {
+    scripts = program.parallel.split(',')
+    args = getArgs(program.args, program.rawArgs, scripts)
+    parallel = true
   }
   return {scripts, args, parallel}
 }
@@ -98,7 +98,7 @@ function getAttemptModuleRequireFn(onFail) {
  * @return {*} The required module (or it's `default` if it's an `__esModule`)
  */
 function requireDefaultFromModule(modulePath) {
-  const mod = require(modulePath)
+  const mod = require(modulePath) // eslint-disable-line global-require
   if (mod.__esModule) {
     return mod.default
   } else {
@@ -119,12 +119,12 @@ function help({scripts}) {
     }
     return line.join(' - ').trim()
   })
-  if (!scriptLines.length) {
-    return colors.yellow('There are no scripts available')
-  } else {
+  if (scriptLines.length) {
     const topMessage = 'Available scripts (camel or kebab case accepted)'
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
     return message
+  } else {
+    return colors.yellow('There are no scripts available')
   }
 }
 

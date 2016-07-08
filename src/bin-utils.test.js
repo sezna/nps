@@ -1,5 +1,5 @@
-import test from 'ava'
 import {resolve} from 'path'
+import test from 'ava'
 import colors from 'colors/safe'
 import {spy} from 'sinon'
 import proxyquire from 'proxyquire'
@@ -59,7 +59,7 @@ test('preloadModule: logs a warning when the module cannot be required', t => {
   t.is(val, undefined)
   t.true(warn.calledOnce)
   const [{message}] = warn.firstCall.args
-  t.regex(message, /Unable to preload "\.\/module-that-does-exist\"/)
+  t.regex(message, /Unable to preload "\.\/module-that-does-exist"/)
 })
 
 test('loadConfig: logs a warning when the module cannot be required', t => {
@@ -71,7 +71,7 @@ test('loadConfig: logs a warning when the module cannot be required', t => {
   t.is(val, undefined)
   t.true(error.calledOnce)
   const [{message}] = error.firstCall.args
-  t.regex(message, /Unable to find config at "\.\/config-that-does-exist\"/)
+  t.regex(message, /Unable to find config at "\.\/config-that-does-exist"/)
 })
 
 test('loadConfig: does not swallow syntax errors', t => {
@@ -95,27 +95,27 @@ test('help: formats a nice message', t => {
     scripts: {
       foo: {
         description: 'the foo script',
-        script: 'echo \"foo\"',
+        script: 'echo "foo"',
       },
       bar: {
         default: {
           description: 'stuff',
-          script: 'echo \"bar default\"',
+          script: 'echo "bar default"',
         },
-        baz: 'echo \"baz\"',
+        baz: 'echo "baz"',
         barBub: {
-          script: 'echo \"barBub\"',
+          script: 'echo "barBub"',
         },
       },
       build: {
         x: {
           y: {
             description: 'build X-Y',
-            script: 'echo \"build x-y\"',
+            script: 'echo "build x-y"',
           },
         },
       },
-      foobar: 'echo \"foobar\"',
+      foobar: 'echo "foobar"',
       extra: 42,
     },
   }

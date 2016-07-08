@@ -1,13 +1,13 @@
-import ava from 'ava'
+import test from 'ava'
 import kebabAndCamelCasify from './kebab-and-camel-casify'
 
 testUnchanged({boo: 'baz'})
 testUnchanged({boo: {bar: 'baz', foo: 'bar'}})
 
-test({e2e: 'foo'}, {e2E: 'foo', 'e-2-e': 'foo', e2e: 'foo'}, 'shallow objects')
-test({fooBar: 'baz'}, {fooBar: 'baz', 'foo-bar': 'baz'}, 'shallow objects')
+testScenario({e2e: 'foo'}, {e2E: 'foo', 'e-2-e': 'foo', e2e: 'foo'}, 'shallow objects')
+testScenario({fooBar: 'baz'}, {fooBar: 'baz', 'foo-bar': 'baz'}, 'shallow objects')
 
-test({
+testScenario({
   fooBar: {
     spam: {
       fooBaz: 'blah',
@@ -29,14 +29,14 @@ test({
 }, 'deep objects')
 
 function testUnchanged(input, message = 'no change needed') {
-  test(input, input, message)
+  testScenario(input, input, message)
 }
 
-function test(input, output, message) {
+function testScenario(input, output, message) {
   const fn = t => t.deepEqual(kebabAndCamelCasify(input), output) // eslint-disable-line func-style
   if (message) {
-    ava(message, fn)
+    test(message, fn)
   } else {
-    ava(fn)
+    test(fn) // eslint-disable-line ava/test-title, I am lazy
   }
 }

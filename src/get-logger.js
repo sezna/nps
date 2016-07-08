@@ -1,6 +1,8 @@
-import arrify from 'arrify'
 import console from 'console'
+import arrify from 'arrify'
 import isPlainObject from 'lodash.isplainobject'
+
+const {version} = require('../package.json')
 
 const shouldLog = {
   error: getShouldLogFn('error'),
@@ -18,9 +20,9 @@ function getLogger(logLevel) {
   }
 
   function getLogFn(name) {
-    return function logFn() {
+    return function logFn(...args) {
       if (shouldLog[name](logLevel || process.env.LOG_LEVEL)) {
-        const message = getMessage(...arguments)
+        const message = getMessage(...args)
         console[name](...message) // eslint-disable-line no-console
       }
     }
@@ -36,7 +38,6 @@ function getMessage(first, ...rest) {
 }
 
 function getLink(ref) {
-  const {version} = require('../package.json')
   return `https://github.com/kentcdodds/p-s/blob/v${version}/other/ERRORS_AND_WARNINGS.md#${ref}`
 }
 

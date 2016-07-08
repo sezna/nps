@@ -2,6 +2,7 @@ import test from 'ava'
 import {spy} from 'sinon'
 import color from 'colors/safe'
 import proxyquire from 'proxyquire'
+
 proxyquire.noCallThru()
 
 test('spawn called with the parent process.env', t => {

@@ -1,5 +1,6 @@
 import isPlainObject from 'lodash.isplainobject'
 import isFunction from 'lodash.isfunction'
+
 export default getScriptsFromConfig
 
 function getScriptsFromConfig(scripts, input) {

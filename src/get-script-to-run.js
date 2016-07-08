@@ -1,5 +1,5 @@
-import resolveScriptObjectToString from './resolve-script-object-to-string'
 import prefixMatches from 'prefix-matches'
+import resolveScriptObjectToString from './resolve-script-object-to-string'
 import kebabAndCamelCasify from './kebab-and-camel-casify'
 
 export default getScriptToRun

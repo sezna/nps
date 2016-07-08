@@ -8,7 +8,7 @@ import getScriptToRun from './get-script-to-run'
 import getScriptsFromConfig from './get-scripts-from-config'
 import getLogger from './get-logger'
 
-const noop = () => {} // eslint-disable-line func-style
+const noop = () => {} // eslint-disable-line func-style, no-empty-function
 
 export default runPackageScripts
 

@@ -1,6 +1,7 @@
 import isPlainObject from 'lodash.isplainobject'
 import camelCase from 'lodash.camelcase'
 import kebabCase from 'lodash.kebabcase'
+
 export default kebabAndCamelCasify
 
 function kebabAndCamelCasify(obj) {
