@@ -82,6 +82,10 @@
       "lcov",
       "text",
       "html"
+    ],
+    "exclude": [
+      "**/*.test.js",
+      "package-scripts.js"
     ]
   },
   "release": {
