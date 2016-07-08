@@ -98,7 +98,7 @@
   "config": {
     "ghooks": {
       "commit-msg": "opt --in commit-msg --exec \"validate-commit-msg\"",
-      "pre-commit": "opt --in pre-commit --exec \"npm start validate\""
+      "pre-commit": "opt --in pre-commit --exec \"npm run localstart validate\""
     },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
