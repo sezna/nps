@@ -7,7 +7,7 @@ module.exports = {
     test: {
       default: {
         description: 'Run all test files in the src directory',
-        script: 'ava ./src/**/*.test.js',
+        script: 'ava',
       },
       watch: {
         description: 'pass the -w flag on to the npm t command so ava will watch stuff',
