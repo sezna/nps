@@ -19,7 +19,7 @@ program
   .on('--help', onHelp)
   .parse(process.argv)
 
-if (process.argv.length < 3) {
+if (program.args.length < 1) {
   program.outputHelp()
 } else {
   loadAndRun()
