@@ -1,3 +1,8 @@
+const nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
+const validate = ['lint', 'build', 'cover']
+if (nodeVersion < 4) {
+  validate.slice(1)
+}
 module.exports = {
   scripts: {
     commit: {
@@ -40,7 +45,7 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: 'p-s -p lint,build,cover && p-s check-coverage',
+      script: `p-s -p ${validate.join(',')} && p-s check-coverage`,
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',
