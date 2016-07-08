@@ -21,14 +21,14 @@ program
   .on('--help', onHelp)
   .parse(process.argv)
 
-if (program.args.length < 1) {
+const scriptsAndArgs = getScriptsAndArgs(program)
+if (scriptsAndArgs.scripts.length < 1) {
   program.outputHelp()
 } else {
   loadAndRun()
 }
 
 function loadAndRun() {
-  const scriptsAndArgs = getScriptsAndArgs(program)
   const psConfig = getPSConfig()
 
   runPackageScript({

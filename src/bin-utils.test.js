@@ -32,6 +32,15 @@ test('getScriptsAndArgs: passes args to scripts', t => {
   t.is(args, '--watch --verbose')
 })
 
+test('getScriptsAndArgs: returns empty scripts and args if not parallel and no args', t => {
+  const {args, scripts} = getScriptsAndArgs({
+    args: [],
+    rawArgs: ['node', 'p-s'],
+  })
+  t.is(scripts.length, 0)
+  t.is(args, '')
+})
+
 test('preloadModule: resolves a relative path', t => {
   const relativePath = '../test/fixtures/my-module'
   const val = preloadModule(relativePath)
