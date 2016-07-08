@@ -46,7 +46,7 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: 'dist/bin/p-s.js -p ' + validate.join(',') + ' && p-s check-coverage',
+      script: 'p-s -p ' + validate.join(',') + ' && p-s check-coverage',
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',
