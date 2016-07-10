@@ -62,7 +62,7 @@
     "p-s": "*",
     "proxyquire": "1.7.10",
     "rimraf": "2.5.3",
-    "semantic-release": "^4.3.5",
+    "semantic-release": "4.3.5",
     "sinon": "1.17.4",
     "validate-commit-msg": "2.6.1"
   },
