@@ -4,11 +4,12 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
+[![Dependencies][dependencyci-badge]][dependencyci]
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors)
 
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -319,6 +320,8 @@ MIT
 [build]: https://travis-ci.org/kentcdodds/p-s
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/p-s.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/p-s
+[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/p-s/badge?style=flat-square
+[dependencyci]: https://dependencyci.com/github/kentcdodds/p-s
 [version-badge]: https://img.shields.io/npm/v/p-s.svg?style=flat-square
 [package]: https://www.npmjs.com/package/p-s
 [downloads-badge]: https://img.shields.io/npm/dm/p-s.svg?style=flat-square
