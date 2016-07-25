@@ -1,6 +1,4 @@
-import isPlainObject from 'lodash.isplainobject'
-import camelCase from 'lodash.camelcase'
-import kebabCase from 'lodash.kebabcase'
+import {isPlainObject, camelCase, kebabCase} from 'lodash'
 
 export default kebabAndCamelCasify
 

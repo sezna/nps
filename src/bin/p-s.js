@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint no-process-exit: "off" */
 import findUp from 'find-up'
-import merge from 'lodash.merge'
+import {merge} from 'lodash'
 import program from 'commander'
 import runPackageScript from '../index'
 import {getScriptsAndArgs, help, preloadModule, loadConfig} from '../bin-utils'

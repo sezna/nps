@@ -1,6 +1,6 @@
 import console from 'console'
 import arrify from 'arrify'
-import isPlainObject from 'lodash.isplainobject'
+import {isPlainObject} from 'lodash'
 
 const {version} = require('../package.json')
 

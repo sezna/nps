@@ -1,6 +1,4 @@
-import isString from 'lodash.isstring'
-import isPlainObject from 'lodash.isplainobject'
-import isUndefined from 'lodash.isundefined'
+import {isString, isPlainObject, isUndefined} from 'lodash'
 
 export {resolveScriptObjectToString as default, resolveScriptObjectToScript}
 

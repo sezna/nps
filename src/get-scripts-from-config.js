@@ -1,5 +1,4 @@
-import isPlainObject from 'lodash.isplainobject'
-import isFunction from 'lodash.isfunction'
+import {isPlainObject, isFunction} from 'lodash'
 
 export default getScriptsFromConfig
 

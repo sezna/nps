@@ -1,8 +1,8 @@
-/* eslint prefer-template:"off", no-var:"off" */ // this file runs in node 0.10.0
+/* eslint prefer-template:"off", no-var:"off", max-len:[2, 200] */ // this file runs in node 0.10.0
 var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
-var validate = ['lint', 'build', 'cover']
-if (nodeVersion < 4) {
-  validate = validate.slice(1)
+var validate = ['build', 'test']
+if (nodeVersion >= 4) {
+  validate.push('lint') // we can't run linting on node versions < 4
 }
 module.exports = {
   scripts: {
@@ -13,11 +13,11 @@ module.exports = {
     test: {
       default: {
         description: 'Run all test files in the src directory',
-        script: 'ava',
+        script: 'cross-env NODE_ENV=test nyc ava',
       },
       watch: {
-        description: 'pass the -w flag on to the npm t command so ava will watch stuff',
-        script: 'p-s test -w',
+        description: `Use AVA's watch mode. Good for TDD (adds a require to babel-register because nyc does it for us normally)`,
+        script: 'ava -r babel-register -w',
       },
     },
     build: {
@@ -27,14 +27,6 @@ module.exports = {
     lint: {
       description: 'lint the code with eslint',
       script: 'eslint .',
-    },
-    checkCoverage: {
-      description: 'We want to keep 100% code coverage on this project because... reasons',
-      script: 'nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100',
-    },
-    cover: {
-      description: 'we use nyc to instrument our code for coverage. Some of the config happens in package.json',
-      script: 'nyc npm t',
     },
     reportCoverage: {
       description: 'Report coverage stats to codecov. This should be run after the `cover` script and only on travis',
@@ -46,7 +38,7 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: 'p-s -p ' + validate.join(',') + ' && p-s check-coverage',
+      script: 'p-s -p ' + validate.join(','),
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',

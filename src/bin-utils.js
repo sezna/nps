@@ -1,9 +1,6 @@
 import {resolve} from 'path'
-import remove from 'lodash.remove'
-import contains from 'lodash.contains'
-import isPlainObject from 'lodash.isplainobject'
+import {remove, includes, isPlainObject, isEmpty} from 'lodash'
 import shellEscape from 'shell-escape'
-import isEmpty from 'lodash.isempty'
 import colors from 'colors/safe'
 
 import getLogger from './get-logger'
@@ -61,9 +58,9 @@ function getArgs(args, rawArgs, scripts) {
   const psArgs = ['-p', '--parallel', '-c', '--config', '-r', '--require']
   const psFlags = ['-s', '--silent']
   const cleanedArgs = remove(allArgs, (item, index, arry) => {
-    const isArgOrFlag = contains(psArgs, item) || contains(psFlags, item)
-    const isArgValue = contains(psArgs, arry[index - 1])
-    const isInScripts = contains(scripts, item)
+    const isArgOrFlag = includes(psArgs, item) || includes(psFlags, item)
+    const isArgValue = includes(psArgs, arry[index - 1])
+    const isInScripts = includes(scripts, item)
     return !isArgOrFlag && !isArgValue && !isInScripts
   })
   return shellEscape(cleanedArgs)
@@ -132,7 +129,7 @@ function getAvailableScripts(config, prefix = []) {
   const excluded = ['description', 'script', 'default']
   return Object.keys(config).reduce((scripts, key) => {
     const val = config[key]
-    if (contains(excluded, key)) {
+    if (includes(excluded, key)) {
       return scripts
     }
     const scriptObj = resolveScriptObjectToScript(val)
