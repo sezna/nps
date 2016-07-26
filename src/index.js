@@ -14,6 +14,9 @@ const noop = () => {} // eslint-disable-line func-style, no-empty-function
 export default runPackageScripts
 
 function runPackageScripts({scriptConfig, scripts, args, options}, callback = noop) {
+  if (scripts.length === 0) {
+    scripts = ['default']
+  }
   const scriptNames = arrify(scripts)
   async.map(scriptNames, (scriptName, cb) => {
     const child = runPackageScript({scriptConfig, options, scriptName, args})

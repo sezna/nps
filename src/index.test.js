@@ -83,6 +83,11 @@ test.cb('runs scripts in parallel if given an array of input', t => {
   })
 })
 
+test('runs the default script if no scripts provided', t => {
+  const {command} = testSpawnCall(t, {default: 'echo foo'}, [])
+  t.is(command, `echo foo`)
+})
+
 // util functions
 
 function testSpawnCallWithDefaults(t, options, stubOverrides) {

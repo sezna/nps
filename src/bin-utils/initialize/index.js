@@ -30,7 +30,11 @@ function generatePackageScriptsFileContents(scripts) {
 function structureScripts(scripts) {
   // start out by giving every script a `default`
   const defaultedScripts = Object.keys(scripts).reduce((obj, key) => {
-    const deepKey = [...key.split(':'), 'default'].join('.')
+    const keyParts = key.split(':')
+    let deepKey = [...keyParts, 'default'].join('.')
+    if (key.indexOf('start') === 0) {
+      deepKey = ['default', ...keyParts.slice(1, keyParts.length), 'default'].join('.')
+    }
     const script = scripts[key]
     set(obj, deepKey, script)
     return obj
