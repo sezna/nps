@@ -6,8 +6,6 @@ function resolveScriptObjectToString(script) {
   const scriptObj = resolveScriptObjectToScript(script)
   if (isPlainObject(scriptObj)) {
     return scriptObj.script
-  } else if (isString(scriptObj)) {
-    return scriptObj
   }
   return undefined
 }
@@ -17,7 +15,7 @@ function resolveScriptObjectToScript(script) {
     if (!isUndefined(script.script)) {
       return script
     } else if (!isUndefined(script.default)) {
-      return script.default
+      return resolveScriptObjectToScript(script.default)
     }
   } else if (isString(script)) {
     return {script}
