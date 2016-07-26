@@ -1,6 +1,9 @@
 module.exports = {
   scripts: {
-    start: 'echo start',
+    default: {
+      default: 'echo start',
+      stuff: 'echo start:stuff'
+    },
     test: 'echo test',
     foo: {
       default: 'echo foo',

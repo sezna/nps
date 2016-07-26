@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "echo start",
+    "start:stuff": "echo start:stuff",
     "test": "echo test",
     "foo": "echo foo",
     "bar": "echo bar",

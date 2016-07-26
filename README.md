@@ -41,6 +41,7 @@ Put all of your scripts in a file called `package-scripts.js` and use `p-s` in a
 ```javascript
 module.exports = {
   scripts: {
+    default: 'node index.js',
     lint: 'eslint .',
     test: {
       default: 'ava',
@@ -60,8 +61,9 @@ module.exports = {
 Then you can run:
 
 ```console
-npm start lint
-npm start test.watch
+npm start # runs `node index.js`
+npm start lint # runs `eslint .`
+npm start test.watch # runs `ava -w`
 ```
 
 But the fun doesn't end there! You can use a prefix:
@@ -213,6 +215,7 @@ look like (and different ways to run them):
 ```javascript
 module.exports = {
   scripts: {
+    default: 'echo "This runs on `npm start`"', // npm start
     // you can assign a script property to a string
     simple: 'echo "this is easy"', // npm start simple
     test: {
@@ -288,6 +291,12 @@ this. For example:
 So, while you could use a script called `script` and run `npm run script build`, I just think it reads more clearly to
 just use the `start` script and run `npm start build`. It's also nice that it's fewer things to type. You could also use
 the `test` script and then type even less: `npm t build`, but thats just... odd.
+
+Note, often servers are configured to run `npm start` by default to start the server.
+To allow for this case, you can provide a `default` script at the root of your scripts
+which will be run when `p-s` is run without any arguments. Effectively this will
+allow you to have a script run when `npm start` is executed.
+
 
 ## Inspiration
 
