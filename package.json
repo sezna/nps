@@ -1,6 +1,6 @@
 {
   "name": "p-s",
-  "version": "2.0.0",
+  "version": "0.0.0-semantically-released",
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
   "scripts": {
