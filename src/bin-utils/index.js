@@ -3,8 +3,9 @@ import {remove, includes, isPlainObject, isEmpty} from 'lodash'
 import shellEscape from 'shell-escape'
 import colors from 'colors/safe'
 
-import getLogger from './get-logger'
-import {resolveScriptObjectToScript} from './resolve-script-object-to-string'
+import getLogger from '../get-logger'
+import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
+import initialize from './initialize'
 
 const log = getLogger()
 
@@ -34,7 +35,10 @@ const loadConfig = getAttemptModuleRequireFn(function onFail(configPath, require
   return undefined
 })
 
-export {getScriptsAndArgs, help, getModuleRequirePath, preloadModule, loadConfig}
+export {
+  getScriptsAndArgs, initialize, help,
+  getModuleRequirePath, preloadModule, loadConfig,
+}
 
 
 /****** implementations ******/
