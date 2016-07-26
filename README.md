@@ -316,7 +316,7 @@ MIT
 [quick-run]: https://npmjs.com/package/npm-quick-run
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/kentcdodds/p-s.svg?style=flat-square
+[build-badge]: https://img.shields.io/travis/kentcdodds/p-s/master.svg?style=flat-square
 [build]: https://travis-ci.org/kentcdodds/p-s
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/p-s.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/p-s
