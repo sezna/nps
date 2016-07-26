@@ -1,13 +1,25 @@
+import {resolve} from 'path'
 import test from 'ava'
 import {spy} from 'sinon'
 import color from 'colors/safe'
+import {clone} from 'lodash'
+import managePath from 'manage-path'
 import proxyquire from 'proxyquire'
 
 proxyquire.noCallThru()
 
-test('spawn called with the parent process.env', t => {
+test('spawn called with the parent process.env + npm path', t => {
   const {options: {env}} = testSpawnCallWithDefaults(t)
-  t.is(env, process.env)
+  const copy = clone(process.env)
+  managePath(copy).unshift(resolve('../node_modules/.bin'))
+  t.deepEqual(env, copy)
+})
+
+test('does not blow up if there is no node_modules/.bin', t => {
+  const {options: {env}} = testSpawnCallWithDefaults(t, undefined, {
+    'find-up': {sync: () => null},
+  })
+  t.deepEqual(env, process.env)
 })
 
 test('spawn called with the expected command', t => {
@@ -73,18 +85,19 @@ test.cb('runs scripts in parallel if given an array of input', t => {
 
 // util functions
 
-function testSpawnCallWithDefaults(t, options) {
-  return testSpawnCall(t, undefined, undefined, options)
+function testSpawnCallWithDefaults(t, options, stubOverrides) {
+  return testSpawnCall(t, undefined, undefined, options, undefined, stubOverrides)
 }
-function testSpawnCall(t, scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions, args) {
-  const {runPackageScript, spawnStubSpy, ...otherRet} = setup()
+function testSpawnCall(t, scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions, args, stubOverrides) {
+  /* eslint max-params:[2, 6] */ // TODO: refactor
+  const {runPackageScript, spawnStubSpy, ...otherRet} = setup(stubOverrides)
   runPackageScript({scriptConfig, options: psOptions, scripts, args})
   t.true(spawnStubSpy.calledOnce)
   const [command, options] = spawnStubSpy.firstCall.args
   return {command, options, spawnStubSpy, ...otherRet}
 }
 
-function setup() {
+function setup(stubOverrides = {}) {
   const onSpy = spy((event, cb) => cb())
   const spawnStub = () => ({on: onSpy}) // eslint-disable-line func-style
   const infoSpy = spy()
@@ -93,6 +106,7 @@ function setup() {
   const runPackageScript = proxyquire('./index', {
     'spawn-command': spawnStubSpy,
     './get-logger': getLoggerSpy,
+    ...stubOverrides,
   }).default
   return {spawnStubSpy, infoSpy, getLoggerSpy, onSpy, runPackageScript}
 }

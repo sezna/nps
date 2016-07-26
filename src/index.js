@@ -1,7 +1,9 @@
 import spawn from 'spawn-command'
 import async from 'async'
 import colors from 'colors/safe'
-import {isString, find} from 'lodash'
+import {isString, find, clone} from 'lodash'
+import {sync as findUpSync} from 'find-up'
+import managePath from 'manage-path'
 import arrify from 'arrify'
 import getScriptToRun from './get-script-to-run'
 import getScriptsFromConfig from './get-scripts-from-config'
@@ -45,7 +47,7 @@ function runPackageScript({scriptConfig, options = {}, scriptName, args}) {
   const command = [script, args].join(' ').trim()
   const log = getLogger(getLogLevel(options))
   log.info(colors.gray('p-s executing: ') + colors.green(command))
-  return spawn(command, {stdio: 'inherit', env: process.env})
+  return spawn(command, {stdio: 'inherit', env: getEnv()})
 }
 
 function getLogLevel({silent, logLevel}) {
@@ -56,4 +58,14 @@ function getLogLevel({silent, logLevel}) {
   } else {
     return undefined
   }
+}
+
+function getEnv() {
+  const env = clone(process.env)
+  const alterPath = managePath(env)
+  const npmBin = findUpSync('node_modules/.bin')
+  if (npmBin) {
+    alterPath.unshift(npmBin)
+  }
+  return env
 }

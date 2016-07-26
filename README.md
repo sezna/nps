@@ -204,8 +204,12 @@ module.exports = {
     simple: 'echo "this is easy"', // npm start simple
     test: {
       default: {
-        script: 'echo "test things!"', // npm start test
-        description: 'just pass it on to npm... Do not take this config very seriously :-)',
+        script: 'ava', // npm start test
+        description: 'Run tests with ava',
+        // your scripts will be run with node_modules/.bin in the PATH, so you can use locally installed packages.
+        // this is done in a cross-platform way, so your scripts will work on Mac and Windows :)
+        // NOTE: if you need to set environment variables, I recommend you check out the cross-env package, which works
+        // gret with p-s
       },
       otherStuff: {
         // this one can be executed two different ways:
