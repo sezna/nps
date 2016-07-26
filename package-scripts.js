@@ -16,7 +16,7 @@ module.exports = {
         script: 'cross-env NODE_ENV=test nyc ava',
       },
       watch: {
-        description: `Use AVA's watch mode. Good for TDD (adds a require to babel-register because nyc does it for us normally)`,
+        description: 'Use AVA\'s watch mode. Good for TDD (adds a require to babel-register because nyc does it for us normally)',
         script: 'ava -r babel-register -w',
       },
     },
