@@ -20,3 +20,14 @@ test('can accept snake-case representation of a camelCase name', t => {
   const script = getScriptToRun({checkCoverage: 'checking coverage'}, 'check-coverage')
   t.is(script, 'checking coverage')
 })
+
+test('fallsback to `default` if no prefix is found', t => {
+  const scripts = {foo: {default: 'echo "default"', dee: 'echo "dee"'}}
+  const usesDefault = getScriptToRun(scripts, 'foo')
+  const defaultIsPrefixFallback = getScriptToRun(scripts, 'foo.def')
+  const script = getScriptToRun(scripts, 'foo.de')
+
+  t.is(usesDefault, 'echo "default"')
+  t.is(defaultIsPrefixFallback, 'echo "default"')
+  t.is(script, 'echo "dee"')
+})
