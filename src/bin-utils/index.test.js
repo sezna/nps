@@ -3,7 +3,7 @@ import test from 'ava'
 import colors from 'colors/safe'
 import {spy} from 'sinon'
 import proxyquire from 'proxyquire'
-import {getScriptsAndArgs, help, preloadModule, loadConfig} from './bin-utils'
+import {getScriptsAndArgs, help, preloadModule, loadConfig} from './index'
 
 proxyquire.noCallThru()
 
@@ -42,13 +42,13 @@ test('getScriptsAndArgs: returns empty scripts and args if not parallel and no a
 })
 
 test('preloadModule: resolves a relative path', t => {
-  const relativePath = '../test/fixtures/my-module'
+  const relativePath = './fixtures/my-module'
   const val = preloadModule(relativePath)
   t.is(val, 'hello')
 })
 
 test('preloadModule: resolves an absolute path', t => {
-  const relativePath = '../test/fixtures/my-module'
+  const relativePath = './fixtures/my-module'
   const absolutePath = resolve(__dirname, relativePath)
   const val = preloadModule(absolutePath)
   t.is(val, 'hello')
@@ -61,8 +61,8 @@ test('preloadModule: resolves a node_module', t => {
 
 test('preloadModule: logs a warning when the module cannot be required', t => {
   const warn = spy()
-  const proxiedPreloadModule = proxyquire('./bin-utils', {
-    './get-logger': () => ({warn}),
+  const proxiedPreloadModule = proxyquire('./index', {
+    '../get-logger': () => ({warn}),
   }).preloadModule
   const val = proxiedPreloadModule('./module-that-does-exist')
   t.is(val, undefined)
@@ -73,8 +73,8 @@ test('preloadModule: logs a warning when the module cannot be required', t => {
 
 test('loadConfig: logs a warning when the module cannot be required', t => {
   const error = spy()
-  const proxiedReloadConfig = proxyquire('./bin-utils', {
-    './get-logger': () => ({error}),
+  const proxiedReloadConfig = proxyquire('./index', {
+    '../get-logger': () => ({error}),
   }).loadConfig
   const val = proxiedReloadConfig('./config-that-does-exist')
   t.is(val, undefined)
@@ -84,12 +84,12 @@ test('loadConfig: logs a warning when the module cannot be required', t => {
 })
 
 test('loadConfig: does not swallow syntax errors', t => {
-  const relativePath = '../test/fixtures/syntax-error-module'
+  const relativePath = './fixtures/syntax-error-module'
   t.throws(() => loadConfig(relativePath), SyntaxError)
 })
 
 test('loadConfig: can load ES6 module', t => {
-  const relativePath = '../test/fixtures/fake-es6-module'
+  const relativePath = './fixtures/fake-es6-module'
   const val = loadConfig(relativePath)
   t.deepEqual(val, {
     scripts: {

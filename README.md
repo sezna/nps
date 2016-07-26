@@ -99,6 +99,19 @@ be installed as one of your project's `devDependencies`:
 npm install --save-dev p-s
 ```
 
+## Getting started
+
+If you're already using npm scripts, you can get up and going really quickly
+with the `init` command:
+
+```
+./node_modules/.bin/p-s init
+```
+
+This will use your `package.json` `scripts` to generate a
+`package-scripts.js` file and update your `scripts` to utilize the
+`package-scripts` binary.
+
 ## API
 
 ### CLI

@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "echo start",
+    "test": "echo test",
+    "foo": "echo foo",
+    "bar": "echo bar",
+    "foo-bar": "echo foo-bar",
+    "foobar": "echo \"foo bar\"",
+    "baz": "echo 'baz buzz'",
+    "foo:bar": "echo foo:bar",
+    "foo:bar:baz": "echo foo:bar:baz"
+  }
+}

@@ -22,7 +22,7 @@ module.exports = {
     },
     build: {
       description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
-      script: 'rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js src',
+      script: 'rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js,fixtures src',
     },
     lint: {
       description: 'lint the code with eslint',
