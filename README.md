@@ -89,8 +89,10 @@ Cool stuff right? And there's more on [the roadmap][roadmap].
 **Also** check out the [examples][examples]. You'll find some good stuff in there (including how to deal with windows
 and other cross-platform issues).
 
-**Note:** You don't have to use the `start` script of course. If you're writing a node application, you're likely using
-this for starting your server. You could easily create a `p-s` script and do: `npm run p-s b`.
+**Note:** You don't have to use the `start` script if you don't want. If you're writing a node application, you're
+likely using this for starting your server. In that case, you can create a `default` script which will be run when
+`p-s` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever you
+wish. For example you could easily create a `p-s` script and do: `npm run p-s b`.
 
 ## Installation
 
