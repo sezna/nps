@@ -72,7 +72,7 @@ function onInit() {
   log.info(colors.gray(
     'Check out your scripts in there. Go ahead and update them and add descriptions to the ones that need it'
   ))
-  log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start --help` for help'))
+  log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start -- --help` for help'))
 }
 
 function onHelp() {
