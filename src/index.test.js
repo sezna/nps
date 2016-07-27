@@ -5,6 +5,7 @@ import color from 'colors/safe'
 import {clone} from 'lodash'
 import managePath from 'manage-path'
 import proxyquire from 'proxyquire'
+import async from 'async'
 
 proxyquire.noCallThru()
 
@@ -66,14 +67,41 @@ test('passes on additional arguments', t => {
   t.is(command, `${lintCommand} ${argsToPassOn}`)
 })
 
+test.cb('runs scripts serially if given an array of input without parallel', t => {
+  const lintCommand = 'eslint'
+  const buildCommand = 'babel'
+  const args = 'src/ scripts/'
+  const mapSeriesSpy = spy(async.mapSeries)
+  const {runPackageScript, spawnStubSpy} = setup({
+    async: {mapSeries: mapSeriesSpy},
+  })
+  const scripts = ['lint', 'build']
+  const scriptConfig = {build: buildCommand, lint: lintCommand}
+  const options = {}
+  runPackageScript({scriptConfig, scripts, args, options}, () => {
+    t.true(mapSeriesSpy.calledOnce)
+    t.true(spawnStubSpy.calledTwice)
+    const [command1] = spawnStubSpy.firstCall.args
+    const [command2] = spawnStubSpy.secondCall.args
+    t.is(command1, 'eslint src/ scripts/')
+    t.is(command2, 'babel src/ scripts/')
+    t.end()
+  })
+})
+
 test.cb('runs scripts in parallel if given an array of input', t => {
   const lintCommand = 'eslint'
   const buildCommand = 'babel'
   const args = 'src/ scripts/'
-  const {runPackageScript, spawnStubSpy} = setup()
+  const mapSpy = spy(async.map)
+  const {runPackageScript, spawnStubSpy} = setup({
+    async: {map: mapSpy},
+  })
   const scripts = ['lint', 'build']
   const scriptConfig = {build: buildCommand, lint: lintCommand}
-  runPackageScript({scriptConfig, scripts, args}, () => {
+  const options = {parallel: true}
+  runPackageScript({scriptConfig, scripts, args, options}, () => {
+    t.true(mapSpy.calledOnce)
     t.true(spawnStubSpy.calledTwice)
     const [command1] = spawnStubSpy.firstCall.args
     const [command2] = spawnStubSpy.secondCall.args

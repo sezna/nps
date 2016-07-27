@@ -61,8 +61,9 @@ module.exports = {
     build: {
       default: 'webpack',
       prod: 'webpack -p',
-    }
-  }
+    },
+    validate: 'p-s --parallel lint,test,build',
+  },
 }
 ```
 
@@ -72,6 +73,7 @@ Then you can run:
 npm start # runs `node index.js`
 npm start lint # runs `eslint .`
 npm start test.watch # runs `ava -w`
+npm start validate # runs the lint, test, and build scripts in parallel
 ```
 
 But the fun doesn't end there! You can use a prefix:
@@ -249,7 +251,8 @@ module.exports = {
     // 1. npm start k
     // 2. npm start kebab-case
     // 3. npm start kebabCase
-    'kebab-case': 'echo "kebab-case"'
+    'kebab-case': 'echo "kebab-case"',
+    series: 'p-s simple,test,kebabCase', // runs these other scripts in series
   },
 }
 ```
@@ -307,7 +310,6 @@ To allow for this case, you can provide a `default` script at the root of your s
 which will be run when `p-s` is run without any arguments. Effectively this will
 allow you to have a script run when `npm start` is executed.
 
-
 ## Inspiration
 
 This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
@@ -324,7 +326,6 @@ benefits of npm scripts I wanted to keep).
 
   GOTCHAS:
     - use `process.cwd()` as the base for all paths
-    - you cannot recursively call `p-s` and need to use `npm start <whatever>`
 
 - [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob patterns.
 

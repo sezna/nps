@@ -46,13 +46,16 @@ export {
 function getScriptsAndArgs(program) {
   let scripts = []
   let args = ''
+  const {rawArgs} = program
   const parallel = !isEmpty(program.parallel)
   if (parallel) {
     scripts = program.parallel.split(',')
     args = getArgs(program.args, program.rawArgs, scripts)
   } else if (!isEmpty(program.args)) {
-    scripts = program.args[0].split(',')
-    args = getArgs(program.args.slice(1), program.rawArgs, scripts)
+    const [scriptsString] = program.args
+    scripts = scriptsString.split(',')
+    remove(rawArgs, arg => arg === scriptsString)
+    args = getArgs(program.args.slice(1), rawArgs, scripts)
   }
   return {scripts, args, parallel}
 }

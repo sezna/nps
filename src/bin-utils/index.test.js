@@ -15,6 +15,15 @@ test('getScriptsAndArgs: gets scripts', t => {
   t.deepEqual(scripts, ['boo'])
 })
 
+test('getScriptsAndArgs: gets scripts in series', t => {
+  const {scripts, args} = getScriptsAndArgs({
+    args: ['boo,bar'],
+    rawArgs: ['node', 'p-s', 'boo,bar'],
+  })
+  t.deepEqual(scripts, ['boo', 'bar'])
+  t.deepEqual(args, '')
+})
+
 test('getScriptsAndArgs: gets parallel scripts', t => {
   const {scripts} = getScriptsAndArgs({
     parallel: 'boo,baz',

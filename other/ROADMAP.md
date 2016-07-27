@@ -2,7 +2,7 @@
 
 ## Want to do
 
-- Add the ability to specify multiple scripts that run in series (right now the solution is to just `&&`)
+- Check [the issues](https://github.com/kentcdodds/p-s/issues)
 
 ## Might do
 

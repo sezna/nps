@@ -13,12 +13,13 @@ const noop = () => {} // eslint-disable-line func-style, no-empty-function
 
 export default runPackageScripts
 
-function runPackageScripts({scriptConfig, scripts, args, options}, callback = noop) {
+function runPackageScripts({scriptConfig, scripts, args, options = {}}, callback = noop) {
   if (scripts.length === 0) {
     scripts = ['default']
   }
   const scriptNames = arrify(scripts)
-  async.map(scriptNames, (scriptName, cb) => {
+  const method = options.parallel ? 'map' : 'mapSeries'
+  async[method](scriptNames, (scriptName, cb) => {
     const child = runPackageScript({scriptConfig, options, scriptName, args})
     if (child.on) {
       child.on('exit', exitCode => cb(null, exitCode))
@@ -36,7 +37,7 @@ function runPackageScripts({scriptConfig, scripts, args, options}, callback = no
   })
 }
 
-function runPackageScript({scriptConfig, options = {}, scriptName, args}) {
+function runPackageScript({scriptConfig, options, scriptName, args}) {
   const scripts = getScriptsFromConfig(scriptConfig, scriptName)
   const script = getScriptToRun(scripts, scriptName)
   if (!isString(script)) {
