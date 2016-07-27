@@ -16,6 +16,14 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![Roadmap][roadmap-badge]][roadmap]
 [![Examples][examples-badge]][examples]
 
+## Quick Video Intro :tv:
+
+<a href="http://kcd.im/p-s-video" title="Simplify and empower npm scripts with p-s">
+  <img src="other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
+</a>
+
+[Simplify and empower npm scripts with p-s][video] 11:19
+
 ## The problem
 
 Even though npm scripts have a ton of advantages ([learn more][scripts-advantages]), it can grow into an
@@ -371,3 +379,4 @@ MIT
 [clarity]: https://github.com/kentcdodds/p-s/issues/1
 [scripty]: https://npmjs.com/package/scripty
 [npm scripts]: https://docs.npmjs.com/misc/scripts
+[video]: http://kcd.im/p-s-video
