@@ -1,9 +1,12 @@
 /* eslint prefer-template:"off", no-var:"off", max-len:[2, 200] */ // this file runs in node 0.10.0
+var transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
+
 var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
 var validate = ['build', 'test']
 if (nodeVersion >= 4) {
   validate.push('lint') // we can't run linting on node versions < 4
 }
+
 module.exports = {
   scripts: {
     commit: {
@@ -21,8 +24,13 @@ module.exports = {
       },
     },
     build: {
-      description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
-      script: 'rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js,fixtures src',
+      default: {
+        description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
+        script: 'rimraf dist && ' + transpile,
+      },
+      watch: {
+        script: 'rimraf dist && ' + transpile + ' --watch',
+      },
     },
     lint: {
       description: 'lint the code with eslint',

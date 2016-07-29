@@ -6,6 +6,7 @@ import colors from 'colors/safe'
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
 import initialize from './initialize'
+import {default as autocomplete, install as installAutocomplete} from './autocomplete'
 
 const log = getLogger()
 
@@ -36,7 +37,7 @@ const loadConfig = getAttemptModuleRequireFn(function onFail(configPath, require
 })
 
 export {
-  getScriptsAndArgs, initialize, help,
+  getScriptsAndArgs, initialize, help, autocomplete, installAutocomplete,
   getModuleRequirePath, preloadModule, loadConfig,
 }
 

@@ -122,7 +122,14 @@ npm install --global p-s
 ```
 
 From here you can use `p-s` on the command line via one of the installed aliases: `p-s`, `package-scripts`, or `nps`.
-In the future, this may support autocomplete capabilities. Check out #28 for updates on this.
+If you do this, you may also be interested in installing the shell autocompletion script. Do so by running:
+
+```
+nps completion <optionally-your-bash-profile-file>
+```
+
+The bash profile file defaults to `~/.bash_profile`. Special thanks to the [`omelette`][omelette] package for making
+this so easy.
 
 ## Getting started
 
@@ -392,3 +399,4 @@ MIT
 [scripty]: https://npmjs.com/package/scripty
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/p-s-video
+[omelette]: https://npmjs.com/package/omelette
