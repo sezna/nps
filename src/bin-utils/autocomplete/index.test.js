@@ -38,15 +38,6 @@ test('install calls setupShellInitFile with the given destination', t => {
   t.is(actualDestination, destination)
 })
 
-test('install defaults to ~/.bash_profile', t => {
-  const {install, setupShellInitFileSpy} = getInstall()
-  const expectedDestination = '~/.bash_profile'
-  install()
-  const [actualDestination] = setupShellInitFileSpy.firstCall.args
-  t.true(setupShellInitFileSpy.calledOnce)
-  t.is(actualDestination, expectedDestination)
-})
-
 function getAutocomplete() {
   const onSpy = spy()
   const initSpy = spy()

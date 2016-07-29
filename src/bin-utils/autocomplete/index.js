@@ -15,9 +15,8 @@ function autocomplete(config = {}) {
   }
 }
 
-function install(destination = '~/.bash_profile') {
+function install(destination) {
   complete.setupShellInitFile(destination)
-  return destination
 }
 
 function getScripts(scriptsObject, prefix = '', allScripts = []) {

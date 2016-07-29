@@ -87,7 +87,7 @@ function onInit() {
     'You may also want to install the package globally and installing autocomplete script. You can do so by running\n' +
     '  npm install --global p-s\n' +
     '  nps completion <optionally-your-bash-profile-file>\n' +
-    'The bash profile file defaults to ~/.bash_profile'
+    'The bash profile file defaults to ~/.bash_profile for bash and ~/.zshrc for zsh'
   ))
 }
 
@@ -98,9 +98,11 @@ function onHelp() {
 
 function onRequestToInstallCompletion() {
   shouldRun = false
-  const [, bin,, destination] = process.argv
-  const finalDestination = installAutocomplete(destination)
-  log.info(
-    `Autocompletion has been set up and installed into ${colors.bold.green(finalDestination)} for ${colors.bold(bin)}`,
-  )
+  const [,,, destination] = process.argv
+  if (destination) {
+    log.info(`Installing p-s autocomplete into ${destination}`)
+  } else {
+    log.info('Installing p-s autocomplete into the default for your current terminal')
+  }
+  installAutocomplete(destination)
 }
