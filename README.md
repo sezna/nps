@@ -133,16 +133,14 @@ The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for 
 
 ## Getting started
 
-If you're already using npm scripts, you can get up and going really quickly
-with the `init` command:
+If you're already using npm scripts, you can get up and going really quickly with the `init` command:
 
 ```
 ./node_modules/.bin/p-s init
 ```
 
-This will use your `package.json` `scripts` to generate a
-`package-scripts.js` file and update your `scripts` to utilize the
-`package-scripts` binary.
+This will use your `package.json` `scripts` to generate a `package-scripts.js` file and update your `scripts` to
+utilize the `package-scripts` binary.
 
 ## API
 
@@ -176,17 +174,44 @@ build - The normal webpack UMD build for development - webpack
 build.prod - The production webpack build - webpack -p
 ```
 
-#### help
+#### Commands
+
+##### help
+
+If you have a `help` script, then your `help` script will be run. Otherwise, this will output the help.
+
+> Note: you can do this with `p-s --help`, but if you're using the `start` script in your `package.json` this allows you
+> to run `npm start help` rather than `npm start -- --help`
+
+##### init
+
+As indicated above, this will migrate your npm scripts to package-scripts.
+
+##### completion
+
+Installs autocompletion functionality into your default bash or zsh configuration. You can override the default by
+providing a specific file:
+
+```console
+p-s completion ~/.bashrc
+```
+
+Note: you should probably only do this if you have the package installed globally. In that case you should probably also
+normally use the `nps` alias rather than `p-s` because it's easier to type.
+
+#### CLI options
+
+##### -h, --help
 
 Will print out the help you see above (the available scripts are colored 🌈 and come from the config specified/default
 config).
 
-#### silent
+##### -s, --silent
 
 By default, `p-s` will log out to the console before running the command. You can add `-s` to your command to silence
 this.
 
-#### parallel
+##### -p, --parallel
 
 Run the given scripts in parallel. This enables handy workflows like this:
 
@@ -194,7 +219,7 @@ Run the given scripts in parallel. This enables handy workflows like this:
 npm start -p lint,build,cover && npm start check-coverage && npm start report-coverage
 ```
 
-#### config
+##### -c, --config
 
 Use a different config
 
@@ -207,15 +232,15 @@ have this at the root of your project (next to the `package.json`). But by speci
 use that file instead.
 
 
-#### log-level
+##### -l, --log-level
 
 Specify the log level to use
 
-#### require
+##### -r, --require
 
 You can specify a module which will be loaded before the config file is loaded. This allows you to preload for example babel-register so you can use all babel presets you like.
 
-#### args
+##### args
 
 You can pass additional arguments to the script(s) that are being spawned:
 
@@ -223,12 +248,18 @@ You can pass additional arguments to the script(s) that are being spawned:
 npm start lint --fix # --fix will be passed on to the lint script
 ```
 
-#### scripts
+##### scripts
 
 If you don't use `-p` (because you don't need parallelism) then you can simply provide the name of the script like so:
 
 ```console
 npm start cover
+```
+
+And you can run multiple scripts in series by providing a comma-separated list:
+
+```console
+npm start cover,check-coverage
 ```
 
 That's all for the CLI.

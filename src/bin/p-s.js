@@ -38,7 +38,10 @@ if (shouldAutocomplete) {
   const psConfig = getPSConfig()
   const hasDefaultScript = !!psConfig.scripts.default
   const scriptsAndArgs = getScriptsAndArgs(program)
+  const hasHelpScript = !!psConfig.scripts.help
   if (!hasDefaultScript && scriptsAndArgs.scripts.length < 1) {
+    program.outputHelp()
+  } else if (!hasHelpScript) { // eslint-disable-line no-negated-condition
     program.outputHelp()
   } else {
     loadAndRun(scriptsAndArgs, psConfig)
@@ -82,7 +85,7 @@ function onInit() {
   log.info(colors.gray(
     'Check out your scripts in there. Go ahead and update them and add descriptions to the ones that need it'
   ))
-  log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start -- --help` for help'))
+  log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start help` for help'))
   log.info(colors.gray(
     'You may also want to install the package globally and installing autocomplete script. You can do so by running\n' +
     '  npm install --global p-s\n' +
