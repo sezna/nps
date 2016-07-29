@@ -1,5 +1,6 @@
 /* eslint prefer-template:"off", no-var:"off", max-len:[2, 200] */ // this file runs in node 0.10.0
 var transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
+var cleanDist = 'rimraf dist'
 
 var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
 var validate = ['build', 'test']
@@ -26,10 +27,10 @@ module.exports = {
     build: {
       default: {
         description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
-        script: 'rimraf dist && ' + transpile,
+        script: [cleanDist, transpile].join('&&'),
       },
       watch: {
-        script: 'rimraf dist && ' + transpile + ' --watch',
+        script: [cleanDist, transpile + ' --watch'].join('&&'),
       },
     },
     lint: {
