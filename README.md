@@ -128,8 +128,8 @@ If you do this, you may also be interested in installing the shell autocompletio
 nps completion <optionally-your-bash-profile-file>
 ```
 
-The bash profile file defaults to `~/.bash_profile`. Special thanks to the [`omelette`][omelette] package for making
-this so easy.
+The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for zsh. Special thanks to the
+[`omelette`][omelette] package for making this so easy.
 
 ## Getting started
 
