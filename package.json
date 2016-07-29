@@ -10,7 +10,8 @@
   },
   "bin": {
     "p-s": "./dist/bin/p-s.js",
-    "package-scripts": "./dist/bin/p-s.js"
+    "package-scripts": "./dist/bin/p-s.js",
+    "nps": "./dist/bin/p-s.js"
   },
   "files": [
     "dist"

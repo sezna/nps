@@ -113,6 +113,17 @@ be installed as one of your project's `devDependencies`:
 npm install --save-dev p-s
 ```
 
+### global installation
+
+You can install this module globally also:
+
+```
+npm install --global p-s
+```
+
+From here you can use `p-s` on the command line via one of the installed aliases: `p-s`, `package-scripts`, or `nps`.
+In the future, this may support autocomplete capabilities. Check out #28 for updates on this.
+
 ## Getting started
 
 If you're already using npm scripts, you can get up and going really quickly
