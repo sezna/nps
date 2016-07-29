@@ -104,5 +104,9 @@ function onRequestToInstallCompletion() {
   } else {
     log.info('Installing p-s autocomplete into the default for your current terminal')
   }
+  log.info(
+    `You're going to need to either resource that file, or open a new instance of ` +
+    'the terminal to get autocomplete to start working'
+  )
   installAutocomplete(destination)
 }
