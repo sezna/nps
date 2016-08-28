@@ -39,7 +39,7 @@ Thanks for using `p-s`! I'm glad/I hope it's been helpful to you. Please add a l
 adding a GitHub link, please make sure you hard-link so future changes in your codebase don't break the link. The
 keyboard shortcut for this is `y`.
 
-Also, if you'd like to be included as a [contributor][https://github.com/kentcdodds/p-s#contributors], please follow the
+Also, if you'd like to be included as a [contributor](https://github.com/kentcdodds/p-s#contributors), please follow the
 [Contribution Guidelines](https://github.com/kentcdodds/p-s/blob/master/CONTRIBUTING.md) and add yourself as a
 contributor to the `.all-contributorsrc`. The best way to do this is by running:
 
