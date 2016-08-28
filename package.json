@@ -27,6 +27,7 @@
     "find-up": "1.1.2",
     "lodash": "4.14.0",
     "manage-path": "2.0.0",
+    "omelette": "0.3.1",
     "prefix-matches": "0.0.9",
     "shell-escape": "0.2.0",
     "spawn-command": "0.0.2"
