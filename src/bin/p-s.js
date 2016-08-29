@@ -73,7 +73,12 @@ function getPSConfig() {
   if (program.require) {
     preloadModule(program.require)
   }
-  const config = loadConfig(program.config || findUp.sync('package-scripts.js'))
+  const configFilepath = program.config || findUp.sync('package-scripts.js')
+  if (!configFilepath) {
+    log.warn(colors.yellow('Unable to find a config file and none was specified.'))
+    return {scripts: {}} // empty config
+  }
+  const config = loadConfig(configFilepath)
   if (!config) {
     process.exit(FAIL_CODE)
   }
