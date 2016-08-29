@@ -39,9 +39,11 @@ if (shouldAutocomplete) {
   const hasDefaultScript = !!psConfig.scripts.default
   const scriptsAndArgs = getScriptsAndArgs(program)
   const hasHelpScript = !!psConfig.scripts.help
-  if (!hasDefaultScript && scriptsAndArgs.scripts.length < 1) {
+  const scriptIsHelp = scriptsAndArgs.scripts[0] === 'help'
+  const scriptSpecified = scriptsAndArgs.scripts.length >= 1
+  if (!hasDefaultScript && !scriptSpecified) {
     program.outputHelp()
-  } else if (!hasHelpScript) { // eslint-disable-line no-negated-condition
+  } else if (!hasHelpScript && scriptIsHelp) { // eslint-disable-line no-negated-condition
     program.outputHelp()
   } else {
     loadAndRun(scriptsAndArgs, psConfig)
