@@ -4,6 +4,8 @@
 Examples of how people us `p-s`:
 
 - **[p-s](https://github.com/kentcdodds/p-s):** [scripts](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package.json#L6-L10), [`package-scripts.js`](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package-scripts.js)
+- **[Smithers](https://github.com/SmithersAssistant/smithers):**
+  [scripts](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package.json#L67-L70), [`package-scripts.js`](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package-scripts.js)
 
 ## Inline Examples
 
