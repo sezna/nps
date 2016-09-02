@@ -378,6 +378,8 @@ benefits of npm scripts I wanted to keep).
 
 - [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob patterns.
 
+- [SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers) is an [electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s` to dynamically find the current platform and execute the dev environment. Now we don't have to manually update the `package.json` scripts when you are on a different platform!
+
 ## Contributors
 
 Thanks goes to these people ([emoji key][emojis]):
