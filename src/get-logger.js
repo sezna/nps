@@ -31,7 +31,12 @@ function getLogger(logLevel) {
 
 function getMessage(first, ...rest) {
   if (isPlainObject(first) && first.message && first.ref) {
-    return [...arrify(first.message), getLink(first.ref), ...rest]
+    return [
+      ...arrify(first.message),
+      getLink(first.ref),
+      first.error,
+      ...rest,
+    ].filter(i => !!i)
   } else {
     return [first, ...rest]
   }

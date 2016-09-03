@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "arrify": "1.0.1",
-    "async": "2.0.1",
+    "bluebird": "3.4.6",
     "colors": "1.1.2",
     "commander": "2.9.0",
     "find-up": "1.1.2",
@@ -30,7 +30,7 @@
     "omelette": "0.3.1",
     "prefix-matches": "0.0.9",
     "shell-escape": "0.2.0",
-    "spawn-command": "0.0.2"
+    "spawn-command-with-kill": "1.0.0"
   },
   "devDependencies": {
     "all-contributors-cli": "3.0.6",

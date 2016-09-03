@@ -27,3 +27,21 @@ This happens when you use the `--require` flag and the module you specify cannot
 
 1. Check that you spelled the module correctly
 2. Check that the module you wish to require is require-able
+
+## Failed with exit code
+
+This means that one of the scripts p-s tried to run resulted in a non-zero exit code (a failing exit code)
+
+### To Fix:
+
+Try to run the script without `p-s` and verify that the script is working. If not, fix that. If it's working without `p-s` it could be a problem with `p-s`. Please file an issue.
+
+## Emitted an error
+
+This means that the child process for the specified script emitted an error.
+
+### To Fix:
+
+Look at the error and try to figure out why the script would be failing.
+
+Try to run the script without `p-s` and verify that the script is working. If not, fix that. If it's working without `p-s` it could be a problem with `p-s`. Please file an issue.
