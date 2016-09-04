@@ -17,7 +17,8 @@
         "doc",
         "infra",
         "example",
-        "video"
+        "video",
+        "review"
       ]
     },
     {
@@ -87,7 +88,8 @@
       "contributions": [
         "bug",
         "code",
-        "test"
+        "test",
+        "review"
       ]
     },
     {
@@ -96,7 +98,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/509946?v=3",
       "profile": "http://www.hypercubed.com",
       "contributions": [
-        "example"
+        "example",
+        "review"
       ]
     },
     {
@@ -107,6 +110,42 @@
       "contributions": [
         "code",
         "test"
+      ]
+    },
+    {
+      "login": "boneskull",
+      "name": "Christopher Hiller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/924465?v=3",
+      "profile": "https://boneskull.com",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "RobinMalfait",
+      "name": "Robin Malfait",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1834413?v=3",
+      "profile": "robinmalfait.com",
+      "contributions": [
+        "example"
+      ]
+    },
+    {
+      "login": "edm00se",
+      "name": "Eric McCormick",
+      "avatar_url": "https://avatars.githubusercontent.com/u/622118?v=3",
+      "profile": "https://ericmccormick.io",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "SamVerschueren",
+      "name": "Sam Verschueren",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1913805?v=3",
+      "profile": "https://twitter.com/SamVerschueren",
+      "contributions": [
+        "review"
       ]
     }
   ]
