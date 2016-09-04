@@ -60,12 +60,9 @@ function loadAndRun(scriptsAndArgs, psConfig) {
       parallel: scriptsAndArgs.parallel,
       logLevel: program.logLevel,
     }),
-  }, result => {
-    if (result.error) {
-      log.error(result.error)
-      process.exit(FAIL_CODE)
-    }
-    process.exit(result.code)
+  }).catch(error => {
+    log.error(error)
+    process.exitCode = error.code || FAIL_CODE
   })
 }
 

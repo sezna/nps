@@ -1,7 +1,7 @@
-import spawn from 'spawn-command'
-import async from 'async'
+import spawn from 'spawn-command-with-kill'
+import Promise from 'bluebird'
 import colors from 'colors/safe'
-import {isString, find, clone} from 'lodash'
+import {isString, clone} from 'lodash'
 import {sync as findUpSync} from 'find-up'
 import managePath from 'manage-path'
 import arrify from 'arrify'
@@ -9,49 +9,117 @@ import getScriptToRun from './get-script-to-run'
 import getScriptsFromConfig from './get-scripts-from-config'
 import getLogger from './get-logger'
 
-const noop = () => {} // eslint-disable-line func-style, no-empty-function
+const NON_ERROR = 0
 
 export default runPackageScripts
 
-function runPackageScripts({scriptConfig, scripts, args, options = {}}, callback = noop) {
+function runPackageScripts({scriptConfig, scripts, args, options = {}}) {
   if (scripts.length === 0) {
     scripts = ['default']
   }
   const scriptNames = arrify(scripts)
-  const method = options.parallel ? 'map' : 'mapSeries'
-  async[method](scriptNames, (scriptName, cb) => {
-    const child = runPackageScript({scriptConfig, options, scriptName, args})
-    if (child.on) {
-      child.on('exit', exitCode => cb(null, exitCode))
-    } else {
-      cb(child)
+  if (options.parallel) {
+    return runParallel()
+  } else {
+    return runSeries()
+  }
+
+  function runSeries() {
+    return scriptNames.reduce((res, scriptName) => {
+      return res.then(() => (
+        runPackageScript({scriptConfig, options, scriptName, args})
+      ))
+    }, Promise.resolve())
+  }
+
+  function runParallel() {
+    const results = scriptNames.map(script => ({script, code: undefined}))
+    let aborted = false
+
+    const promises = scriptNames.map(scriptName => {
+      return runPackageScript({scriptConfig, options, scriptName, args})
+    })
+
+    const allPromise = Promise.all(promises.map((promise, index) => {
+      return promise.then(code => {
+        if (!aborted) {
+          results[index].code = code
+        }
+      })
+    })).then(() => results)
+
+    allPromise.catch(() => {
+      /* istanbul ignore if */
+      if (aborted) {
+        // this is very unlikely to happen
+      } else {
+        abortAll()
+      }
+    })
+
+    return allPromise
+
+    function abortAll() {
+      aborted = true
+      promises.forEach(p => p.abort())
     }
-  }, (err, results) => {
-    if (err) {
-      callback({error: err})
-    } else {
-      const NON_ERROR = 0
-      const result = find(results, r => r !== NON_ERROR)
-      callback({code: result})
-    }
-  })
+  }
 }
+
 
 function runPackageScript({scriptConfig, options, scriptName, args}) {
   const scripts = getScriptsFromConfig(scriptConfig, scriptName)
   const script = getScriptToRun(scripts, scriptName)
   if (!isString(script)) {
-    return {
+    return Promise.reject({
       message: colors.red(
         `Scripts must resolve to strings. There is no script that can be resolved from "${scriptName}"`
       ),
       ref: 'missing-script',
-    }
+    })
   }
   const command = [script, args].join(' ').trim()
   const log = getLogger(getLogLevel(options))
   log.info(colors.gray('p-s executing: ') + colors.green(command))
-  return spawn(command, {stdio: 'inherit', env: getEnv()})
+  let child
+  const promise = new Promise((resolve, reject) => {
+    child = spawn(command, {stdio: 'inherit', env: getEnv()})
+
+    child.on('error', error => {
+      child = null
+      reject({
+        message: colors.red(
+          `The script called "${scriptName}" which runs "${command}" emitted an error`
+        ),
+        ref: 'emitted-an-error',
+        error,
+      })
+    })
+
+    child.on('close', code => {
+      child = null
+      if (code === NON_ERROR) {
+        resolve(code)
+      } else {
+        reject({
+          message: colors.red(
+            `The script called "${scriptName}" which runs "${command}" failed with exit code ${code}`
+          ),
+          ref: 'failed-with-exit-code',
+          code,
+        })
+      }
+    })
+  })
+
+  promise.abort = function abort() {
+    if (child !== null) {
+      child.kill()
+      child = null
+    }
+  }
+
+  return promise
 }
 
 function getLogLevel({silent, logLevel}) {
