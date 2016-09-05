@@ -121,7 +121,7 @@ You can install this module globally also:
 npm install --global nps
 ```
 
-From here you can use `nps` on the command line via one of the installed aliases: `nps`, `npm-package-scripts`, or `nps`.
+From here you can use `nps` on the command line via `nps` or `npm-package-scripts`.
 If you do this, you may also be interested in installing the shell autocompletion script. Do so by running:
 
 ```
