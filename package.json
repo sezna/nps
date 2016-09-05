@@ -4,8 +4,8 @@
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
   "scripts": {
-    "start": "nps",
-    "test": "nps test",
+    "start": "npm run localstart",
+    "test": "npm run localstart test",
     "build": "rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js,fixtures src",
     "localstart": "npm run build && ./dist/bin/nps.js"
   },
