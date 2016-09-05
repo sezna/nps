@@ -10,7 +10,7 @@ proxyquire.noCallThru()
 test('getScriptsAndArgs: gets scripts', t => {
   const {scripts} = getScriptsAndArgs({
     args: ['boo'],
-    rawArgs: ['node', 'p-s', 'boo'],
+    rawArgs: ['node', 'nps', 'boo'],
   })
   t.deepEqual(scripts, ['boo'])
 })
@@ -18,7 +18,7 @@ test('getScriptsAndArgs: gets scripts', t => {
 test('getScriptsAndArgs: gets scripts in series', t => {
   const {scripts, args} = getScriptsAndArgs({
     args: ['boo,bar'],
-    rawArgs: ['node', 'p-s', 'boo,bar'],
+    rawArgs: ['node', 'nps', 'boo,bar'],
   })
   t.deepEqual(scripts, ['boo', 'bar'])
   t.deepEqual(args, '')
@@ -27,7 +27,7 @@ test('getScriptsAndArgs: gets scripts in series', t => {
 test('getScriptsAndArgs: gets parallel scripts', t => {
   const {scripts} = getScriptsAndArgs({
     parallel: 'boo,baz',
-    rawArgs: ['node', 'p-s', '-p', 'boo,baz'],
+    rawArgs: ['node', 'nps', '-p', 'boo,baz'],
   })
   t.deepEqual(scripts, ['boo', 'baz'])
 })
@@ -35,7 +35,7 @@ test('getScriptsAndArgs: gets parallel scripts', t => {
 test('getScriptsAndArgs: passes args to scripts', t => {
   const {args, scripts} = getScriptsAndArgs({
     args: ['boo'],
-    rawArgs: ['node', 'p-s', 'boo', '--watch', '--verbose'],
+    rawArgs: ['node', 'nps', 'boo', '--watch', '--verbose'],
   })
   t.deepEqual(scripts, ['boo'])
   t.is(args, '--watch --verbose')
@@ -44,7 +44,7 @@ test('getScriptsAndArgs: passes args to scripts', t => {
 test('getScriptsAndArgs: returns empty scripts and args if not parallel and no args', t => {
   const {args, scripts} = getScriptsAndArgs({
     args: [],
-    rawArgs: ['node', 'p-s'],
+    rawArgs: ['node', 'nps'],
   })
   t.is(scripts.length, 0)
   t.is(args, '')

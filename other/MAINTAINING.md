@@ -12,8 +12,8 @@ I'll add more here later, but here are the basic things:
 8. We use [opt-cli][opt-cli] to enable the git hooks (so new contributors don't have an extra barrier to contributing)
 9. We use several GitHub status checks and use branch protection to prevent automatic releases from breaking people. So you cannot force push to master and you must have one of the people in `MAINTAINERS` comment with `LGTM` to have pull requests merged ([more info][LGTM]).
 
-[travis]: https://travis-ci.org/kentcdodds/p-s
-[codecov]: https://codecov.io/github/kentcdodds/p-s
+[travis]: https://travis-ci.org/kentcdodds/nps
+[codecov]: https://codecov.io/github/kentcdodds/nps
 [semantic-release]: https://npmjs.com/package/semantic-release
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [ghooks]: https://www.npmjs.com/package/ghooks

@@ -1,4 +1,4 @@
-# package-scripts (aka p-s)
+# nps (aka npm-package-scripts)
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
 
@@ -18,11 +18,11 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 
 ## Quick Video Intro :tv:
 
-<a href="http://kcd.im/p-s-video" title="Simplify and empower npm scripts with p-s">
+<a href="http://kcd.im/p-s-video" title="Simplify and empower npm scripts with nps">
   <img src="other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
 </a>
 
-[Simplify and empower npm scripts with p-s][video] 11:19
+[Simplify and empower npm scripts with `nps`][video] 11:19
 
 ## The problem
 
@@ -32,19 +32,19 @@ which has fundamental issues (like no comments).
 
 ## This solution
 
-Put all of your scripts in a file called `package-scripts.js` and use `p-s` in a single `package.json` script:
+Put all of your scripts in a file called `npsfile.js` and use `nps` in a single `package.json` script:
 
 **package.json**
 
 ```json
 {
   "scripts": {
-    "start": "package-scripts"
+    "start": "npm-package-scripts"
   }
 }
 ```
 
-**package-scripts.js**
+**npsfile.js**
 
 ```javascript
 module.exports = {
@@ -62,7 +62,7 @@ module.exports = {
       default: 'webpack',
       prod: 'webpack -p',
     },
-    validate: 'p-s --parallel lint,test,build',
+    validate: 'nps --parallel lint,test,build',
   },
 }
 ```
@@ -101,8 +101,8 @@ and other cross-platform issues).
 
 **Note:** You don't have to use the `start` script if you don't want. If you're writing a node application, you're
 likely using this for starting your server. In that case, you can create a `default` script which will be run when
-`p-s` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever you
-wish. For example you could easily create a `p-s` script and do: `npm run p-s b`.
+`nps` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever you
+wish. For example you could easily create a `nps` script and do: `npm run nps b`.
 
 ## Installation
 
@@ -110,7 +110,7 @@ This module is distributed via [npm][npm] which is bundled with [node][node] and
 be installed as one of your project's `devDependencies`:
 
 ```
-npm install --save-dev p-s
+npm install --save-dev nps
 ```
 
 ### global installation
@@ -118,10 +118,10 @@ npm install --save-dev p-s
 You can install this module globally also:
 
 ```
-npm install --global p-s
+npm install --global nps
 ```
 
-From here you can use `p-s` on the command line via one of the installed aliases: `p-s`, `package-scripts`, or `nps`.
+From here you can use `nps` on the command line via one of the installed aliases: `nps`, `npm-package-scripts`, or `nps`.
 If you do this, you may also be interested in installing the shell autocompletion script. Do so by running:
 
 ```
@@ -136,32 +136,32 @@ The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for 
 If you're already using npm scripts, you can get up and going really quickly with the `init` command:
 
 ```
-./node_modules/.bin/p-s init
+./node_modules/.bin/nps init
 ```
 
-This will use your `package.json` `scripts` to generate a `package-scripts.js` file and update your `scripts` to
-utilize the `package-scripts` binary.
+This will use your `package.json` `scripts` to generate a `npsfile.js` file and update your `scripts` to
+utilize the `npm-package-scripts` binary.
 
 ## API
 
 ### CLI
 
-The CLI is fairly simple. It allows for a few options. The `p-s` binary is available in your `node_modules/.bin`
+The CLI is fairly simple. It allows for a few options. The `nps` binary is available in your `node_modules/.bin`
 directory when you install it locally in a project so you can use it in your `npm` scripts. We also expose a
-`package-scripts` alias binary so you can use that as well if you'd like the script to be [more clear][clarity].
+`npm-package-scripts` alias binary so you can use that as well if you'd like the script to be [more clear][clarity].
 
 ```console
-$ p-s --help
+$ nps --help
 
-  Usage: p-s [options]
+  Usage: nps [options]
 
   Options:
 
     -h, --help                                  output usage information
     -V, --version                               output the version number
-    -s, --silent                                Silent p-s output
+    -s, --silent                                Silent nps output
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
-    -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
+    -c, --config <filepath>                     Config file to use (defaults to nearest npsfile.js)
     -l, --log-level <level>                     The log level to use (error, warn, info [default])
     -r, --require <module>                      Module to preload
 
@@ -180,12 +180,12 @@ build.prod - The production webpack build - webpack -p
 
 If you have a `help` script, then your `help` script will be run. Otherwise, this will output the help.
 
-> Note: you can do this with `p-s --help`, but if you're using the `start` script in your `package.json` this allows you
+> Note: you can do this with `nps --help`, but if you're using the `start` script in your `package.json` this allows you
 > to run `npm start help` rather than `npm start -- --help`
 
 ##### init
 
-As indicated above, this will migrate your npm scripts to package-scripts.
+As indicated above, this will migrate your npm scripts to npm-package-scripts.
 
 ##### completion
 
@@ -193,11 +193,11 @@ Installs autocompletion functionality into your default bash or zsh configuratio
 providing a specific file:
 
 ```console
-p-s completion ~/.bashrc
+nps completion ~/.bashrc
 ```
 
 Note: you should probably only do this if you have the package installed globally. In that case you should probably also
-normally use the `nps` alias rather than `p-s` because it's easier to type.
+normally use the `nps` alias rather than `nps` because it's easier to type.
 
 #### CLI options
 
@@ -208,7 +208,7 @@ config).
 
 ##### -s, --silent
 
-By default, `p-s` will log out to the console before running the command. You can add `-s` to your command to silence
+By default, `nps` will log out to the console before running the command. You can add `-s` to your command to silence
 this.
 
 ##### -p, --parallel
@@ -224,11 +224,11 @@ npm start -p lint,build,cover && npm start check-coverage && npm start report-co
 Use a different config
 
 ```
-npm start -c ./other/package-scripts.js lint
+npm start -c ./other/npsfile.js lint
 ```
 
-Normally, `p-s` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
-have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `p-s` will
+Normally, `nps` will look for a `npsfile.js` file and load that to get the scripts. Generally you'll want to
+have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `nps` will
 use that file instead.
 
 
@@ -264,9 +264,9 @@ npm start cover,check-coverage
 
 That's all for the CLI.
 
-### package-scripts.js
+### npsfile.js
 
-`p-s` expects to your `package-scripts.js` file to `module.exports` an object with the following properties:
+`nps` expects to your `npsfile.js` file to `module.exports` an object with the following properties:
 
 #### scripts
 
@@ -286,7 +286,7 @@ module.exports = {
         // your scripts will be run with node_modules/.bin in the PATH, so you can use locally installed packages.
         // this is done in a cross-platform way, so your scripts will work on Mac and Windows :)
         // NOTE: if you need to set environment variables, I recommend you check out the cross-env package, which works
-        // gret with p-s
+        // great with nps
       },
       otherStuff: {
         // this one can be executed two different ways:
@@ -301,7 +301,7 @@ module.exports = {
     // 2. npm start kebab-case
     // 3. npm start kebabCase
     'kebab-case': 'echo "kebab-case"',
-    series: 'p-s simple,test,kebabCase', // runs these other scripts in series
+    series: 'nps simple,test,kebabCase', // runs these other scripts in series
   },
 }
 ```
@@ -314,22 +314,22 @@ nr s k # runs npm start kebab-case
 
 #### options
 
-This object is used to configure `p-s` with the following options:
+This object is used to configure `nps` with the following options:
 
 ##### silent
 
-Setting this to `true` will prevent `p-s` from outputting anything for your script (normally you'll get simple output
+Setting this to `true` will prevent `nps` from outputting anything for your script (normally you'll get simple output
 indicating the command that's being executed). This effectively sets the `logLevel` to `disable`.
 
 ##### logLevel
 
-This sets the logLevel of `p-s`.
+This sets the logLevel of `nps`.
 
 ## ENV variables
 
 ### LOG_LEVEL
 
-By setting `LOG_LEVEL` environment variable you can control the log level for `p-s`
+By setting `LOG_LEVEL` environment variable you can control the log level for `nps`
 
 ## Log level
 
@@ -356,7 +356,7 @@ the `test` script and then type even less: `npm t build`, but thats just... odd.
 
 Note, often servers are configured to run `npm start` by default to start the server.
 To allow for this case, you can provide a `default` script at the root of your scripts
-which will be run when `p-s` is run without any arguments. Effectively this will
+which will be run when `nps` is run without any arguments. Effectively this will
 allow you to have a script run when `npm start` is executed.
 
 ## Inspiration
@@ -371,23 +371,23 @@ benefits of npm scripts I wanted to keep).
 
 ## In the wild
 
-- [react-component-template](https://github.com/nkbt/react-component-template) uses `p-s` to implement shareable npm scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them.
+- [react-component-template](https://github.com/nkbt/react-component-template) uses `nps` to implement shareable npm scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them.
 
   GOTCHAS:
     - use `process.cwd()` as the base for all paths
 
-- [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob patterns.
+- [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `nps` to automate benchmark running and reporting in node and the browser.  `npsfile.js` enables us to keep our scripts DRY.  Combined with [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob patterns.
 
-- [SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers) is an [electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s` to dynamically find the current platform and execute the dev environment. Now we don't have to manually update the `package.json` scripts when you are on a different platform!
+- [SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers) is an [electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `nps` to dynamically find the current platform and execute the dev environment. Now we don't have to manually update the `package.json` scripts when you are on a different platform!
 
 ## Contributors
 
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) 🚇 💡 📹 👀 | [<img src="https://avatars.githubusercontent.com/u/532272?v=3" width="100px;"/><br /><sub>David Wells</sub>](http://davidwells.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=DavidWells) | [<img src="https://avatars.githubusercontent.com/u/802242?v=3" width="100px;"/><br /><sub>Abhishek Shende</sub>](https://twitter.com/abhishekisnot)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=abhishekisnot) [⚠️](https://github.com/kentcdodds/p-s/commits?author=abhishekisnot) | [<img src="https://avatars.githubusercontent.com/u/185649?v=3" width="100px;"/><br /><sub>Rowan Oulton</sub>](http://travelog.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) [📖](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) [⚠️](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) | [<img src="https://avatars.githubusercontent.com/u/1915716?v=3" width="100px;"/><br /><sub>Gilad Goldberg</sub>](https://github.com/giladgo)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=giladgo) | [<img src="https://avatars.githubusercontent.com/u/14267457?v=3" width="100px;"/><br /><sub>Tim McGee</sub>](https://github.com/tim-mcgee)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=tim-mcgee) [📖](https://github.com/kentcdodds/p-s/commits?author=tim-mcgee) | [<img src="https://avatars.githubusercontent.com/u/175264?v=3" width="100px;"/><br /><sub>Nik Butenko</sub>](http://butenko.me)<br />💡 [💻](https://github.com/kentcdodds/p-s/commits?author=nkbt) |
+| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/nps/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/nps/commits?author=kentcdodds) 🚇 💡 📹 👀 | [<img src="https://avatars.githubusercontent.com/u/532272?v=3" width="100px;"/><br /><sub>David Wells</sub>](http://davidwells.io)<br />[💻](https://github.com/kentcdodds/nps/commits?author=DavidWells) | [<img src="https://avatars.githubusercontent.com/u/802242?v=3" width="100px;"/><br /><sub>Abhishek Shende</sub>](https://twitter.com/abhishekisnot)<br />[💻](https://github.com/kentcdodds/nps/commits?author=abhishekisnot) [⚠️](https://github.com/kentcdodds/nps/commits?author=abhishekisnot) | [<img src="https://avatars.githubusercontent.com/u/185649?v=3" width="100px;"/><br /><sub>Rowan Oulton</sub>](http://travelog.io)<br />[💻](https://github.com/kentcdodds/nps/commits?author=rowanoulton) [📖](https://github.com/kentcdodds/nps/commits?author=rowanoulton) [⚠️](https://github.com/kentcdodds/nps/commits?author=rowanoulton) | [<img src="https://avatars.githubusercontent.com/u/1915716?v=3" width="100px;"/><br /><sub>Gilad Goldberg</sub>](https://github.com/giladgo)<br />[💻](https://github.com/kentcdodds/nps/commits?author=giladgo) | [<img src="https://avatars.githubusercontent.com/u/14267457?v=3" width="100px;"/><br /><sub>Tim McGee</sub>](https://github.com/tim-mcgee)<br />[💻](https://github.com/kentcdodds/nps/commits?author=tim-mcgee) [📖](https://github.com/kentcdodds/nps/commits?author=tim-mcgee) | [<img src="https://avatars.githubusercontent.com/u/175264?v=3" width="100px;"/><br /><sub>Nik Butenko</sub>](http://butenko.me)<br />💡 [💻](https://github.com/kentcdodds/nps/commits?author=nkbt) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/p-s/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/p-s/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/p-s/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
+| [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/nps/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/nps/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/nps/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/nps/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/nps/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -399,37 +399,37 @@ MIT
 
 [scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
-[roadmap]: https://github.com/kentcdodds/p-s/blob/master/other/ROADMAP.md
-[examples]: https://github.com/kentcdodds/p-s/blob/master/other/EXAMPLES.md
+[roadmap]: https://github.com/kentcdodds/nps/blob/master/other/ROADMAP.md
+[examples]: https://github.com/kentcdodds/nps/blob/master/other/EXAMPLES.md
 [quick-run]: https://npmjs.com/package/npm-quick-run
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/kentcdodds/p-s/master.svg?style=flat-square
-[build]: https://travis-ci.org/kentcdodds/p-s
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/p-s.svg?style=flat-square
-[coverage]: https://codecov.io/github/kentcdodds/p-s
-[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/p-s/badge?style=flat-square
-[dependencyci]: https://dependencyci.com/github/kentcdodds/p-s
-[version-badge]: https://img.shields.io/npm/v/p-s.svg?style=flat-square
-[package]: https://www.npmjs.com/package/p-s
-[downloads-badge]: https://img.shields.io/npm/dm/p-s.svg?style=flat-square
-[npm-stat]: http://npm-stat.com/charts.html?package=p-s&from=2016-04-01
-[license-badge]: https://img.shields.io/npm/l/p-s.svg?style=flat-square
-[license]: https://github.com/kentcdodds/p-s/blob/master/LICENSE
+[build-badge]: https://img.shields.io/travis/kentcdodds/nps/master.svg?style=flat-square
+[build]: https://travis-ci.org/kentcdodds/nps
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/nps.svg?style=flat-square
+[coverage]: https://codecov.io/github/kentcdodds/nps
+[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/nps/badge?style=flat-square
+[dependencyci]: https://dependencyci.com/github/kentcdodds/nps
+[version-badge]: https://img.shields.io/npm/v/nps.svg?style=flat-square
+[package]: https://www.npmjs.com/package/nps
+[downloads-badge]: https://img.shields.io/npm/dm/nps.svg?style=flat-square
+[npm-stat]: http://npm-stat.com/charts.html?package=nps&from=2016-04-01
+[license-badge]: https://img.shields.io/npm/l/nps.svg?style=flat-square
+[license]: https://github.com/kentcdodds/nps/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
 [donate-badge]: https://img.shields.io/badge/%EF%BC%84-support-green.svg?style=flat-square
 [donate]: http://kcd.im/donate
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/p-s/blob/master/other/CODE_OF_CONDUCT.md
+[coc]: https://github.com/kentcdodds/nps/blob/master/other/CODE_OF_CONDUCT.md
 [roadmap-badge]: https://img.shields.io/badge/%F0%9F%93%94-roadmap-CD9523.svg?style=flat-square
 [examples-badge]: https://img.shields.io/badge/%F0%9F%92%A1-examples-8C8E93.svg?style=flat-square
 [tweet]: https://twitter.com/sindresorhus/status/724259780676575232
 [sindre]: https://github.com/sindresorhus
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[clarity]: https://github.com/kentcdodds/p-s/issues/1
+[clarity]: https://github.com/kentcdodds/nps/issues/1
 [scripty]: https://npmjs.com/package/scripty
 [npm scripts]: https://docs.npmjs.com/misc/scripts
-[video]: http://kcd.im/p-s-video
+[video]: http://kcd.im/nps-video
 [omelette]: https://npmjs.com/package/omelette

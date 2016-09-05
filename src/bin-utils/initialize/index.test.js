@@ -5,9 +5,9 @@ import proxyquire from 'proxyquire'
 import {spy} from 'sinon'
 
 test('normal case initialize', t => {
-  const packageScriptsDestination = resolve('./fixtures/package-scripts.js')
+  const packageScriptsDestination = resolve('./fixtures/npsfile.js')
   const packageJsonDestination = resolve('./fixtures/_package.json')
-  const expectedPackageScripts = readFileSync(resolve('./fixtures/_package-scripts.js'), 'utf-8')
+  const expectedPackageScripts = readFileSync(resolve('./fixtures/_npsfile.js'), 'utf-8')
   const writeFileSync = spy()
   const findUpSync = spy(file => {
     if (file === 'package.json') {
@@ -31,8 +31,8 @@ test('normal case initialize', t => {
   t.is(packageScriptsStringResult, expectedPackageScripts)
   t.is(packageJsonDestinationReuslt, packageJsonDestination)
   t.deepEqual(packageJsonScripts, {
-    start: 'package-scripts',
-    test: 'package-scripts test',
+    start: 'npm-package-scripts',
+    test: 'npm-package-scripts test',
   })
 })
 
@@ -55,6 +55,6 @@ test('initialize without a test script should not add a test to the package.json
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
   t.deepEqual(packageJsonScripts, {
-    start: 'package-scripts',
+    start: 'npm-package-scripts',
   })
 })

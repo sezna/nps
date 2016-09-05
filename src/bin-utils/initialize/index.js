@@ -7,13 +7,13 @@ export default initialize
 
 function initialize() {
   const packageJsonPath = findUpSync('package.json')
-  const packageScriptsPath = resolve(dirname(packageJsonPath), './package-scripts.js')
+  const packageScriptsPath = resolve(dirname(packageJsonPath), './npsfile.js')
   const packageJson = require(packageJsonPath) // eslint-disable-line global-require
   const {scripts} = packageJson
   const fileContents = generatePackageScriptsFileContents(scripts)
   packageJson.scripts = {
-    start: 'package-scripts',
-    test: scripts.test ? 'package-scripts test' : undefined,
+    start: 'npm-package-scripts',
+    test: scripts.test ? 'npm-package-scripts test' : undefined,
   }
   writeFileSync(packageScriptsPath, fileContents)
   writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))

@@ -21,9 +21,9 @@ const shouldAutocomplete = includes(process.argv, '--compbash')
 program
   .version(version)
   .allowUnknownOption()
-  .option('-s, --silent', 'Silent p-s output')
+  .option('-s, --silent', 'Silent nps output')
   .option('-p, --parallel <script-name1,script-name2>', 'Scripts to run in parallel (comma seprated)')
-  .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.js)')
+  .option('-c, --config <filepath>', 'Config file to use (defaults to nearest npsfile.js)')
   .option('-l, --log-level <level>', 'The log level to use (error, warn, info [default])')
   .option('-r, --require <module>', 'Module to preload')
   .on('init', onInit)
@@ -70,7 +70,7 @@ function getPSConfig() {
   if (program.require) {
     preloadModule(program.require)
   }
-  const configFilepath = program.config || findUp.sync('package-scripts.js')
+  const configFilepath = program.config || findUp.sync('npsfile.js')
   if (!configFilepath) {
     log.warn(colors.yellow('Unable to find a config file and none was specified.'))
     return {scripts: {}} // empty config
@@ -92,7 +92,7 @@ function onInit() {
   log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start help` for help'))
   log.info(colors.gray(
     'You may also want to install the package globally and installing autocomplete script. You can do so by running\n' +
-    '  npm install --global p-s\n' +
+    '  npm install --global nps\n' +
     '  nps completion <optionally-your-bash-profile-file>\n' +
     'The bash profile file defaults to ~/.bash_profile for bash and ~/.zshrc for zsh'
   ))
@@ -107,9 +107,9 @@ function onRequestToInstallCompletion() {
   shouldRun = false
   const [,,, destination] = process.argv
   if (destination) {
-    log.info(`Installing p-s autocomplete into ${destination}`)
+    log.info(`Installing nps autocomplete into ${destination}`)
   } else {
-    log.info('Installing p-s autocomplete into the default for your current terminal')
+    log.info('Installing nps autocomplete into the default for your current terminal')
   }
   log.info(
     `You're going to need to either resource that file, or open a new instance of ` +

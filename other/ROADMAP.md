@@ -1,8 +1,8 @@
-# p-s roadmap
+# nps roadmap
 
 ## Want to do
 
-- Check [the issues](https://github.com/kentcdodds/p-s/issues)
+- Check [the issues](https://github.com/kentcdodds/nps/issues)
 
 ## Might do
 
