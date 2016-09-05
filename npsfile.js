@@ -1,6 +1,7 @@
 /* eslint prefer-template:"off", no-var:"off", max-len:[2, 200] */ // this file runs in node 0.10.0
 var transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
 var cleanDist = 'rimraf dist'
+var nps = './dist/bin/nps.js'
 
 var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
 var validate = ['build', 'test']
@@ -47,7 +48,7 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: 'p-s -p ' + validate.join(','),
+      script: nps + ' -p ' + validate.join(','),
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',

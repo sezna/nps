@@ -1,17 +1,17 @@
 {
-  "name": "p-s",
+  "name": "npm-package-scripts",
   "version": "0.0.0-semantically-released",
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
   "scripts": {
-    "start": "p-s",
-    "test": "p-s test",
-    "localstart": "npm start build && ./dist/bin/p-s.js"
+    "start": "npm run localstart",
+    "test": "npm run localstart test",
+    "build": "rimraf dist && babel --copy-files --out-dir dist --ignore *.test.js,fixtures src",
+    "localstart": "npm run build && ./dist/bin/nps.js"
   },
   "bin": {
-    "p-s": "./dist/bin/p-s.js",
-    "package-scripts": "./dist/bin/p-s.js",
-    "nps": "./dist/bin/p-s.js"
+    "nps": "./dist/bin/nps.js",
+    "npm-package-scripts": "./dist/bin/nps.js"
   },
   "files": [
     "dist"
@@ -52,7 +52,6 @@
     "ghooks": "1.3.2",
     "nyc": "7.1.0",
     "opt-cli": "1.5.1",
-    "p-s": "*",
     "proxyquire": "1.7.10",
     "rimraf": "2.5.4",
     "semantic-release": "4.3.5",
@@ -105,10 +104,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kentcdodds/p-s.git"
+    "url": "https://github.com/kentcdodds/nps.git"
   },
   "bugs": {
-    "url": "https://github.com/kentcdodds/p-s/issues"
+    "url": "https://github.com/kentcdodds/nps/issues"
   },
-  "homepage": "https://github.com/kentcdodds/p-s#readme"
+  "homepage": "https://github.com/kentcdodds/nps#readme"
 }
