@@ -279,6 +279,11 @@ module.exports = {
     default: 'echo "This runs on `npm start`"', // npm start
     // you can assign a script property to a string
     simple: 'echo "this is easy"', // npm start simple
+    // you can specify whether some scripts should be excluded from the help list
+    hidden: {
+      script: 'debugging script',
+      hiddenFromHelp: true,
+    }
     test: {
       default: {
         script: 'ava', // npm start test
