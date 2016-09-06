@@ -10,7 +10,7 @@ test('returns undefined if a script is marked as hiddenFromHelp', t => {
 test('returns the script if hiddenFromHelp is false', t => {
   const lintCommand = 'eslint .'
   const result = resolveScriptObjectToString({script: lintCommand, hiddenFromHelp: false})
-  t.is(result, undefined)
+  t.is(result, lintCommand)
 })
 
 test('returns undefined if a script cannot be resolved to a string', t => {

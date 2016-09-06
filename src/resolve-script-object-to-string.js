@@ -20,7 +20,7 @@ function resolveScriptObjectToScript(script) {
 }
 
 function resolvePlainObjectToScript(script) {
-  if (!isUndefined(script.hiddenFromHelp)) {
+  if (script.hiddenFromHelp) {
     return undefined
   }
   if (!isUndefined(script.script)) {
