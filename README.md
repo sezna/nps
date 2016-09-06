@@ -283,7 +283,7 @@ module.exports = {
     hidden: {
       script: 'debugging script',
       hiddenFromHelp: true,
-    }
+    },
     test: {
       default: {
         script: 'ava', // npm start test
