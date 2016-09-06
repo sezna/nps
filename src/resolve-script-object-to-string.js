@@ -12,13 +12,22 @@ function resolveScriptObjectToString(script) {
 
 function resolveScriptObjectToScript(script) {
   if (isPlainObject(script)) {
-    if (!isUndefined(script.script)) {
-      return script
-    } else if (!isUndefined(script.default)) {
-      return resolveScriptObjectToScript(script.default)
-    }
+    return resolvePlainObjectToScript(script)
   } else if (isString(script)) {
     return {script}
+  }
+  return undefined
+}
+
+function resolvePlainObjectToScript(script) {
+  if (!isUndefined(script.hiddenFromHelp)) {
+    return undefined
+  }
+  if (!isUndefined(script.script)) {
+    return script
+  }
+  if (!isUndefined(script.default)) {
+    return resolveScriptObjectToScript(script.default)
   }
   return undefined
 }
