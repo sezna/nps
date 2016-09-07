@@ -1,21 +1,20 @@
 import {spy} from 'sinon'
-import test from 'ava'
 import getScriptsFromConfig from './get-scripts-from-config'
 
-test('returns empty object by default', t => {
-  t.deepEqual(getScriptsFromConfig(), {})
+test('returns empty object by default', () => {
+  expect(getScriptsFromConfig()).toEqual({})
 })
 
-test('passes input to the scripts if it is a function', t => {
+test('passes input to the scripts if it is a function', () => {
   const input = 'hello'
   const scripts = spy()
   getScriptsFromConfig(scripts, input)
-  t.true(scripts.calledOnce)
+  expect(scripts.calledOnce)
   const [firstArg] = scripts.firstCall.args
-  t.is(firstArg, input)
+  expect(firstArg).toBe(input)
 })
 
-test('just uses the scripts object if it is an object', t => {
+test('just uses the scripts object if it is an object', () => {
   const scripts = {boo: 'bar'}
-  t.is(getScriptsFromConfig(scripts), scripts)
+  expect(getScriptsFromConfig(scripts)).toBe(scripts)
 })

@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nps",
     "test": "nps test",
-    "localstart": "npm start build && ./dist/bin/nps.js"
+    "localstart": "npm start build && ./dist/bin/nps.js",
+    "commitmsg": "opt --in commit-msg --exec \"validate-commit-msg\"",
+    "precommit": "opt --in pre-commit --exec \"npm start validate\""
   },
   "bin": {
     "nps": "./dist/bin/nps.js",
@@ -33,10 +35,9 @@
   },
   "devDependencies": {
     "all-contributors-cli": "3.0.6",
-    "ava": "0.15.2",
     "babel-cli": "6.11.4",
     "babel-eslint": "6.1.2",
-    "babel-plugin-istanbul": "1.0.3",
+    "babel-jest": "15.0.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-stage-2": "6.11.0",
     "babel-register": "6.11.5",
@@ -46,13 +47,12 @@
     "condition-node-version": "1.3.0",
     "cross-env": "2.0.0",
     "cz-conventional-changelog": "1.1.6",
-    "eslint": "3.1.1",
-    "eslint-config-kentcdodds": "8.1.3",
-    "ghooks": "1.3.2",
-    "nyc": "7.1.0",
+    "eslint": "3.4.0",
+    "eslint-config-kentcdodds": "10.1.0",
+    "husky": "0.11.7",
+    "jest-cli": "15.1.1",
     "opt-cli": "1.5.1",
     "p-s": "*",
-    "proxyquire": "1.7.10",
     "rimraf": "2.5.4",
     "semantic-release": "4.3.5",
     "sinon": "1.17.4",
@@ -61,30 +61,7 @@
   "eslintConfig": {
     "extends": [
       "kentcdodds",
-      "kentcdodds/ava"
-    ]
-  },
-  "ava": {
-    "require": [
-      "babel-register"
-    ]
-  },
-  "nyc": {
-    "all": true,
-    "sourceMap": false,
-    "instrument": false,
-    "check-coverage": true,
-    "branches": 100,
-    "functions": 100,
-    "lines": 100,
-    "statements": 100,
-    "reporter": [
-      "lcov",
-      "text",
-      "html"
-    ],
-    "include": [
-      "src/**/*.js"
+      "kentcdodds/jest"
     ]
   },
   "release": {
@@ -94,10 +71,6 @@
     }
   },
   "config": {
-    "ghooks": {
-      "commit-msg": "opt --in commit-msg --exec \"validate-commit-msg\"",
-      "pre-commit": "opt --in pre-commit --exec \"npm start validate\""
-    },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }

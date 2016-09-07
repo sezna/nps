@@ -1,4 +1,3 @@
-import test from 'ava'
 import kebabAndCamelCasify from './kebab-and-camel-casify'
 
 testUnchanged({boo: 'baz'})
@@ -33,7 +32,7 @@ function testUnchanged(input, message = 'no change needed') {
 }
 
 function testScenario(input, output, message) {
-  const fn = t => t.deepEqual(kebabAndCamelCasify(input), output) // eslint-disable-line func-style
+  const fn = () => expect(kebabAndCamelCasify(input)).toEqual(output) // eslint-disable-line func-style
   if (message) {
     test(message, fn)
   } else {

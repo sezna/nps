@@ -1,50 +1,49 @@
-import test from 'ava'
 import resolveScriptObjectToString from './resolve-script-object-to-string'
 
-test('returns undefined if a script is marked as hiddenFromHelp', t => {
+test('returns undefined if a script is marked as hiddenFromHelp', () => {
   const lintCommand = 'eslint .'
   const result = resolveScriptObjectToString({script: lintCommand, hiddenFromHelp: true})
-  t.is(result, undefined)
+  expect(result).toBe(undefined)
 })
 
-test('returns the script if hiddenFromHelp is false', t => {
+test('returns the script if hiddenFromHelp is false', () => {
   const lintCommand = 'eslint .'
   const result = resolveScriptObjectToString({script: lintCommand, hiddenFromHelp: false})
-  t.is(result, lintCommand)
+  expect(result).toBe(lintCommand)
 })
 
-test('returns undefined if a script cannot be resolved to a string', t => {
+test('returns undefined if a script cannot be resolved to a string', () => {
   const result = resolveScriptObjectToString(42)
-  t.is(result, undefined)
+  expect(result).toBe(undefined)
 })
 
-test('returns the string if given a string', t => {
-  t.is('hello', resolveScriptObjectToString('hello'))
+test('returns the string if given a string', () => {
+  expect('hello').toBe(resolveScriptObjectToString('hello'))
 })
 
-test('script can be an object', t => {
+test('script can be an object', () => {
   const lintCommand = 'eslint .'
   const command = resolveScriptObjectToString({script: lintCommand})
-  t.is(command, lintCommand)
+  expect(command).toBe(lintCommand)
 })
 
-test('get the default from the script object', t => {
+test('get the default from the script object', () => {
   const buildCommand = 'webpack'
   const command = resolveScriptObjectToString({default: {script: buildCommand}})
-  t.is(command, buildCommand)
+  expect(command).toBe(buildCommand)
 })
 
-test('returns undefined if the object with default cannot be resolved to a string', t => {
+test('returns undefined if the object with default cannot be resolved to a string', () => {
   const result = resolveScriptObjectToString({default: {blah: 'stuff'}})
-  t.is(result, undefined)
+  expect(result).toBe(undefined)
 })
 
-test('resolves default to the script if it is a string', t => {
+test('resolves default to the script if it is a string', () => {
   const result = resolveScriptObjectToString({default: 'string'})
-  t.is(result, 'string')
+  expect(result).toBe('string')
 })
 
-test('does not resolve a script object without a script or default', t => {
+test('does not resolve a script object without a script or default', () => {
   const result = resolveScriptObjectToString({foo: 'bar'})
-  t.is(result, undefined)
+  expect(result).toBe(undefined)
 })

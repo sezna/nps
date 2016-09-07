@@ -1,60 +1,59 @@
+/* eslint global-require:0 */
 import {resolve} from 'path'
 import {readFileSync} from 'fs'
-import test from 'ava'
-import proxyquire from 'proxyquire'
 import {spy} from 'sinon'
 
-test('normal case initialize', t => {
-  const packageScriptsDestination = resolve('./fixtures/package-scripts.js')
-  const packageJsonDestination = resolve('./fixtures/_package.json')
-  const expectedPackageScripts = readFileSync(resolve('./fixtures/_package-scripts.js'), 'utf-8')
-  const writeFileSync = spy()
-  const findUpSync = spy(file => {
+test('normal case initialize', () => {
+  const packageScriptsDestination = resolve('./src/bin-utils/initialize/fixtures/package-scripts.js')
+  const packageJsonDestination = resolve('./src/bin-utils/initialize/fixtures/_package.json')
+  const expectedPackageScripts = readFileSync(resolve('./src/bin-utils/initialize/fixtures/_package-scripts.js'), 'utf-8')
+  const mockWriteFileSync = spy()
+  const mockFindUpSync = spy(file => {
     if (file === 'package.json') {
       return packageJsonDestination
     }
     throw new Error('Should not look for anything but package.json')
   })
-  const initialize = proxyquire('./index', {
-    'find-up': {sync: findUpSync},
-    fs: {writeFileSync},
-  }).default
+  jest.resetModules()
+  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
+  const initialize = require('./index').default
 
   initialize()
 
-  const [packageScriptsDestinationResult, packageScriptsStringResult] = writeFileSync.firstCall.args
-  const [packageJsonDestinationReuslt, packageJsonStringResult] = writeFileSync.secondCall.args
+  const [packageScriptsDestinationResult, packageScriptsStringResult] = mockWriteFileSync.firstCall.args
+  const [packageJsonDestinationReuslt, packageJsonStringResult] = mockWriteFileSync.secondCall.args
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
-  t.true(writeFileSync.calledTwice)
-  t.is(packageScriptsDestinationResult, packageScriptsDestination)
-  t.is(packageScriptsStringResult, expectedPackageScripts)
-  t.is(packageJsonDestinationReuslt, packageJsonDestination)
-  t.deepEqual(packageJsonScripts, {
+  expect(mockWriteFileSync.calledTwice)
+  expect(packageScriptsDestinationResult).toBe(packageScriptsDestination)
+  expect(packageScriptsStringResult).toBe(expectedPackageScripts)
+  expect(packageJsonDestinationReuslt).toBe(packageJsonDestination)
+  expect(packageJsonScripts).toEqual({
     start: 'nps',
     test: 'nps test',
   })
 })
 
-test('initialize without a test script should not add a test to the package.json', t => {
-  const packageJsonDestination = resolve('./fixtures/_package-no-test.json')
-  const writeFileSync = spy()
-  const findUpSync = spy(file => {
+test('initialize without a test script should not add a test to the package.json', () => {
+  const packageJsonDestination = resolve('./src/bin-utils/initialize/fixtures/_package-no-test.json')
+  const mockWriteFileSync = spy()
+  const mockFindUpSync = spy(file => {
     if (file === 'package.json') {
       return packageJsonDestination
     }
     throw new Error('Should not look for anything but package.json')
   })
-  const initialize = proxyquire('./index', {
-    'find-up': {sync: findUpSync},
-    fs: {writeFileSync},
-  }).default
+  jest.resetModules()
+  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
+  const initialize = require('./index').default
 
   initialize()
-  const [, packageJsonStringResult] = writeFileSync.secondCall.args
+  const [, packageJsonStringResult] = mockWriteFileSync.secondCall.args
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
-  t.deepEqual(packageJsonScripts, {
+  expect(packageJsonScripts).toEqual({
     start: 'nps',
   })
 })

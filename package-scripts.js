@@ -3,7 +3,7 @@ var transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures s
 var cleanDist = 'rimraf dist'
 
 var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
-var validate = ['build', 'test']
+var validate = ['build.andValidate', 'test']
 if (nodeVersion >= 4) {
   validate.push('lint') // we can't run linting on node versions < 4
 }
@@ -15,13 +15,11 @@ module.exports = {
       script: 'git-cz',
     },
     test: {
-      default: {
-        description: 'Run all test files in the src directory',
-        script: 'cross-env NODE_ENV=test nyc ava',
-      },
-      watch: {
-        description: 'Use AVA\'s watch mode. Good for TDD (adds a require to babel-register because nyc does it for us normally)',
-        script: 'ava -r babel-register -w',
+      default: 'jest src/ --coverage',
+      watch: 'jest src/ --watch',
+      cli: {
+        default: 'jest cli-test/',
+        watch: 'jest cli-test/ --watch',
       },
     },
     build: {
@@ -31,6 +29,10 @@ module.exports = {
       },
       watch: {
         script: [cleanDist, transpile + ' --watch'].join('&&'),
+      },
+      andValidate: {
+        description: 'Runs the normal build first, then validates the CLI',
+        script: 'nps build,test.cli',
       },
     },
     lint: {
