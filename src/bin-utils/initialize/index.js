@@ -12,8 +12,8 @@ function initialize() {
   const {scripts} = packageJson
   const fileContents = generatePackageScriptsFileContents(scripts)
   packageJson.scripts = {
-    start: 'package-scripts',
-    test: scripts.test ? 'package-scripts test' : undefined,
+    start: 'p-s',
+    test: scripts.test ? 'p-s test' : undefined,
   }
   writeFileSync(packageScriptsPath, fileContents)
   writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))

@@ -31,8 +31,8 @@ test('normal case initialize', t => {
   t.is(packageScriptsStringResult, expectedPackageScripts)
   t.is(packageJsonDestinationReuslt, packageJsonDestination)
   t.deepEqual(packageJsonScripts, {
-    start: 'package-scripts',
-    test: 'package-scripts test',
+    start: 'p-s',
+    test: 'p-s test',
   })
 })
 
@@ -55,6 +55,6 @@ test('initialize without a test script should not add a test to the package.json
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
   t.deepEqual(packageJsonScripts, {
-    start: 'package-scripts',
+    start: 'p-s',
   })
 })

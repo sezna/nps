@@ -39,7 +39,7 @@ Put all of your scripts in a file called `package-scripts.js` and use `p-s` in a
 ```json
 {
   "scripts": {
-    "start": "package-scripts"
+    "start": "p-s"
   }
 }
 ```
@@ -121,7 +121,7 @@ You can install this module globally also:
 npm install --global p-s
 ```
 
-From here you can use `p-s` on the command line via one of the installed aliases: `p-s`, `package-scripts`, or `nps`.
+From here you can use `p-s` on the command line via one of the installed aliases: `p-s` or `nps`.
 If you do this, you may also be interested in installing the shell autocompletion script. Do so by running:
 
 ```
@@ -140,7 +140,7 @@ If you're already using npm scripts, you can get up and going really quickly wit
 ```
 
 This will use your `package.json` `scripts` to generate a `package-scripts.js` file and update your `scripts` to
-utilize the `package-scripts` binary.
+utilize the `p-s` binary.
 
 ## API
 
@@ -148,7 +148,7 @@ utilize the `package-scripts` binary.
 
 The CLI is fairly simple. It allows for a few options. The `p-s` binary is available in your `node_modules/.bin`
 directory when you install it locally in a project so you can use it in your `npm` scripts. We also expose a
-`package-scripts` alias binary so you can use that as well if you'd like the script to be [more clear][clarity].
+`nps` alias binary so you can use that as well if you find `p-s` cumbersome to type.
 
 ```console
 $ p-s --help
