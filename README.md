@@ -34,6 +34,10 @@ which has fundamental issues (like no comments).
 
 Put all of your scripts in a file called `package-scripts.js` and use `nps` in a single `package.json` script:
 
+Note: We used `nps` even though the package we just installed is named `p-s`. This is because internally we use `nps`
+as on some keyboard layouts it's easier to type. However, for consistency and convenience, we also expose a `p-s`
+binary.
+
 **package.json**
 
 ```json
@@ -128,10 +132,6 @@ If you do this, you may also be interested in installing the shell autocompletio
 ```
 nps completion <optionally-your-bash-profile-file>
 ```
-
-Note: We used `nps` even though the package we just installed is named `p-s`. This is because internally we use `nps`
-as on some keyboard layouts it's easier to type. However, for consistency and convenience, we also expose a `p-s`
-binary.
 
 The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for zsh. Special thanks to the
 [`omelette`][omelette] package for making this so easy.
