@@ -80,7 +80,7 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
   }
   const command = [script, args].join(' ').trim()
   const log = getLogger(getLogLevel(options))
-  log.info(colors.gray('p-s executing: ') + colors.green(command))
+  log.info(colors.gray('nps executing: ') + colors.green(command))
   let child
   const promise = new Promise((resolve, reject) => {
     child = spawn(command, {stdio: 'inherit', env: getEnv()})

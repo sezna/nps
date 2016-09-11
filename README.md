@@ -32,14 +32,14 @@ which has fundamental issues (like no comments).
 
 ## This solution
 
-Put all of your scripts in a file called `package-scripts.js` and use `p-s` in a single `package.json` script:
+Put all of your scripts in a file called `package-scripts.js` and use `nps` in a single `package.json` script:
 
 **package.json**
 
 ```json
 {
   "scripts": {
-    "start": "p-s"
+    "start": "nps"
   }
 }
 ```
@@ -62,7 +62,7 @@ module.exports = {
       default: 'webpack',
       prod: 'webpack -p',
     },
-    validate: 'p-s --parallel lint,test,build',
+    validate: 'nps --parallel lint,test,build',
   },
 }
 ```
@@ -101,8 +101,8 @@ and other cross-platform issues).
 
 **Note:** You don't have to use the `start` script if you don't want. If you're writing a node application, you're
 likely using this for starting your server. In that case, you can create a `default` script which will be run when
-`p-s` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever you
-wish. For example you could easily create a `p-s` script and do: `npm run p-s b`.
+`nps` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever you
+wish. For example you could easily create a `nps` script and do: `npm run nps b`.
 
 ## Installation
 
@@ -121,12 +121,17 @@ You can install this module globally also:
 npm install --global p-s
 ```
 
-From here you can use `p-s` on the command line via one of the installed aliases: `p-s` or `nps`.
+From here you can use `p-s` on the command line via one of the installed aliases: `nps` or `p-s`.
+
 If you do this, you may also be interested in installing the shell autocompletion script. Do so by running:
 
 ```
 nps completion <optionally-your-bash-profile-file>
 ```
+
+Note: We used `nps` even though the package we just installed is named `p-s`. This is because internally we use `nps`
+as on some keyboard layouts it's easier to type. However, for consistency and convenience, we also expose a `p-s`
+binary.
 
 The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for zsh. Special thanks to the
 [`omelette`][omelette] package for making this so easy.
@@ -136,30 +141,29 @@ The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for 
 If you're already using npm scripts, you can get up and going really quickly with the `init` command:
 
 ```
-./node_modules/.bin/p-s init
+./node_modules/.bin/nps init
 ```
 
 This will use your `package.json` `scripts` to generate a `package-scripts.js` file and update your `scripts` to
-utilize the `p-s` binary.
+utilize the `nps` binary.
 
 ## API
 
 ### CLI
 
-The CLI is fairly simple. It allows for a few options. The `p-s` binary is available in your `node_modules/.bin`
-directory when you install it locally in a project so you can use it in your `npm` scripts. We also expose a
-`nps` alias binary so you can use that as well if you find `p-s` cumbersome to type.
+The CLI is fairly simple. It allows for a few options. The `nps` binary is available in your `node_modules/.bin`
+directory when you install it locally in a project so you can use it in your `npm` scripts.
 
 ```console
-$ p-s --help
+$ nps --help
 
-  Usage: p-s [options]
+  Usage: nps [options]
 
   Options:
 
     -h, --help                                  output usage information
     -V, --version                               output the version number
-    -s, --silent                                Silent p-s output
+    -s, --silent                                Silent nps output
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
     -l, --log-level <level>                     The log level to use (error, warn, info [default])
@@ -180,7 +184,7 @@ build.prod - The production webpack build - webpack -p
 
 If you have a `help` script, then your `help` script will be run. Otherwise, this will output the help.
 
-> Note: you can do this with `p-s --help`, but if you're using the `start` script in your `package.json` this allows you
+> Note: you can do this with `nps --help`, but if you're using the `start` script in your `package.json` this allows you
 > to run `npm start help` rather than `npm start -- --help`
 
 ##### init
@@ -193,7 +197,7 @@ Installs autocompletion functionality into your default bash or zsh configuratio
 providing a specific file:
 
 ```console
-p-s completion ~/.bashrc
+nps completion ~/.bashrc
 ```
 
 Note: you should probably only do this if you have the package installed globally. In that case you should probably also
@@ -208,7 +212,7 @@ config).
 
 ##### -s, --silent
 
-By default, `p-s` will log out to the console before running the command. You can add `-s` to your command to silence
+By default, `nps` will log out to the console before running the command. You can add `-s` to your command to silence
 this.
 
 ##### -p, --parallel
@@ -227,8 +231,8 @@ Use a different config
 npm start -c ./other/package-scripts.js lint
 ```
 
-Normally, `p-s` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
-have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `p-s` will
+Normally, `npss` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
+have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `nps` will
 use that file instead.
 
 
@@ -266,7 +270,7 @@ That's all for the CLI.
 
 ### package-scripts.js
 
-`p-s` expects to your `package-scripts.js` file to `module.exports` an object with the following properties:
+`nps` expects to your `package-scripts.js` file to `module.exports` an object with the following properties:
 
 #### scripts
 
@@ -291,7 +295,7 @@ module.exports = {
         // your scripts will be run with node_modules/.bin in the PATH, so you can use locally installed packages.
         // this is done in a cross-platform way, so your scripts will work on Mac and Windows :)
         // NOTE: if you need to set environment variables, I recommend you check out the cross-env package, which works
-        // gret with p-s
+        // great with p-s
       },
       otherStuff: {
         // this one can be executed two different ways:
@@ -306,7 +310,7 @@ module.exports = {
     // 2. npm start kebab-case
     // 3. npm start kebabCase
     'kebab-case': 'echo "kebab-case"',
-    series: 'p-s simple,test,kebabCase', // runs these other scripts in series
+    series: 'nps simple,test,kebabCase', // runs these other scripts in series
   },
 }
 ```
@@ -319,22 +323,22 @@ nr s k # runs npm start kebab-case
 
 #### options
 
-This object is used to configure `p-s` with the following options:
+This object is used to configure `nps` with the following options:
 
 ##### silent
 
-Setting this to `true` will prevent `p-s` from outputting anything for your script (normally you'll get simple output
+Setting this to `true` will prevent `nps` from outputting anything for your script (normally you'll get simple output
 indicating the command that's being executed). This effectively sets the `logLevel` to `disable`.
 
 ##### logLevel
 
-This sets the logLevel of `p-s`.
+This sets the logLevel of `nps`.
 
 ## ENV variables
 
 ### LOG_LEVEL
 
-By setting `LOG_LEVEL` environment variable you can control the log level for `p-s`
+By setting `LOG_LEVEL` environment variable you can control the log level for `nps`
 
 ## Log level
 
@@ -361,7 +365,7 @@ the `test` script and then type even less: `npm t build`, but thats just... odd.
 
 Note, often servers are configured to run `npm start` by default to start the server.
 To allow for this case, you can provide a `default` script at the root of your scripts
-which will be run when `p-s` is run without any arguments. Effectively this will
+which will be run when `nps` is run without any arguments. Effectively this will
 allow you to have a script run when `npm start` is executed.
 
 ## Inspiration
