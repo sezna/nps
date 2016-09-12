@@ -1,4 +1,4 @@
-# package-scripts (aka p-s)
+# npm-package-scripts (aka nps)
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
 
