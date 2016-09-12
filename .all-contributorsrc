@@ -155,7 +155,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1155589?v=3",
       "profile": "sorinmuntean.ro",
       "contributions": [
-        "code"
+        "code",
+        "test",
+        "doc"
       ]
     }
   ]
