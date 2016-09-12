@@ -1,4 +1,4 @@
-# package-scripts (aka p-s)
+# npm-package-scripts (aka nps)
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
 
@@ -32,23 +32,9 @@ which has fundamental issues (like no comments).
 
 ## This solution
 
-Put all of your scripts in a file called `package-scripts.js` and use `nps` in a single `package.json` script:
-
-Note: We used `nps` (short for "npm package scripts") even though the package we just installed is named `p-s`.
-This is because internally we use `nps` as on some keyboard layouts it's easier to type. However, for consistency
-and convenience, we also expose a `p-s` binary.
-
-**package.json**
-
-```json
-{
-  "scripts": {
-    "start": "nps"
-  }
-}
-```
-
-**package-scripts.js**
+`p-s` is a package that solves this problem by allowing you to move your scripts to a `package-scripts.js` file. Because
+this file is a JavaScript file, you can do a lot more with your project scripts. Here's an example of a
+`package-scripts.js` file:
 
 ```javascript
 module.exports = {
@@ -56,10 +42,11 @@ module.exports = {
     default: 'node index.js',
     lint: 'eslint .',
     test: {
-      default: 'ava',
+      // learn more about Jest here: https://kcd.im/egghead-jest
+      default: 'jest',
       watch: {
-        script: 'ava -w',
-        description: 'run in the amazingly intelligent AVA watch mode'
+        script: 'jest --watch',
+        description: 'run in the amazingly intelligent Jest watch mode'
       }
     },
     build: {
@@ -71,31 +58,61 @@ module.exports = {
 }
 ```
 
+To use `p-s`, it's recommended that you either install it globally (`npm i -g p-s`) or add `./node_modules/bin` to your
+`$PATH` (be careful that you know what you're doing when doing this).
+
 Then you can run:
 
 ```console
-npm start # runs `node index.js`
-npm start lint # runs `eslint .`
-npm start test.watch # runs `ava -w`
-npm start validate # runs the lint, test, and build scripts in parallel
+p-s --help
+```
+
+Which will output:
+
+```console
+  Usage: nps [options]
+
+  Options:
+
+    -h, --help                                  output usage information
+    -V, --version                               output the version number
+    -s, --silent                                Silent nps output
+    -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
+    -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
+    -l, --log-level <level>                     The log level to use (error, warn, info [default])
+    -r, --require <module>                      Module to preload
+
+Available scripts (camel or kebab case accepted)
+
+lint - eslint .
+test - jest
+test.watch - run in the amazingly intelligent Jest watch mode - jest --watch
+build - webpack
+build.prod - webpack -p
+validate - nps --parallel lint,test,build
+```
+
+**Because `p-s` is harder to type, it is recommended that you use the alias `nps` to interact with `p-s`, which is much
+easier to type and the rest of the documentation will use `nps`**
+
+Now, to run a script, you can run:
+
+```console
+nps lint
+nps test.watch
+# etc.
 ```
 
 But the fun doesn't end there! You can use a prefix:
 
 ```console
-npm start b # will run the build script
+nps b # will run the build script
 ```
 
 And these prefixes can go as deep as you like!
 
 ```console
-npm start b.p # will run the production build script
-```
-
-And if you want to speed things up even more, you can install [`npm-quick-run`][quick-run] and then:
-
-```console
-nr s build.prod
+nps b.p # will run the production build script
 ```
 
 Cool stuff right? And there's more on [the roadmap][roadmap].
@@ -103,10 +120,24 @@ Cool stuff right? And there's more on [the roadmap][roadmap].
 **Also** check out the [examples][examples]. You'll find some good stuff in there (including how to deal with windows
 and other cross-platform issues).
 
-**Note:** You don't have to use the `start` script if you don't want. If you're writing a node application, you're
-likely using this for starting your server. In that case, you can create a `default` script which will be run when
-`nps` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever you
-wish. For example you could easily create a `nps` script and do: `npm run nps b`.
+**Note:** If you don't like installing things globally and don't want to muck with your `$PATH` (or don't want to
+require that your co-workers or project contributors to do so), then you can add a single script to your `package.json`.
+We recommend that you use the `start` script because it requires less typing:
+
+**package.json**
+
+```json
+{
+  "scripts": {
+    "start": "nps"
+  }
+}
+```
+
+You don't have to use the `start` script if you don't want. Note that if you're writing a node application, you're
+likely using `nps` for starting your server. In that case, you can create a `default` script which will be run
+when `nps` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever
+you wish. For example you could easily create a `nps` script and do: `npm run nps b`.
 
 ## Installation
 
@@ -119,7 +150,7 @@ npm install --save-dev p-s
 
 ### global installation
 
-You can install this module globally also:
+You can install this module globally also (this is recommended):
 
 ```
 npm install --global p-s
@@ -150,33 +181,6 @@ utilize the `nps` binary.
 ## API
 
 ### CLI
-
-The CLI is fairly simple. It allows for a few options. The `nps` binary is available in your `node_modules/.bin`
-directory when you install it locally in a project so you can use it in your `npm` scripts.
-
-```console
-$ nps --help
-
-  Usage: nps [options]
-
-  Options:
-
-    -h, --help                                  output usage information
-    -V, --version                               output the version number
-    -s, --silent                                Silent nps output
-    -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
-    -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
-    -l, --log-level <level>                     The log level to use (error, warn, info [default])
-    -r, --require <module>                      Module to preload
-
-Available scripts (camel or kebab case accepted)
-
-lint - Lint all files with eslint. Configuration is in package.json - eslint .
-test - Run tests with AVA. See package.json for config - ava
-test.watch - Run in the amazingly intelligent AVA watch mode - ava -w
-build - The normal webpack UMD build for development - webpack
-build.prod - The production webpack build - webpack -p
-```
 
 #### Commands
 
@@ -220,7 +224,7 @@ this.
 Run the given scripts in parallel. This enables handy workflows like this:
 
 ```console
-npm start -p lint,build,cover && npm start check-coverage && npm start report-coverage
+nps -p lint,build,cover && nps check-coverage && nps report-coverage
 ```
 
 ##### -c, --config
@@ -228,7 +232,7 @@ npm start -p lint,build,cover && npm start check-coverage && npm start report-co
 Use a different config
 
 ```
-npm start -c ./other/package-scripts.js lint
+nps -c ./other/package-scripts.js lint
 ```
 
 Normally, `npss` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
@@ -242,14 +246,15 @@ Specify the log level to use
 
 ##### -r, --require
 
-You can specify a module which will be loaded before the config file is loaded. This allows you to preload for example babel-register so you can use all babel presets you like.
+You can specify a module which will be loaded before the config file is loaded. This allows you to preload for example
+babel-register so you can use all babel presets you like.
 
 ##### args
 
 You can pass additional arguments to the script(s) that are being spawned:
 
 ```console
-npm start lint --fix # --fix will be passed on to the lint script
+nps lint --fix # --fix will be passed on to the lint script
 ```
 
 ##### scripts
@@ -257,13 +262,13 @@ npm start lint --fix # --fix will be passed on to the lint script
 If you don't use `-p` (because you don't need parallelism) then you can simply provide the name of the script like so:
 
 ```console
-npm start cover
+nps cover
 ```
 
 And you can run multiple scripts in series by providing a comma-separated list:
 
 ```console
-npm start cover,check-coverage
+nps cover,check-coverage
 ```
 
 That's all for the CLI.
@@ -280,9 +285,9 @@ look like (and different ways to run them):
 ```javascript
 module.exports = {
   scripts: {
-    default: 'echo "This runs on `npm start`"', // npm start
+    default: 'echo "This runs on `nps`"', // nps
     // you can assign a script property to a string
-    simple: 'echo "this is easy"', // npm start simple
+    simple: 'echo "this is easy"', // nps simple
     // you can specify whether some scripts should be excluded from the help list
     hidden: {
       script: 'debugging script',
@@ -290,8 +295,8 @@ module.exports = {
     },
     test: {
       default: {
-        script: 'ava', // npm start test
-        description: 'Run tests with ava',
+        script: 'jest', // nps test
+        description: 'Run tests with jest',
         // your scripts will be run with node_modules/.bin in the PATH, so you can use locally installed packages.
         // this is done in a cross-platform way, so your scripts will work on Mac and Windows :)
         // NOTE: if you need to set environment variables, I recommend you check out the cross-env package, which works
@@ -299,26 +304,24 @@ module.exports = {
       },
       otherStuff: {
         // this one can be executed two different ways:
-        // 1. npm start test.otherStuff
-        // 2. npm start test.other-stuff
+        // 1. nps test.otherStuff
+        // 2. nps test.other-stuff
         script: 'echo "testing other things"',
         description: 'this is a handy description',
       },
     },
     // this one can be executed a few different ways:
-    // 1. npm start k
-    // 2. npm start kebab-case
-    // 3. npm start kebabCase
+    // 1. nps k
+    // 2. nps kebab-case
+    // 3. nps kebabCase
     'kebab-case': 'echo "kebab-case"',
     series: 'nps simple,test,kebabCase', // runs these other scripts in series
   },
 }
 ```
 
-Remember, I find it considerably nicer to just use [`npm-quick-run`][quick-run] and then I can do:
-
 ```console
-nr s k # runs npm start kebab-case
+nps k # runs nps kebab-case
 ```
 
 #### options
@@ -357,16 +360,15 @@ the `start`. [npm scripts][npm scripts] are generally run with `npm run <script-
 this. For example:
 
 1. `npm run test` === `npm test` === `npm t`
-2. `npm run start` === `npm start`
+2. `npm run start` === `nps`
 
 So, while you could use a script called `script` and run `npm run script build`, I just think it reads more clearly to
-just use the `start` script and run `npm start build`. It's also nice that it's fewer things to type. You could also use
+just use the `start` script and run `nps build`. It's also nice that it's fewer things to type. You could also use
 the `test` script and then type even less: `npm t build`, but thats just... odd.
 
-Note, often servers are configured to run `npm start` by default to start the server.
-To allow for this case, you can provide a `default` script at the root of your scripts
-which will be run when `nps` is run without any arguments. Effectively this will
-allow you to have a script run when `npm start` is executed.
+Note, often servers are configured to run `npm start` by default to start the server. To allow for this case, you can
+provide a `default` script at the root of your scripts which will be run when `npm start` is run without any arguments.
+Effectively this will allow you to have a script run when `npm start` is executed.
 
 ## Inspiration
 
@@ -380,14 +382,21 @@ benefits of npm scripts I wanted to keep).
 
 ## In the wild
 
-- [react-component-template](https://github.com/nkbt/react-component-template) uses `p-s` to implement shareable npm scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them.
+- [react-component-template](https://github.com/nkbt/react-component-template) uses `p-s` to implement shareable npm
+scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them.
 
-  GOTCHAS:
-    - use `process.cwd()` as the base for all paths
+GOTCHAS:
+  - use `process.cwd()` as the base for all paths
 
-- [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob patterns.
+- [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running
+and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with
+[grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob
+patterns.
 
-- [SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers) is an [electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s` to dynamically find the current platform and execute the dev environment. Now we don't have to manually update the `package.json` scripts when you are on a different platform!
+- [SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers) is an [electron](https://electron.atom.io)
+based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s` to dynamically find the current
+platform and execute the dev environment. Now we don't have to manually update the `package.json` scripts when you are
+on a different platform!
 
 ## Contributors
 

@@ -21,7 +21,7 @@ const shouldAutocomplete = includes(process.argv, '--compbash')
 program
   .version(version)
   .allowUnknownOption()
-  .option('-s, --silent', 'Silent p-s output')
+  .option('-s, --silent', 'Silent nps output')
   .option('-p, --parallel <script-name1,script-name2>', 'Scripts to run in parallel (comma seprated)')
   .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.js)')
   .option('-l, --log-level <level>', 'The log level to use (error, warn, info [default])')
