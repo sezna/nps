@@ -34,9 +34,9 @@ which has fundamental issues (like no comments).
 
 Put all of your scripts in a file called `package-scripts.js` and use `nps` in a single `package.json` script:
 
-Note: We used `nps` even though the package we just installed is named `p-s`. This is because internally we use `nps`
-as on some keyboard layouts it's easier to type. However, for consistency and convenience, we also expose a `p-s`
-binary.
+Note: We used `nps` (short for "npm package scripts") even though the package we just installed is named `p-s`.
+This is because internally we use `nps` as on some keyboard layouts it's easier to type. However, for consistency
+and convenience, we also expose a `p-s` binary.
 
 **package.json**
 
