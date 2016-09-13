@@ -3,11 +3,11 @@ import path from 'path'
 import spawn from 'spawn-command-with-kill'
 
 let symlinkCreated = false
-const PS_PATH = path.resolve(__dirname, './dist/bin/p-s.js')
+const NPS_PATH = path.resolve(__dirname, './dist/bin/nps.js')
 
-export default runPS
+export default runNPS
 
-function runPS(cwd, args = '') {
+function runNPS(cwd, args = '') {
   if (!symlinkCreated) {
     createSymlink()
   }
@@ -20,7 +20,7 @@ function runPS(cwd, args = '') {
   return new Promise((resolve, reject) => {
     let stdout = ''
     let stderr = ''
-    const command = `${PS_PATH} ${args}`
+    const command = `node ${NPS_PATH} ${args}`
     const child = spawn(command, {cwd})
 
     child.on('error', error => {

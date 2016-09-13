@@ -3,14 +3,12 @@ import {resolve} from 'path'
 import Promise from 'bluebird'
 import {spy} from 'sinon'
 import color from 'colors/safe'
-import {clone} from 'lodash'
 import managePath from 'manage-path'
 
-xit('spawn called with the parent process.env + npm path', () => {
+test('spawn called with the parent process.env + npm path', () => {
   return testSpawnCallWithDefaults().then(({options: {env}}) => {
-    const copy = clone(process.env)
-    managePath(copy).unshift(resolve('../node_modules/.bin'))
-    expect(env).toEqual(copy)
+    const path = managePath(env).get()
+    expect(path).toContain(resolve(__dirname, '../node_modules/.bin'))
   })
 })
 

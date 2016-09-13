@@ -1,5 +1,5 @@
 import {resolve} from 'path'
-import runPS from './run-p-s'
+import runNPS from './run-nps'
 
 const fixturesPath = resolve(__dirname, './fixtures')
 
@@ -29,7 +29,20 @@ test(
 )
 
 function snapshot(args) {
-  return runPS(fixturesPath, args).then(results => {
-    expect(results).toMatchSnapshot()
+  return runNPS(fixturesPath, args).then(results => {
+    const snapshottableResults = relativeizePaths(results)
+    expect(snapshottableResults).toMatchSnapshot()
   })
+}
+
+/**
+ * This takes the results object and removes environment-specific elements from the path.
+ * @param {Object} results - This is the results object from runNPS
+ * @return {Object} - The new results object with the clean paths
+ */
+function relativeizePaths(results) {
+  return Object.keys(results).reduce((obj, key) => {
+    obj[key] = results[key].replace(resolve(__dirname, '../'), '<projectRootDir>')
+    return obj
+  }, {})
 }

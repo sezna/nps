@@ -1,12 +1,6 @@
-/* eslint prefer-template:"off", no-var:"off", max-len:[2, 200] */ // this file runs in node 0.10.0
-var transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
-var cleanDist = 'rimraf dist'
-
-var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1])
-var validate = ['build.andValidate', 'test']
-if (nodeVersion >= 4) {
-  validate.push('lint') // we can't run linting on node versions < 4
-}
+const transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
+const cleanDist = 'rimraf dist'
+const validate = ['build.andValidate', 'test', 'lint']
 
 module.exports = {
   scripts: {
@@ -28,7 +22,7 @@ module.exports = {
         script: [cleanDist, transpile].join('&&'),
       },
       watch: {
-        script: [cleanDist, transpile + ' --watch'].join('&&'),
+        script: [cleanDist, `${transpile} --watch`].join('&&'),
       },
       andValidate: {
         description: 'Runs the normal build first, then validates the CLI',
@@ -49,7 +43,7 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: 'p-s -p ' + validate.join(','),
+      script: `nps -p ${validate.join(',')}`,
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',

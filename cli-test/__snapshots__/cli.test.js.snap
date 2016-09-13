@@ -1,7 +1,7 @@
 exports[`test with --require 1`] = `
 Object {
   "stderr": "",
-  "stdout": "p-s executing: echo \"log\"
+  "stdout": "nps executing: echo \"log\"
 log
 "
 }
@@ -17,7 +17,7 @@ Object {
 
 exports[`test with a missing config 1`] = `
 Object {
-  "stderr": "Unable to find config at \"./something-that-does-not-exist.js\". Attempted to require as \"/Users/kdodds/Developer/p-s/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
+  "stderr": "Unable to find config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
 ",
   "stdout": ""
 }
@@ -26,7 +26,7 @@ Object {
 exports[`test with config with default script 1`] = `
 Object {
   "stderr": "",
-  "stdout": "p-s executing: echo \"default script\"
+  "stdout": "nps executing: echo \"default script\"
 default script
 "
 }
@@ -36,13 +36,13 @@ exports[`test without arguments 1`] = `
 Object {
   "stderr": "",
   "stdout": "
-  Usage: p-s [options]
+  Usage: nps [options]
 
   Options:
 
     -h, --help                                  output usage information
     -V, --version                               output the version number
-    -s, --silent                                Silent p-s output
+    -s, --silent                                Silent nps output
     -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
     -l, --log-level <level>                     The log level to use (error, warn, info [default])

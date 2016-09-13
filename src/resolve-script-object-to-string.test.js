@@ -3,7 +3,7 @@ import resolveScriptObjectToString from './resolve-script-object-to-string'
 test('returns undefined if a script is marked as hiddenFromHelp', () => {
   const lintCommand = 'eslint .'
   const result = resolveScriptObjectToString({script: lintCommand, hiddenFromHelp: true})
-  expect(result).toBe(undefined)
+  expect(result).toBeUndefined()
 })
 
 test('returns the script if hiddenFromHelp is false', () => {
@@ -14,7 +14,7 @@ test('returns the script if hiddenFromHelp is false', () => {
 
 test('returns undefined if a script cannot be resolved to a string', () => {
   const result = resolveScriptObjectToString(42)
-  expect(result).toBe(undefined)
+  expect(result).toBeUndefined()
 })
 
 test('returns the string if given a string', () => {
@@ -35,7 +35,7 @@ test('get the default from the script object', () => {
 
 test('returns undefined if the object with default cannot be resolved to a string', () => {
   const result = resolveScriptObjectToString({default: {blah: 'stuff'}})
-  expect(result).toBe(undefined)
+  expect(result).toBeUndefined()
 })
 
 test('resolves default to the script if it is a string', () => {
@@ -45,5 +45,5 @@ test('resolves default to the script if it is a string', () => {
 
 test('does not resolve a script object without a script or default', () => {
   const result = resolveScriptObjectToString({foo: 'bar'})
-  expect(result).toBe(undefined)
+  expect(result).toBeUndefined()
 })

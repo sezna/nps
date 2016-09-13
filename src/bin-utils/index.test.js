@@ -73,7 +73,7 @@ test('preloadModule: logs a warning when the module cannot be required', () => {
   jest.mock('../get-logger', () => () => ({warn: mockWarn}))
   const {preloadModule: proxiedPreloadModule} = require('./index')
   const val = proxiedPreloadModule('./module-that-does-exist')
-  expect(val).toBe(undefined)
+  expect(val).toBeUndefined()
   expect(mockWarn.calledOnce)
   const [{message}] = mockWarn.firstCall.args
   expect(message).toMatch(/Unable to preload "\.\/module-that-does-exist"/)
@@ -85,15 +85,18 @@ test('loadConfig: logs a warning when the module cannot be required', () => {
   jest.mock('../get-logger', () => () => ({error: mockError}))
   const {loadConfig: proxiedReloadConfig} = require('./index')
   const val = proxiedReloadConfig('./config-that-does-exist')
-  expect(val).toBe(undefined)
+  expect(val).toBeUndefined()
   expect(mockError.calledOnce)
   const [{message}] = mockError.firstCall.args
   expect(message).toMatch(/Unable to find config at "\.\/config-that-does-exist"/)
 })
 
-xit('loadConfig: does not swallow syntax errors', () => {
+test('loadConfig: does not swallow syntax errors', () => {
+  const originalCwd = process.cwd
+  process.cwd = jest.fn(() => resolve(__dirname, '../..'))
   const relativePath = './src/bin-utils/fixtures/syntax-error-module'
-  expect(() => loadConfig(relativePath)).toThrowError(SyntaxError)
+  expect(() => loadConfig(relativePath)).toThrowError()
+  process.cwd = originalCwd
 })
 
 test('loadConfig: can load ES6 module', () => {
@@ -143,6 +146,9 @@ test('help: formats a nice message', () => {
   }
 
   const message = help(config)
+  // normally I'd use snapshot testing
+  // but the colors here are easier to think about
+  // than `[32mfoobar[39m` sooo....
   const expected = `
 Available scripts (camel or kebab case accepted)
 
@@ -154,7 +160,7 @@ ${colors.green('build')} - ${colors.gray('webpack')}
 ${colors.green('build.x')} - ${colors.white('webpack with x env')} - ${colors.gray('webpack --env.x')}
 ${colors.green('build.x.y')} - ${colors.white('build X-Y')} - ${colors.gray('echo "build x-y"')}
 ${colors.green('foobar')} - ${colors.gray('echo "foobar"')}
-  `.trim()
+`.trim()
 
   expect(message).toBe(expected)
 })
