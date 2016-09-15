@@ -42,9 +42,7 @@ function runPackageScripts({scriptConfig, scripts, args, options = {}}) {
 
     const allPromise = Promise.all(promises.map((promise, index) => {
       return promise.then(code => {
-        if (!aborted) {
-          results[index].code = code
-        }
+        results[index].code = code
       })
     })).then(() => results)
 

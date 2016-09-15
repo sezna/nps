@@ -1,14 +1,13 @@
-import test from 'ava'
+/* eslint global-require:0, import/newline-after-import:0 */
 import {spy} from 'sinon'
-import proxyquire from 'proxyquire'
 
-test('inits omelette', t => {
-  const {autocomplete, initSpy} = getAutocomplete()
+test('inits omelette', () => {
+  const {autocomplete, mockInit} = getAutocomplete()
   autocomplete()
-  t.true(initSpy.calledOnce)
+  expect(mockInit.calledOnce)
 })
 
-test('calls this.reply with the available scripts', t => {
+test('calls this.reply with the available scripts', () => {
   const stubConfig = {
     scripts: {
       build: {default: {script: 'build'}, watch: 'build.watch', main: {umd: 'build.main.umd', default: 'build.main'}},
@@ -26,29 +25,30 @@ test('calls this.reply with the available scripts', t => {
   const {autocomplete, getReplyArgs} = getAutocomplete()
   autocomplete(stubConfig)
   const actualReplyArgs = getReplyArgs()
-  t.deepEqual(actualReplyArgs, expectedReplyArgs)
+  expect(actualReplyArgs).toEqual(expectedReplyArgs)
 })
 
-test('install calls setupShellInitFile with the given destination', t => {
-  const {install, setupShellInitFileSpy} = getInstall()
+test('install calls setupShellInitFile with the given destination', () => {
+  const {install, mockSetupShellInitFile} = getInstall()
   const destination = '~/.my_bash_profile'
   install(destination)
-  const [actualDestination] = setupShellInitFileSpy.firstCall.args
-  t.true(setupShellInitFileSpy.calledOnce)
-  t.is(actualDestination, destination)
+  const [actualDestination] = mockSetupShellInitFile.firstCall.args
+  expect(mockSetupShellInitFile.calledOnce)
+  expect(actualDestination).toBe(destination)
 })
 
 function getAutocomplete() {
-  const onSpy = spy()
-  const initSpy = spy()
-  const omelette = spy(() => {
-    return {on: onSpy, init: initSpy}
+  const mockOn = spy()
+  const mockInit = spy()
+  jest.resetModules()
+  jest.mock('omelette', () => () => {
+    return {on: mockOn, init: mockInit}
   })
-  const autocomplete = proxyquire('./index', {omelette}).default
-  return {autocomplete, getReplyArgs, initSpy}
+  const autocomplete = require('./index').default
+  return {autocomplete, getReplyArgs, mockInit}
 
   function getReplyArgs() {
-    const [, replier] = onSpy.firstCall.args
+    const [, replier] = mockOn.firstCall.args
     const reply = spy()
     const context = {reply}
     replier.call(context)
@@ -57,8 +57,11 @@ function getAutocomplete() {
 }
 
 function getInstall() {
-  const setupShellInitFileSpy = spy()
-  const omelette = spy(() => ({setupShellInitFile: setupShellInitFileSpy}))
-  const {install} = proxyquire('./index', {omelette})
-  return {install, setupShellInitFileSpy}
+  const mockSetupShellInitFile = spy()
+  jest.resetModules()
+  jest.mock('omelette', () => () => {
+    return {setupShellInitFile: mockSetupShellInitFile}
+  })
+  const {install} = require('./index')
+  return {install, mockSetupShellInitFile}
 }

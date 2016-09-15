@@ -1,0 +1,58 @@
+exports[`test with --require 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps executing: echo \"log\"
+log
+"
+}
+`;
+
+exports[`test with --silent 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "test script
+"
+}
+`;
+
+exports[`test with a missing config 1`] = `
+Object {
+  "stderr": "Unable to find config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
+",
+  "stdout": ""
+}
+`;
+
+exports[`test with config with default script 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps executing: echo \"default script\"
+default script
+"
+}
+`;
+
+exports[`test without arguments 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "
+  Usage: nps [options]
+
+  Options:
+
+    -h, --help                                  output usage information
+    -V, --version                               output the version number
+    -s, --silent                                Silent nps output
+    -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
+    -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.js)
+    -l, --log-level <level>                     The log level to use (error, warn, info [default])
+    -r, --require <module>                      Module to preload
+
+Available scripts (camel or kebab case accepted)
+
+test - echo \"test script\"
+lint - echo \"lint.default\"
+lint.sub.thing - this is a description - echo \"deeply nested thing\"
+"
+}
+`;

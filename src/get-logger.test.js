@@ -1,30 +1,29 @@
-import test from 'ava'
+/* eslint import/newline-after-import:0 global-require:0 */
 import {spy} from 'sinon'
-import proxyquire from 'proxyquire'
 
-test('allows you to log errors', t => {
+test('allows you to log errors', () => {
   const {log, console: {error}} = setup()
   log.error('hello', 'world')
-  t.true(error.calledOnce)
-  t.true(error.calledWith('hello', 'world'))
+  expect(error.calledOnce)
+  expect(error.calledWith('hello', 'world'))
 })
 
-test('allows you to log warnings', t => {
+test('allows you to log warnings', () => {
   const {log, console: {warn}} = setup()
   log.warn('hello', 'world')
-  t.true(warn.calledOnce)
-  t.true(warn.calledWith('hello', 'world'))
+  expect(warn.calledOnce)
+  expect(warn.calledWith('hello', 'world'))
 })
 
-test('allows you to log warnings/errors with a ref', t => {
+test('allows you to log warnings/errors with a ref', () => {
   const {log, console: {warn}} = setup()
   const message = [`Han Solo is Kylo Ren's dad`, '😱']
   log.warn({
     message,
     ref: 'han-solo',
   }, 'this is extra', 'stuff')
-  t.true(warn.calledOnce)
-  t.true(warn.calledWith(
+  expect(warn.calledOnce)
+  expect(warn.calledWith(
     ...message,
     'https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#han-solo',
     'this is extra',
@@ -32,38 +31,38 @@ test('allows you to log warnings/errors with a ref', t => {
   ))
 })
 
-test('allows you to disable warnings', t => {
+test('allows you to disable warnings', () => {
   const {LOG_LEVEL} = process.env
   process.env.LOG_LEVEL = 'disable'
   const {log, console: {warn}} = setup()
   log.warn('hi')
-  t.false(warn.called)
+  expect(warn.called).toBe(false)
   process.env.LOG_LEVEL = LOG_LEVEL
 })
 
-test('allows you to disable errors', t => {
+test('allows you to disable errors', () => {
   const {LOG_LEVEL} = process.env
   process.env.LOG_LEVEL = 'disable'
   const {log, console: {error}} = setup()
   log.error('hi')
-  t.false(error.called)
+  expect(error.called).toBe(false)
   process.env.LOG_LEVEL = LOG_LEVEL
 })
 
-test('allows you to specify a logLevel of your own for errors/warnings/info', t => {
+test('allows you to specify a logLevel of your own for errors/warnings/info', () => {
   const logLevel = 'info'
   const {log, console: {info}} = setup({logLevel})
   log.info('sup')
-  t.true(info.calledOnce)
-  t.true(info.calledWith('sup'))
+  expect(info.calledOnce)
+  expect(info.calledWith('sup'))
 })
 
-function setup({consoleStub, logLevel} = {}) {
-  consoleStub = getConsoleStub(consoleStub)
-  const getLogger = proxyquire('./get-logger', {
-    console: consoleStub,
-  }).default
-  return {console: consoleStub, log: getLogger(logLevel)}
+function setup({mockConsole, logLevel} = {}) {
+  mockConsole = getConsoleStub(mockConsole)
+  jest.resetModules()
+  jest.mock('console', () => mockConsole)
+  const getLogger = require('./get-logger').default
+  return {console: mockConsole, log: getLogger(logLevel)}
 }
 
 function getConsoleStub(overrides = {}) {
