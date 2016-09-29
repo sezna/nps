@@ -2,6 +2,8 @@ import {resolve} from 'path'
 import {remove, includes, isPlainObject, isEmpty} from 'lodash'
 import shellEscape from 'shell-escape'
 import colors from 'colors/safe'
+import {safeLoad} from 'js-yaml'
+import {readFileSync} from 'fs'
 
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
@@ -28,13 +30,13 @@ const preloadModule = getAttemptModuleRequireFn((moduleName, requirePath) => {
  * @param  {String} configPath The path to attempt to require the config from
  * @return {*} The required module
  */
-const loadConfig = getAttemptModuleRequireFn(function onFail(configPath, requirePath) {
-  log.error({
-    message: colors.red(`Unable to find config at "${configPath}". Attempted to require as "${requirePath}"`),
-    ref: 'unable-to-find-config',
-  })
-  return undefined
-})
+function loadConfig(configPath) {
+  if (configPath.endsWith('.yml')) {
+    return loadYAMLConfig(configPath)
+  }
+
+  return loadJSConfig(configPath)
+}
 
 export {
   getScriptsAndArgs, initialize, help, autocomplete, installAutocomplete,
@@ -43,6 +45,29 @@ export {
 
 
 /****** implementations ******/
+
+const loadJSConfig = getAttemptModuleRequireFn(function onFail(configPath, requirePath) {
+  log.error({
+    message: colors.red(`Unable to find JS config at "${configPath}". Attempted to require as "${requirePath}"`),
+    ref: 'unable-to-find-config',
+  })
+  return undefined
+})
+
+function loadYAMLConfig(configPath) {
+  try {
+    return safeLoad(readFileSync(configPath, 'utf8'))
+  } catch(e) {
+    if (e.constructor.name === 'YAMLException') {
+      throw e
+    }
+    log.error({
+      message: colors.red(`Unable to find YML config at "${configPath}".`),
+      ref: 'unable-to-find-config',
+    })
+    return undefined
+  }
+}
 
 function getScriptsAndArgs(program) {
   let scripts = []

@@ -23,7 +23,7 @@ program
   .allowUnknownOption()
   .option('-s, --silent', 'Silent nps output')
   .option('-p, --parallel <script-name1,script-name2>', 'Scripts to run in parallel (comma seprated)')
-  .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.js)')
+  .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.yml or package-scripts.js)')
   .option('-l, --log-level <level>', 'The log level to use (error, warn, info [default])')
   .option('-r, --require <module>', 'Module to preload')
   .on('init', onInit)
@@ -70,7 +70,7 @@ function getPSConfig() {
   if (program.require) {
     preloadModule(program.require)
   }
-  const configFilepath = program.config || findUp.sync('package-scripts.js')
+  const configFilepath = program.config || findUp.sync('package-scripts.yml') || findUp.sync('package-scripts.js')
   if (!configFilepath) {
     log.warn(colors.yellow('Unable to find a config file and none was specified.'))
     return {scripts: {}} // empty config
