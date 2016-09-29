@@ -17,7 +17,7 @@ Object {
 
 exports[`test with a missing config 1`] = `
 Object {
-  "stderr": "Unable to find config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
+  "stderr": "Unable to find JS config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
 ",
   "stdout": ""
 }

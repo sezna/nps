@@ -1,9 +1,9 @@
 import {resolve} from 'path'
+import {readFileSync} from 'fs'
 import {remove, includes, isPlainObject, isEmpty} from 'lodash'
 import shellEscape from 'shell-escape'
 import colors from 'colors/safe'
 import {safeLoad} from 'js-yaml'
-import {readFileSync} from 'fs'
 
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
@@ -21,6 +21,14 @@ const preloadModule = getAttemptModuleRequireFn((moduleName, requirePath) => {
   log.warn({
     message: colors.yellow(`Unable to preload "${moduleName}". Attempted to require as "${requirePath}"`),
     ref: 'unable-to-preload-module',
+  })
+  return undefined
+})
+
+const loadJSConfig = getAttemptModuleRequireFn(function onFail(configPath, requirePath) {
+  log.error({
+    message: colors.red(`Unable to find JS config at "${configPath}". Attempted to require as "${requirePath}"`),
+    ref: 'unable-to-find-config',
   })
   return undefined
 })
@@ -46,18 +54,10 @@ export {
 
 /****** implementations ******/
 
-const loadJSConfig = getAttemptModuleRequireFn(function onFail(configPath, requirePath) {
-  log.error({
-    message: colors.red(`Unable to find JS config at "${configPath}". Attempted to require as "${requirePath}"`),
-    ref: 'unable-to-find-config',
-  })
-  return undefined
-})
-
 function loadYAMLConfig(configPath) {
   try {
     return safeLoad(readFileSync(configPath, 'utf8'))
-  } catch(e) {
+  } catch (e) {
     if (e.constructor.name === 'YAMLException') {
       throw e
     }
