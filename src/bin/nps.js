@@ -70,7 +70,7 @@ function getPSConfig() {
   if (program.require) {
     preloadModule(program.require)
   }
-  const configFilepath = program.config || findUp.sync('package-scripts.yml') || findUp.sync('package-scripts.js')
+  const configFilepath = getPSConfigFilepath()
   if (!configFilepath) {
     log.warn(colors.yellow('Unable to find a config file and none was specified.'))
     return {scripts: {}} // empty config
@@ -80,6 +80,10 @@ function getPSConfig() {
     process.exit(FAIL_CODE)
   }
   return config
+}
+
+function getPSConfigFilepath() {
+  return program.config || findUp.sync('package-scripts.yml') || findUp.sync('package-scripts.js')
 }
 
 function onInit() {
