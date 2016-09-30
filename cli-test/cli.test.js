@@ -30,7 +30,7 @@ test(
 
 function snapshot(args) {
   return runNPS(fixturesPath, args).then(results => {
-    const snapshottableResults = relativeizePaths(results)
+    const snapshottableResults = relativizePaths(results)
     expect(snapshottableResults).toMatchSnapshot()
   })
 }
@@ -40,7 +40,7 @@ function snapshot(args) {
  * @param {Object} results - This is the results object from runNPS
  * @return {Object} - The new results object with the clean paths
  */
-function relativeizePaths(results) {
+function relativizePaths(results) {
   return Object.keys(results).reduce((obj, key) => {
     obj[key] = results[key].replace(resolve(__dirname, '../'), '<projectRootDir>')
     return obj

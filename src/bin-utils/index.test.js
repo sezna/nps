@@ -79,7 +79,7 @@ test('preloadModule: logs a warning when the module cannot be required', () => {
   expect(message).toMatch(/Unable to preload "\.\/module-that-does-exist"/)
 })
 
-test('loadConfig: logs a warning when the module cannot be required', () => {
+test('loadConfig: logs a warning when the JS module cannot be required', () => {
   const mockError = spy()
   jest.resetModules()
   jest.mock('../get-logger', () => () => ({error: mockError}))
@@ -88,10 +88,10 @@ test('loadConfig: logs a warning when the module cannot be required', () => {
   expect(val).toBeUndefined()
   expect(mockError.calledOnce)
   const [{message}] = mockError.firstCall.args
-  expect(message).toMatch(/Unable to find config at "\.\/config-that-does-exist"/)
+  expect(message).toMatch(/Unable to find JS config at "\.\/config-that-does-exist"/)
 })
 
-test('loadConfig: does not swallow syntax errors', () => {
+test('loadConfig: does not swallow JS syntax errors', () => {
   const originalCwd = process.cwd
   process.cwd = jest.fn(() => resolve(__dirname, '../..'))
   const relativePath = './src/bin-utils/fixtures/syntax-error-module'
@@ -101,6 +101,37 @@ test('loadConfig: does not swallow syntax errors', () => {
 
 test('loadConfig: can load ES6 module', () => {
   const relativePath = './src/bin-utils/fixtures/fake-es6-module'
+  const val = loadConfig(relativePath)
+  expect(val).toEqual({
+    scripts: {
+      skywalker: `echo "That's impossible!!"`,
+    },
+    options: {},
+  })
+})
+
+test('loadConfig: does not swallow YAML syntax errors', () => {
+  const originalCwd = process.cwd
+  process.cwd = jest.fn(() => resolve(__dirname, '../..'))
+  const relativePath = './src/bin-utils/fixtures/syntax-error-config.yml'
+  expect(() => loadConfig(relativePath)).toThrowError()
+  process.cwd = originalCwd
+})
+
+test('loadConfig: logs a warning when the YAML file cannot be located', () => {
+  const mockError = spy()
+  jest.resetModules()
+  jest.mock('../get-logger', () => () => ({error: mockError}))
+  const {loadConfig: proxiedReloadConfig} = require('./index')
+  const val = proxiedReloadConfig('./config-that-does-not-exist.yml')
+  expect(val).toBeUndefined()
+  expect(mockError.calledOnce)
+  const [{message}] = mockError.firstCall.args
+  expect(message).toMatch(/Unable to find YML config at "\.\/config-that-does-not-exist.yml"/)
+})
+
+test('loadConfig: can load config from YML file', () => {
+  const relativePath = './src/bin-utils/fixtures/fake-config.yml'
   const val = loadConfig(relativePath)
   expect(val).toEqual({
     scripts: {

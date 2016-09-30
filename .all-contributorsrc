@@ -125,7 +125,7 @@
       "login": "RobinMalfait",
       "name": "Robin Malfait",
       "avatar_url": "https://avatars.githubusercontent.com/u/1834413?v=3",
-      "profile": "robinmalfait.com",
+      "profile": "https://robinmalfait.com",
       "contributions": [
         "example"
       ]
@@ -153,7 +153,7 @@
       "login": "sxn",
       "name": "Sorin Muntean",
       "avatar_url": "https://avatars.githubusercontent.com/u/1155589?v=3",
-      "profile": "sorinmuntean.ro",
+      "profile": "https://github.com/sxn",
       "contributions": [
         "code",
         "test",
