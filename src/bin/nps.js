@@ -83,7 +83,7 @@ function getPSConfig() {
 }
 
 function getPSConfigFilepath() {
-  return program.config || findUp.sync('package-scripts.yml') || findUp.sync('package-scripts.js')
+  return program.config || findUp.sync('package-scripts.js') || findUp.sync('package-scripts.yml')
 }
 
 function onInit() {
