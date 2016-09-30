@@ -62,7 +62,7 @@ module.exports = {
 
 Or if case you prefer YAML, here's an example of how that would look in a `package-scripts.yml` file:
 
-```javascript
+```yml
 scripts:
     default: node index.js
     lint: eslint .
