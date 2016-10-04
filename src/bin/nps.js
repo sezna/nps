@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint no-process-exit: "off" */
 import findUp from 'find-up'
-import {merge, includes} from 'lodash'
+import {merge, includes, indexOf, isUndefined} from 'lodash'
 import program from 'commander'
 import colors from 'colors/safe'
 import runPackageScript from '../index'
@@ -88,7 +88,7 @@ function getPSConfigFilepath() {
 
 function onInit() {
   shouldRun = false
-  const {packageScriptsPath} = initialize()
+  const {packageScriptsPath} = initialize(getConfigType())
   log.info(`Your scripts have been saved at ${colors.green(packageScriptsPath)}`)
   log.info(colors.gray(
     'Check out your scripts in there. Go ahead and update them and add descriptions to the ones that need it'
@@ -100,6 +100,24 @@ function onInit() {
     '  nps completion <optionally-your-bash-profile-file>\n' +
     'The bash profile file defaults to ~/.bash_profile for bash and ~/.zshrc for zsh'
   ))
+}
+
+function getConfigType() {
+  let configType
+
+  if (includes(process.argv, '-t')) {
+    configType = process.argv[indexOf(process.argv, '-t') + 1]
+  }
+
+  if (includes(process.argv, '--type')) {
+    configType = process.argv[indexOf(process.argv, '--type') + 1]
+  }
+
+  if (isUndefined(configType)) {
+    return 'js'
+  }
+
+  return configType
 }
 
 function onHelp() {

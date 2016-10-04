@@ -60,7 +60,7 @@ module.exports = {
 }
 ```
 
-Or if case you prefer YAML, here's an example of how that would look in a `package-scripts.yml` file:
+Or in case you prefer YAML, here's an example of how that would look in a `package-scripts.yml` file:
 
 ```yml
 scripts:
@@ -194,9 +194,13 @@ If you're already using npm scripts, you can get up and going really quickly wit
 ```
 ./node_modules/.bin/nps init
 ```
+or
+```
+./node_modules/.bin/nps init --type yaml
+```
 
-This will use your `package.json` `scripts` to generate a `package-scripts.js` file and update your `scripts` to
-utilize the `nps` binary.
+This will use your `package.json` `scripts` to generate a `package-scripts.js` (respectively a `package-scripts.yml`)
+file and update your `scripts` to utilize the `nps` binary.
 
 ## API
 

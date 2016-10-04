@@ -90,9 +90,9 @@ function getArgs(args, rawArgs, scripts) {
   const allArgs = rawArgs.slice(2)
   const psArgs = ['-p', '--parallel', '-c', '--config', '-r', '--require']
   const psFlags = ['-s', '--silent']
-  const cleanedArgs = remove(allArgs, (item, index, arry) => {
+  const cleanedArgs = remove(allArgs, (item, index, array) => {
     const isArgOrFlag = includes(psArgs, item) || includes(psFlags, item)
-    const isArgValue = includes(psArgs, arry[index - 1])
+    const isArgValue = includes(psArgs, array[index - 1])
     const isInScripts = includes(scripts, item)
     return !isArgOrFlag && !isArgValue && !isInScripts
   })
