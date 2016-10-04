@@ -1,0 +1,14 @@
+scripts:
+  default:
+    default: echo start
+    stuff: 'echo start:stuff'
+  test: echo test
+  foo:
+    default: echo foo
+    bar:
+      default: 'echo foo:bar'
+      baz: 'echo foo:bar:baz'
+  bar: echo bar
+  foo-bar: echo foo-bar
+  foobar: echo "foo bar"
+  baz: echo 'baz buzz'

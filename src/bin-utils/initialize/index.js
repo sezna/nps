@@ -2,21 +2,40 @@ import {resolve, dirname} from 'path'
 import {writeFileSync} from 'fs'
 import {sync as findUpSync} from 'find-up'
 import {isPlainObject, camelCase, set, each} from 'lodash'
+import {safeDump} from 'js-yaml'
 
 export default initialize
 
-function initialize() {
+function initialize(configType = 'js') {
   const packageJsonPath = findUpSync('package.json')
-  const packageScriptsPath = resolve(dirname(packageJsonPath), './package-scripts.js')
   const packageJson = require(packageJsonPath) // eslint-disable-line global-require
   const {scripts} = packageJson
-  const fileContents = generatePackageScriptsFileContents(scripts)
   packageJson.scripts = {
     start: 'nps',
     test: scripts.test ? 'nps test' : undefined,
   }
-  writeFileSync(packageScriptsPath, fileContents)
   writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
+
+  if (configType === 'yaml') {
+    return dumpYAMLConfig(packageJsonPath, scripts)
+  }
+
+  return dumpJSConfig(packageJsonPath, scripts)
+}
+
+function dumpJSConfig(packageJsonPath, scripts) {
+  const packageScriptsPath = resolve(dirname(packageJsonPath), './package-scripts.js')
+  const fileContents = generatePackageScriptsFileContents(scripts)
+  writeFileSync(packageScriptsPath, fileContents)
+
+  return {packageJsonPath, packageScriptsPath}
+}
+
+function dumpYAMLConfig(packageJsonPath, scripts) {
+  const packageScriptsPath = resolve(dirname(packageJsonPath), './package-scripts.yml')
+  const fileContents = safeDump({scripts: structureScripts(scripts)})
+  writeFileSync(packageScriptsPath, fileContents)
+
   return {packageJsonPath, packageScriptsPath}
 }
 
