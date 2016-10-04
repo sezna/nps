@@ -105,10 +105,6 @@ function onInit() {
 function getConfigType() {
   let configType
 
-  if (includes(process.argv, '-t')) {
-    configType = process.argv[indexOf(process.argv, '-t') + 1]
-  }
-
   if (includes(process.argv, '--type')) {
     configType = process.argv[indexOf(process.argv, '--type') + 1]
   }
