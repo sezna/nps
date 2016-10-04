@@ -103,17 +103,7 @@ function onInit() {
 }
 
 function getConfigType() {
-  let configType
-
-  if (includes(process.argv, '--type')) {
-    configType = process.argv[indexOf(process.argv, '--type') + 1]
-  }
-
-  if (isUndefined(configType)) {
-    return 'js'
-  }
-
-  return configType
+  return includes(process.argv, '--type') ? process.argv[indexOf(process.argv, '--type') + 1] : 'js'
 }
 
 function onHelp() {
