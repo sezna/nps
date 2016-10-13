@@ -7,9 +7,13 @@ Thanks for being willing to contribute!
 
 ## Project setup
 
+This project includes a `yarn.lock` file. Learn more about `yarn` [here](https://yarnpkg.com/).
+
+The commands below use `yarn`, but you can use [`npm`](https://www.npmjs.com) if you prefer.
+
 1. Fork and clone the repo
-2. `$ npm install` to install dependencies
-3. `$ npm start validate` to validate you've got it working
+2. `$ yarn install` to install dependencies
+3. `$ yarn start validate` to validate you've got it working
 4. Create a branch for your PR
 
 ## Add yourself as a contributor
@@ -18,7 +22,7 @@ This project follows the [all contributors][all-contributors] specification. To 
 contributors on the README.md, please use the automated script as part of your PR:
 
 ```console
-npm start addContributor <YOUR_GITHUB_USERNAME>
+yarn start addContributor <YOUR_GITHUB_USERNAME>
 ```
 
 Follow the prompt. If you've already added yourself to the list and are making a new type of contribution, you can run
@@ -35,7 +39,7 @@ You can use `commitizen` to help you to follow [the convention](https://github.c
 Once you are ready to commit the changes, please use the below commands
 
 1. `git add <files to be comitted>`
-2. `$ npm start commit`
+2. `$ yarn start commit`
 
 ... and follow the instruction of the interactive prompt.
 
