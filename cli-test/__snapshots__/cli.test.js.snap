@@ -49,10 +49,9 @@ Object {
     -r, --require <module>                      Module to preload
 
 Available scripts (camel or kebab case accepted)
-
-test - echo \"test script\"
-lint - echo \"lint.default\"
-lint.sub.thing - this is a description - echo \"deeply nested thing\"
+├─ test - echo \"test script\"
+└─ lint - echo \"lint.default\"
+   │  └─ lint.sub.thing - this is a description - echo \"deeply nested thing\"
 "
 }
 `;
