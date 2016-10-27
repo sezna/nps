@@ -4,6 +4,7 @@ import {remove, includes, isPlainObject, isEmpty} from 'lodash'
 import shellEscape from 'shell-escape'
 import colors from 'colors/safe'
 import {safeLoad} from 'js-yaml'
+import tree from 'ascii-tree'
 
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
@@ -11,6 +12,7 @@ import initialize from './initialize'
 import {default as autocomplete, install as installAutocomplete} from './autocomplete'
 
 const log = getLogger()
+const indentCharacter = '#'
 
 /**
  * Attempts to load the given module. This is used for the --require functionality of the CLI
@@ -138,7 +140,7 @@ function requireDefaultFromModule(modulePath) {
 
 function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
-  const scriptLines = availableScripts.map(({name, description, script}) => {
+  const scriptLines = availableScripts.map(({indent, name, description, script}) => {
     const coloredName = colors.green(name)
     const coloredScript = colors.gray(script)
     let line
@@ -147,18 +149,20 @@ function help({scripts}) {
     } else {
       line = [coloredName, coloredScript]
     }
-    return line.join(' - ').trim()
+    return indent + line.join(' - ').trim()
   })
   if (scriptLines.length) {
-    const topMessage = 'Available scripts (camel or kebab case accepted)'
-    const message = `${topMessage}\n\n${scriptLines.join('\n')}`
-    return message
+    const topMessage = `${indentCharacter}Available scripts (camel or kebab case accepted)`
+    const scriptString = `${scriptLines.join('\n')}`
+    const helpString = tree.generate(`${topMessage}\n${scriptString}`)
+    
+    return helpString.replace(/\r\n/g, '\n')
   } else {
     return colors.yellow('There are no scripts available')
   }
 }
 
-function getAvailableScripts(config, prefix = []) {
+function getAvailableScripts(config, prefix = [], indentLevel = 2) {
   const excluded = ['description', 'script', 'default']
   return Object.keys(config).reduce((scripts, key) => {
     const val = config[key]
@@ -169,10 +173,12 @@ function getAvailableScripts(config, prefix = []) {
     const prefixed = [...prefix, key]
     if (scriptObj) {
       const {description, script} = scriptObj
-      scripts = [...scripts, {name: prefixed.join('.'), description, script}]
+      const name = prefixed.join('.')
+      const indent = indentCharacter.repeat(indentLevel)
+      scripts = [...scripts, {indent, name, description, script}]
     }
     if (isPlainObject(val)) {
-      return [...scripts, ...getAvailableScripts(val, prefixed)]
+      return [...scripts, ...getAvailableScripts(val, prefixed, indentLevel + 1)]
     }
     return scripts
   }, [])
