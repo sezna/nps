@@ -138,7 +138,8 @@ function requireDefaultFromModule(modulePath) {
 
 function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
-  const scriptLines = availableScripts.map(({name, description, script}) => {
+  const filteredScripts = availableScripts.filter(script => !script.hiddenFromHelp)
+  const scriptLines = filteredScripts.map(({name, description, script}) => {
     const coloredName = colors.green(name)
     const coloredScript = colors.gray(script)
     let line
@@ -168,8 +169,8 @@ function getAvailableScripts(config, prefix = []) {
     const scriptObj = resolveScriptObjectToScript(val)
     const prefixed = [...prefix, key]
     if (scriptObj) {
-      const {description, script} = scriptObj
-      scripts = [...scripts, {name: prefixed.join('.'), description, script}]
+      const {description, script, hiddenFromHelp = false} = scriptObj
+      scripts = [...scripts, {name: prefixed.join('.'), description, script, hiddenFromHelp}]
     }
     if (isPlainObject(val)) {
       return [...scripts, ...getAvailableScripts(val, prefixed)]
