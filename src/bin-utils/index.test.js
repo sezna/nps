@@ -202,3 +202,18 @@ test('help: returns no scripts available', () => {
   const expected = colors.yellow('There are no scripts available')
   expect(message).toBe(expected)
 })
+
+test('help: do not display scripts with flag hiddenFromHelp set to true', () => {
+  const config = {
+    scripts: {
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+        hiddenFromHelp: true,
+      },
+    },
+  }
+  const message = help(config)
+  const expected = colors.yellow('There are no scripts available')
+  expect(message).toBe(expected)
+})

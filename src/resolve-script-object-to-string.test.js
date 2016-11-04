@@ -1,17 +1,5 @@
 import resolveScriptObjectToString from './resolve-script-object-to-string'
 
-test('returns undefined if a script is marked as hiddenFromHelp', () => {
-  const lintCommand = 'eslint .'
-  const result = resolveScriptObjectToString({script: lintCommand, hiddenFromHelp: true})
-  expect(result).toBeUndefined()
-})
-
-test('returns the script if hiddenFromHelp is false', () => {
-  const lintCommand = 'eslint .'
-  const result = resolveScriptObjectToString({script: lintCommand, hiddenFromHelp: false})
-  expect(result).toBe(lintCommand)
-})
-
 test('returns undefined if a script cannot be resolved to a string', () => {
   const result = resolveScriptObjectToString(42)
   expect(result).toBeUndefined()
