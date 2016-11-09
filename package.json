@@ -1,6 +1,6 @@
 {
   "name": "p-s",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
   "scripts": {
