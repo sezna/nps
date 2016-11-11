@@ -170,6 +170,17 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "martellaj",
+      "name": "Joe Martella",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1019478?v=3",
+      "profile": "http://martellaj.github.io",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }
