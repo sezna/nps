@@ -1,4 +1,5 @@
 import {resolve} from 'path'
+import pjson from '../package'
 import runNPS from './run-nps'
 
 const fixturesPath = resolve(__dirname, './fixtures')
@@ -43,6 +44,18 @@ function snapshot(args) {
 function relativizePaths(results) {
   return Object.keys(results).reduce((obj, key) => {
     obj[key] = results[key].replace(resolve(__dirname, '../'), '<projectRootDir>')
+    obj[key] = replaceVersionNumber(obj[key])
     return obj
   }, {})
+}
+
+/**
+ * This helper function is specifically for the 'with a missing config' test. It replaces
+ * the actual version of the package found in the error string and replaces it with the
+ * version specified in the snapshot so the test passes.
+ * @param {string} result - Part of the results object from runNPS
+ * @return {string} - The new part of the results object with the version-agnostic error
+ */
+function replaceVersionNumber(result) {
+  return result.replace(pjson.version, '0.0.0-semantically-released')
 }
