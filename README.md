@@ -155,7 +155,7 @@ We recommend that you use the `start` script because it requires less typing:
 ```
 
 You don't have to use the `start` script if you don't want. Note that if you're writing a node application, you're
-likely using `nps` for starting your server. In that case, you can create a `default` script which will be run
+likely using `start` for starting your server. In that case, you can create a `default` script which will be run
 when `nps` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever
 you wish. For example you could easily create a `nps` script and do: `npm run nps b`.
 
@@ -384,10 +384,10 @@ the `start`. [npm scripts][npm scripts] are generally run with `npm run <script-
 this. For example:
 
 1. `npm run test` === `npm test` === `npm t`
-2. `npm run start` === `nps`
+2. `npm run start` === `npm start`
 
 So, while you could use a script called `script` and run `npm run script build`, I just think it reads more clearly to
-just use the `start` script and run `nps build`. It's also nice that it's fewer things to type. You could also use
+just use the `start` script and run `npm start build`. It's also nice that it's fewer things to type. You could also use
 the `test` script and then type even less: `npm t build`, but thats just... odd.
 
 Note, often servers are configured to run `npm start` by default to start the server. To allow for this case, you can
