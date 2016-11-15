@@ -11,7 +11,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -155,7 +155,7 @@ We recommend that you use the `start` script because it requires less typing:
 ```
 
 You don't have to use the `start` script if you don't want. Note that if you're writing a node application, you're
-likely using `nps` for starting your server. In that case, you can create a `default` script which will be run
+likely using `start` for starting your server. In that case, you can create a `default` script which will be run
 when `nps` is run without arguments (so effectively it'll work just the same). But if you'd prefer, you can use whatever
 you wish. For example you could easily create a `nps` script and do: `npm run nps b`.
 
@@ -384,10 +384,10 @@ the `start`. [npm scripts][npm scripts] are generally run with `npm run <script-
 this. For example:
 
 1. `npm run test` === `npm test` === `npm t`
-2. `npm run start` === `nps`
+2. `npm run start` === `npm start`
 
 So, while you could use a script called `script` and run `npm run script build`, I just think it reads more clearly to
-just use the `start` script and run `nps build`. It's also nice that it's fewer things to type. You could also use
+just use the `start` script and run `npm start build`. It's also nice that it's fewer things to type. You could also use
 the `test` script and then type even less: `npm t build`, but thats just... odd.
 
 Note, often servers are configured to run `npm start` by default to start the server. To allow for this case, you can
@@ -430,7 +430,7 @@ Thanks goes to these people ([emoji key][emojis]):
 | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) 🚇 💡 📹 👀 | [<img src="https://avatars.githubusercontent.com/u/532272?v=3" width="100px;"/><br /><sub>David Wells</sub>](http://davidwells.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=DavidWells) | [<img src="https://avatars.githubusercontent.com/u/802242?v=3" width="100px;"/><br /><sub>Abhishek Shende</sub>](https://twitter.com/abhishekisnot)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=abhishekisnot) [⚠️](https://github.com/kentcdodds/p-s/commits?author=abhishekisnot) | [<img src="https://avatars.githubusercontent.com/u/185649?v=3" width="100px;"/><br /><sub>Rowan Oulton</sub>](http://travelog.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) [📖](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) [⚠️](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) | [<img src="https://avatars.githubusercontent.com/u/1915716?v=3" width="100px;"/><br /><sub>Gilad Goldberg</sub>](https://github.com/giladgo)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=giladgo) | [<img src="https://avatars.githubusercontent.com/u/14267457?v=3" width="100px;"/><br /><sub>Tim McGee</sub>](https://github.com/tim-mcgee)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=tim-mcgee) [📖](https://github.com/kentcdodds/p-s/commits?author=tim-mcgee) | [<img src="https://avatars.githubusercontent.com/u/175264?v=3" width="100px;"/><br /><sub>Nik Butenko</sub>](http://butenko.me)<br />💡 [💻](https://github.com/kentcdodds/p-s/commits?author=nkbt) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/p-s/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/p-s/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/p-s/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](https://robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 [📖](https://github.com/kentcdodds/p-s/commits?author=edm00se) | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
-| [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=sxn) [⚠️](https://github.com/kentcdodds/p-s/commits?author=sxn) [📖](https://github.com/kentcdodds/p-s/commits?author=sxn) | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Agunnx) [💻](https://github.com/kentcdodds/p-s/commits?author=gunnx) [⚠️](https://github.com/kentcdodds/p-s/commits?author=gunnx) | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Amartellaj) [💻](https://github.com/kentcdodds/p-s/commits?author=martellaj) [⚠️](https://github.com/kentcdodds/p-s/commits?author=martellaj) |
+| [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=sxn) [⚠️](https://github.com/kentcdodds/p-s/commits?author=sxn) [📖](https://github.com/kentcdodds/p-s/commits?author=sxn) | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Agunnx) [💻](https://github.com/kentcdodds/p-s/commits?author=gunnx) [⚠️](https://github.com/kentcdodds/p-s/commits?author=gunnx) | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Amartellaj) [💻](https://github.com/kentcdodds/p-s/commits?author=martellaj) [⚠️](https://github.com/kentcdodds/p-s/commits?author=martellaj) | [<img src="https://avatars.githubusercontent.com/u/1887854?v=3" width="100px;"/><br /><sub>Martin Segado</sub>](https://github.com/msegado)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=msegado) |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.

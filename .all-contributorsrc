@@ -181,6 +181,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "msegado",
+      "name": "Martin Segado",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1887854?v=3",
+      "profile": "https://github.com/msegado",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
