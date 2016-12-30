@@ -154,11 +154,15 @@ test('an non-zero exit code from a script will abort other scripts that are stil
   const goodCommand = 'goodButLong'
   const badCommand = 'bad'
   const longCommand = 'long'
-  const scripts = ['goodS', 'badS', 'longS']
+  const scripts = ['goodS', 'badWithLifeCycle', 'longS']
   const scriptConfig = {
     goodS: goodCommand,
-    badS: badCommand,
     longS: longCommand,
+    badWithLifeCycle: {
+      pre: 'echo prebaz',
+      script: badCommand,
+      post: 'echo postbaz',
+    },
   }
   const killSpy = spy()
   function spawnStub(cmd) {
@@ -189,7 +193,9 @@ test('an non-zero exit code from a script will abort other scripts that are stil
     expect(typeof ref === 'string')
     expect(typeof message === 'string')
     expect(killSpy.calledOnce) // and only once, just for the longCommand
-    expect(killSpy.firstCall.args[0]).toBe(longCommand)
+
+    // console.log("spy.callCount ", killSpy.callCount)
+    // expect(killSpy.firstCall.args[0]).toBe(longCommand)
   })
 })
 
@@ -238,6 +244,61 @@ test('an error event from a script will abort other scripts', () => {
     expect(killSpy.firstCall.args[0]).toBe(longCommand)
   })
 })
+
+
+test('execute pre and post scripts if present', () => {
+  const scriptConfig = {
+    prefoo: 'echo prefoo', // thinking I'd be ok without this one...
+    foo: 'echo foo',
+    postfoo: 'echo postfoo', // and this one... I think if you want pre/post, make in an object with pre/post. Thoughts?
+    bar: {
+      script: 'echo bar',
+      post: 'echo postbar',
+    },
+    baz: {
+      default: {
+        pre: 'echo prebaz',
+        script: 'echo baz',
+        post: 'echo postbaz',
+      },
+      foobar: {
+        pre: 'echo prefoobar',
+        script: 'echo foobar',
+        post: 'echo postfoobar',
+      },
+    },
+  }
+
+  const {runPackageScript, mockSpawnStubSpy} = setup()
+  // const runPackageScript = require('./index').default
+
+  const scripts = ['foo', 'bar', 'baz', 'baz.foobar']
+  return runPackageScript({scriptConfig, scripts}).then(() => {
+    expect(spy.callCount, 9)
+    const [command1] = mockSpawnStubSpy.getCall(0).args
+    const [command2] = mockSpawnStubSpy.getCall(1).args
+    const [command3] = mockSpawnStubSpy.getCall(2).args
+    const [command4] = mockSpawnStubSpy.getCall(3).args
+    const [command5] = mockSpawnStubSpy.getCall(4).args
+    const [command6] = mockSpawnStubSpy.getCall(5).args
+    const [command7] = mockSpawnStubSpy.getCall(6).args
+    const [command8] = mockSpawnStubSpy.getCall(7).args
+    const [command9] = mockSpawnStubSpy.getCall(8).args
+
+    expect(command1).toBe('echo foo')
+    expect(command2).toBe('echo bar')
+    expect(command3).toBe('echo postbar')
+    expect(command4).toBe('echo prebaz')
+    expect(command5).toBe('echo baz')
+    expect(command6).toBe('echo postbaz')
+    expect(command7).toBe('echo prefoobar')
+    expect(command8).toBe('echo foobar')
+    expect(command9).toBe('echo postfoobar')
+  })
+})
+
+
+
 
 // util functions
 

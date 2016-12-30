@@ -6,18 +6,19 @@ test('returns undefined if a script cannot be resolved to a string', () => {
 })
 
 test('returns the string if given a string', () => {
-  expect('hello').toBe(resolveScriptObjectToString('hello'))
+  const {script} = resolveScriptObjectToString('hello')
+  expect('hello').toBe(script)
 })
 
 test('script can be an object', () => {
   const lintCommand = 'eslint .'
-  const command = resolveScriptObjectToString({script: lintCommand})
+  const {script: command} = resolveScriptObjectToString({script: lintCommand})
   expect(command).toBe(lintCommand)
 })
 
 test('get the default from the script object', () => {
   const buildCommand = 'webpack'
-  const command = resolveScriptObjectToString({default: {script: buildCommand}})
+  const {script: command} = resolveScriptObjectToString({default: {script: buildCommand}})
   expect(command).toBe(buildCommand)
 })
 
@@ -27,7 +28,7 @@ test('returns undefined if the object with default cannot be resolved to a strin
 })
 
 test('resolves default to the script if it is a string', () => {
-  const result = resolveScriptObjectToString({default: 'string'})
+  const {script: result} = resolveScriptObjectToString({default: 'string'})
   expect(result).toBe('string')
 })
 
