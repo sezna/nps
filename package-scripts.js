@@ -9,11 +9,11 @@ module.exports = {
       script: 'git-cz',
     },
     test: {
-      default: 'jest src/ --coverage',
-      watch: 'jest src/ --watch',
+      default: 'jest --config=test/jest.src.config.json --coverage',
+      watch: 'jest --config=test/jest.src.config.json --watch',
       cli: {
-        default: 'jest cli-test/',
-        watch: 'jest cli-test/ --watch',
+        default: 'jest --config=test/jest.cli.config.json',
+        watch: 'jest --config=test/jest.cli.config.json --watch',
       },
     },
     build: {

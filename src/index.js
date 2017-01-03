@@ -71,7 +71,7 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
   if (!isString(script)) {
     return Promise.reject({
       message: colors.red(
-        `Scripts must resolve to strings. There is no script that can be resolved from "${scriptName}"`
+        `Scripts must resolve to strings. There is no script that can be resolved from "${scriptName}"`,
       ),
       ref: 'missing-script',
     })
@@ -87,7 +87,7 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
       child = null
       reject({
         message: colors.red(
-          `The script called "${scriptName}" which runs "${command}" emitted an error`
+          `The script called "${scriptName}" which runs "${command}" emitted an error`,
         ),
         ref: 'emitted-an-error',
         error,
@@ -101,7 +101,7 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
       } else {
         reject({
           message: colors.red(
-            `The script called "${scriptName}" which runs "${command}" failed with exit code ${code}`
+            `The script called "${scriptName}" which runs "${command}" failed with exit code ${code}`,
           ),
           ref: 'failed-with-exit-code',
           code,
