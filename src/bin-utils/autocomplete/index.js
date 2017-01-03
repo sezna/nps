@@ -11,7 +11,7 @@ function autocomplete(config = {}) {
   complete.init()
 
   function onScript() {
-    this.reply(getScripts(config.scripts))
+    this.reply(getScripts(config.scripts)) // eslint-disable-line babel/no-invalid-this
   }
 }
 

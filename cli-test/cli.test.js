@@ -5,27 +5,27 @@ const fixturesPath = resolve(__dirname, './fixtures')
 
 test(
   'without arguments',
-  () => snapshot()
+  () => snapshot(),
 )
 
 test(
   'with config with default script',
-  () => snapshot('-c ./package-scripts-with-default.js')
+  () => snapshot('-c ./package-scripts-with-default.js'),
 )
 
 test(
   'with a missing config',
-  () => snapshot('-c ./something-that-does-not-exist.js')
+  () => snapshot('-c ./something-that-does-not-exist.js'),
 )
 
 test(
   'with --silent',
-  () => snapshot('test --silent')
+  () => snapshot('test --silent'),
 )
 
 test(
   'with --require',
-  () => snapshot('--config ./es6-package-scripts.js --require babel-register log')
+  () => snapshot('--config ./es6-package-scripts.js --require babel-register log'),
 )
 
 function snapshot(args) {

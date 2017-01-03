@@ -8,7 +8,7 @@ import {safeLoad} from 'js-yaml'
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
 import initialize from './initialize'
-import {default as autocomplete, install as installAutocomplete} from './autocomplete'
+import autocomplete, {install as installAutocomplete} from './autocomplete'
 
 const log = getLogger()
 
@@ -128,7 +128,8 @@ function getAttemptModuleRequireFn(onFail) {
  * @return {*} The required module (or it's `default` if it's an `__esModule`)
  */
 function requireDefaultFromModule(modulePath) {
-  const mod = require(modulePath) // eslint-disable-line global-require
+  /* eslint global-require:0,import/no-dynamic-require:0 */
+  const mod = require(modulePath)
   if (mod.__esModule) {
     return mod.default
   } else {

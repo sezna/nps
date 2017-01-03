@@ -91,14 +91,14 @@ function onInit() {
   const {packageScriptsPath} = initialize(getConfigType())
   log.info(`Your scripts have been saved at ${colors.green(packageScriptsPath)}`)
   log.info(colors.gray(
-    'Check out your scripts in there. Go ahead and update them and add descriptions to the ones that need it'
+    'Check out your scripts in there. Go ahead and update them and add descriptions to the ones that need it',
   ))
   log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start help` for help'))
   log.info(colors.gray(
     'You may also want to install the package globally and installing autocomplete script. You can do so by running\n' +
     '  npm install --global p-s\n' +
     '  nps completion <optionally-your-bash-profile-file>\n' +
-    'The bash profile file defaults to ~/.bash_profile for bash and ~/.zshrc for zsh'
+    'The bash profile file defaults to ~/.bash_profile for bash and ~/.zshrc for zsh',
   ))
 }
 
@@ -121,7 +121,7 @@ function onRequestToInstallCompletion() {
   }
   log.info(
     `You're going to need to either resource that file, or open a new instance of ` +
-    'the terminal to get autocomplete to start working'
+    'the terminal to get autocomplete to start working',
   )
   installAutocomplete(destination)
 }

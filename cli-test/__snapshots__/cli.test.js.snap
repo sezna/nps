@@ -3,7 +3,7 @@ Object {
   "stderr": "",
   "stdout": "nps executing: echo \"log\"
 log
-"
+",
 }
 `;
 
@@ -11,7 +11,7 @@ exports[`test with --silent 1`] = `
 Object {
   "stderr": "",
   "stdout": "test script
-"
+",
 }
 `;
 
@@ -19,7 +19,7 @@ exports[`test with a missing config 1`] = `
 Object {
   "stderr": "Unable to find JS config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
 ",
-  "stdout": ""
+  "stdout": "",
 }
 `;
 
@@ -28,7 +28,7 @@ Object {
   "stderr": "",
   "stdout": "nps executing: echo \"default script\"
 default script
-"
+",
 }
 `;
 
@@ -53,6 +53,6 @@ Available scripts (camel or kebab case accepted)
 test - echo \"test script\"
 lint - echo \"lint.default\"
 lint.sub.thing - this is a description - echo \"deeply nested thing\"
-"
+",
 }
 `;

@@ -1,0 +1,6 @@
+{
+  "testPathDirs": [
+    "<rootDir>/cli-test"
+  ],
+  "testEnvironment": "jest-environment-node"
+}
