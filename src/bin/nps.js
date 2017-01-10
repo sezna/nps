@@ -90,7 +90,7 @@ function getPSConfigFilepath() {
 function onInit() {
   if (getPSConfigFilepath()) {
     if (!keyInYN(colors.yellow(`Do you want to overwrite your existing config file?`))) {
-      process.exit(1)
+      process.exit(FAIL_CODE)
     }
   }
   shouldRun = false
