@@ -4,6 +4,7 @@ import findUp from 'find-up'
 import {merge, includes, indexOf} from 'lodash'
 import program from 'commander'
 import colors from 'colors/safe'
+import {keyInYN} from 'readline-sync'
 import runPackageScript from '../index'
 import {
   getScriptsAndArgs, initialize, autocomplete, installAutocomplete,
@@ -87,6 +88,11 @@ function getPSConfigFilepath() {
 }
 
 function onInit() {
+  if (getPSConfigFilepath()) {
+    if (!keyInYN(colors.yellow(`Do you want to overwrite your existing config file?`))) {
+      process.exit(FAIL_CODE)
+    }
+  }
   shouldRun = false
   const {packageScriptsPath} = initialize(getConfigType())
   log.info(`Your scripts have been saved at ${colors.green(packageScriptsPath)}`)

@@ -31,6 +31,7 @@
     "manage-path": "2.0.0",
     "omelette": "0.3.1",
     "prefix-matches": "0.0.9",
+    "readline-sync": "1.4.5",
     "shell-escape": "0.2.0",
     "spawn-command-with-kill": "1.0.0"
   },
