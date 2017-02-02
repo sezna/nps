@@ -259,7 +259,7 @@ Use a different config
 nps -c ./other/package-scripts.js lint
 ```
 
-Normally, `npss` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
+Normally, `nps` will look for a `package-scripts.js` file and load that to get the scripts. Generally you'll want to
 have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `nps` will
 use that file instead.
 
