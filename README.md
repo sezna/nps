@@ -20,11 +20,11 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 
 ## Quick Video Intro :tv:
 
-<a href="http://kcd.im/p-s-video" title="Simplify and empower npm scripts with p-s">
+<a href="http://kcd.im/p-s-video" title="Pull out npm scripts into another file with p-s">
   <img src="other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
 </a>
 
-[Simplify and empower npm scripts with p-s][video] 11:19
+[Pull out npm scripts into another file with p-s][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
 
 ## The problem
 
