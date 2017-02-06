@@ -1,25 +1,25 @@
 import {isString, isPlainObject, isUndefined} from 'lodash'
 
-export {resolveScriptObjectToString as default, resolveScriptObjectToScript}
+export {resolveScriptObjectToLifecycleObject as default, resolveScriptObjectToScript}
 
-function resolveScriptObjectToString(script) {
+function resolveScriptObjectToLifecycleObject(script) {
   const scriptObj = resolveScriptObjectToScript(script)
   if (isPlainObject(scriptObj)) {
-    return scriptObj.script
+    return scriptObj
   }
   return undefined
 }
 
 function resolveScriptObjectToScript(script) {
   if (isPlainObject(script)) {
-    return resolvePlainObjectToScript(script)
+    return resolvePlainObjectToScriptLifecycle(script)
   } else if (isString(script)) {
     return {script}
   }
   return undefined
 }
 
-function resolvePlainObjectToScript(script) {
+function resolvePlainObjectToScriptLifecycle(script) {
   if (!isUndefined(script.script)) {
     return script
   }
