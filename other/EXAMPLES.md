@@ -1,11 +1,23 @@
 # package-scripts examples
 
 ## Links to projects
+
 Examples of how people us `p-s`:
 
 - **[p-s](https://github.com/kentcdodds/p-s):** [scripts](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package.json#L6-L10), [`package-scripts.js`](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package-scripts.js)
-- **[Smithers](https://github.com/SmithersAssistant/smithers):**
-  [scripts](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package.json#L67-L70), [`package-scripts.js`](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package-scripts.js)
+- **[react-component-template](https://github.com/nkbt/react-component-template)** uses `p-s` to implement shareable npm
+scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them. (Gotcha: - use
+`process.cwd()` as the base for all paths).
+- **[Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests)** uses `p-s` to automate benchmark
+running and reporting in node and the browser. `package-scripts.js` enables us to keep our scripts DRY. Combined with
+[grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob
+patterns.
+- **[SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers)** is an
+[electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s`
+to dynamically find the current platform and execute the dev environment. Now we don't have to manually update the
+`package.json` scripts when you are on a different platform!
+[scripts](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package.json#L67-L70),
+[`package-scripts.js`](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package-scripts.js)
 
 ## Inline Examples
 
@@ -15,6 +27,9 @@ One of the big challenges with open source projects is that users and contributo
 can't determine the platform in the `package.json`, you have to either have to duplicate scripts (like having a
 `build:windows` and `build:unix` script), find CLIs that are cross platform (like
 [`cross-env`](http://npm.im/cross-env)), or write your logic in a separate file to handle the platform.
+
+You can also use [`cross-var`](http://npm.im/cross-var) in basically the same way to do the same for using environment
+variables in your scripts so it works on both windows and mac/linux
 
 With `package-scripts`, you can really easily have a single script that uses the platform to determine what should be
 run. For example:
@@ -34,6 +49,32 @@ module.exports = {
 
 Note, in this specific scenario, I'd recommend that you actually use [`rimraf`](http://npm.im/rimraf), but I think you
 get the idea 😄. This is a pretty nice win over traditional npm scripts 👍
+
+### parallel scripts
+
+Often, scripts can run concurrently because they are not interdependent. We recommend
+[`concurrently`](http://npm.im/concurrently) for this:
+
+```javascript
+module.exports = {
+  scripts: {
+    validate: concurrent([
+      'build',
+      'lint',
+      'test',
+      'order.sandwich',
+    ]),
+    // etc...
+  }
+}
+
+function concurrent(scripts) {
+  process.env.FORCE_COLOR = true // this is necessary until https://github.com/kimmobrunfeldt/concurrently/issues/86
+  const names = scripts.join(',')
+  const quotedScripts = `"nps ${scripts.join('" "nps ')}"`
+  return `concurrently --prefix "[{name}]" --names "${names}" ${quotedScripts}`
+}
+```
 
 ## Instructions
 

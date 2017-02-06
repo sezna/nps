@@ -43,7 +43,7 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: `nps -p ${validate.join(',')}`,
+      script: concurrent(validate),
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',
@@ -57,4 +57,11 @@ module.exports = {
   options: {
     silent: false,
   },
+}
+
+function concurrent(scripts) {
+  process.env.FORCE_COLOR = true // this is required until https://github.com/kimmobrunfeldt/concurrently/issues/86
+  const names = scripts.join(',')
+  const quotedScripts = `"nps ${scripts.join('" "nps ')}"`
+  return `concurrently --prefix "[{name}]" --names "${names}" ${quotedScripts}`
 }
