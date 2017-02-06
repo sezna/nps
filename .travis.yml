@@ -24,3 +24,4 @@ branches:
   only:
     - master
     - next
+    - /^greenkeeper/.*$/
