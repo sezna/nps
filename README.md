@@ -1,5 +1,7 @@
 # p-s
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/kentcdodds/p-s.svg)](https://greenkeeper.io/)
+
 > aka npm-package-scripts or `nps` for short
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
