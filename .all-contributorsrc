@@ -209,6 +209,16 @@
       "contributions": [
         "video"
       ]
+    },
+    {
+      "login": "rrag",
+      "name": "Ragu Ramaswamy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10691183?v=3",
+      "profile": "https://github.com/rrag",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
