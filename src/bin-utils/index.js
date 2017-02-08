@@ -1,6 +1,7 @@
 import {resolve} from 'path'
 import {readFileSync} from 'fs'
-import {remove, includes, isPlainObject, isEmpty} from 'lodash'
+import {remove, includes, isPlainObject, isUndefined, isEmpty, isFunction} from 'lodash'
+import typeOf from 'type-detect'
 import shellEscape from 'shell-escape'
 import colors from 'colors/safe'
 import {safeLoad} from 'js-yaml'
@@ -35,15 +36,38 @@ const loadJSConfig = getAttemptModuleRequireFn(function onFail(configPath, requi
 
 /**
  * Attempts to load the config and logs an error if there's a problem
- * @param  {String} configPath The path to attempt to require the config from
- * @return {*} The required module
+ * @param {String} configPath The path to attempt to require the config from
+ * @param {*} input the input to pass to the config if it's a function
+ * @return {Object} The config
  */
-function loadConfig(configPath) {
+function loadConfig(configPath, input) {
   if (configPath.endsWith('.yml')) {
     return loadYAMLConfig(configPath)
   }
 
-  return loadJSConfig(configPath)
+  let config = loadJSConfig(configPath)
+  if (isUndefined(config)) {
+    // let the caller deal with this
+    return config
+  }
+  let typeMessage
+  if (isFunction(config)) {
+    config = config(input)
+    typeMessage = `Your config was a function that returned a data type of "${typeOf(config)}"`
+  } else {
+    typeMessage = `Your config data type was "${typeOf(config)}"`
+  }
+  if (!isPlainObject(config)) {
+    log.error({
+      message: colors.red(
+        `The package-scripts configuration ("${configPath}") ` +
+        'must be an object or a function that returns an object.',
+      ),
+      ref: 'config-must-be-an-object',
+    })
+    throw new Error(typeMessage)
+  }
+  return config
 }
 
 export {

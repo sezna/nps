@@ -33,7 +33,8 @@
     "prefix-matches": "^0.0.9",
     "readline-sync": "^1.4.6",
     "shell-escape": "^0.2.0",
-    "spawn-command-with-kill": "^1.0.0"
+    "spawn-command-with-kill": "^1.0.0",
+    "type-detect": "^4.0.0"
   },
   "devDependencies": {
     "all-contributors-cli": "^3.1.0",
