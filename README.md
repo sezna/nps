@@ -11,7 +11,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -58,6 +58,7 @@ module.exports = {
     },
     // learn more about concurrently here: https://npm.im/concurrently
     validate: 'concurrently "nps lint" "nps test" "nps build"',
+    // concurrently script too verbose for your liking? Check out other/EXAMPLES.md!
   },
 }
 ```
@@ -81,27 +82,41 @@ scripts:
 ```
 
 To use `p-s`, it's recommended that you either install it globally (`npm i -g p-s`) or add `./node_modules/bin` to your
-`$PATH` (be careful that you know what you're doing when doing this).
+`$PATH` (be careful that you know what you're doing when doing this, find out how [here](https://youtu.be/2WZ5iS_3Jgs)).
 
 Then you can run:
 
 ```console
-nps --help
+nps help
 ```
 
 Which will output:
 
 ```console
-  Usage: nps [options]
+Usage: nps [options] <script>...
 
-  Options:
+Commands:
+  init        automatically migrate from npm scripts to p-s
+  completion  generate bash completion script
 
-    -h, --help                                  output usage information
-    -V, --version                               output the version number
-    -s, --silent                                Silent nps output
-    -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.yml or package-scripts.js)
-    -l, --log-level <level>                     The log level to use (error, warn, info [default])
-    -r, --require <module>                      Module to preload
+Options:
+  --config, -c     Config file to use (defaults to nearest package-scripts.yml
+                   or package-scripts.js)
+                     [default: "<path-to-your-project>/package-scripts.js"]
+  --silent, -s     Silent nps output                  [boolean] [default: false]
+  --log-level, -l  The log level to use
+                   [choices: "error", "warn", "info", "debug"] [default: "info"]
+  --require, -r    Module to preload
+  -h, --help       Show help                                           [boolean]
+  -v, --version    Show version number                                 [boolean]
+
+Examples:
+  nps.js test build                         Runs the `test` script then the
+                                            `build` script
+  nps.js "test --cover" "build --prod"      Runs the `test` script and forwards
+                                            the "--cover" flag then the `build`
+                                            script and forwards the "--prod"
+                                            flag
 
 Available scripts (camel or kebab case accepted)
 
@@ -179,14 +194,7 @@ npm install --global p-s
 
 From here you can use `p-s` on the command line via one of the installed aliases: `nps` or `p-s`.
 
-If you do this, you may also be interested in installing the shell autocompletion script. Do so by running:
-
-```
-nps completion <optionally-your-bash-profile-file>
-```
-
-The bash profile file defaults to `~/.bash_profile` for bash and `~/.zshrc` for zsh. Special thanks to the
-[`omelette`][omelette] package for making this so easy.
+If you do this, you may also be interested in installing the shell autocompletion script. See more about this below.
 
 ## Getting started
 
@@ -222,12 +230,11 @@ As indicated above, this will migrate your npm scripts to package-scripts.
 
 ##### completion
 
-Installs autocompletion functionality into your default bash or zsh configuration. You can override the default by
-providing a specific file:
-
 ```console
-nps completion ~/.bashrc
+nps completion >> <your-bash-profile-file>
 ```
+
+Normally `<your-bash-profile-file>` will be `~/.bash_profile`, `~/.bashrc`, or `~/.zshrc`.
 
 Note: you should probably only do this if you have the package installed globally. In that case you should probably also
 normally use the `nps` alias rather than `p-s` because it's easier to type.
@@ -266,14 +273,6 @@ Specify the log level to use
 You can specify a module which will be loaded before the config file is loaded. This allows you to preload for example
 babel-register so you can use all babel presets you like.
 
-##### args
-
-You can pass additional arguments to the script(s) that are being spawned:
-
-```console
-nps lint --fix # --fix will be passed on to the lint script
-```
-
 ##### scripts
 
 To run a script, you simply provide the name of the script like so:
@@ -282,15 +281,24 @@ To run a script, you simply provide the name of the script like so:
 nps cover
 ```
 
-And you can run multiple scripts in series by providing a comma-separated list:
+And you can run multiple scripts in series by simply adding more space-separated arguments.
 
 ```console
-nps cover,check-coverage
+nps cover check-coverage
+```
+
+And you can pass arguments to scripts by putting the scripts in quotes:
+
+```console
+nps "test --cover" check-coverage
 ```
 
 That's all for the CLI.
 
 ### package-scripts.js
+
+> Remember, this file is JavaScript, so you can write functions to make things more simple!
+> See other/EXAMPLES.md for examples of cool things you can do with this.
 
 `nps` expects to your `package-scripts.js` file to `module.exports` an object with the following properties:
 
@@ -410,7 +418,7 @@ Thanks goes to these people ([emoji key][emojis]):
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/p-s/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/p-s/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/p-s/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](https://robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 [📖](https://github.com/kentcdodds/p-s/commits?author=edm00se) | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
 | [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=sxn) [⚠️](https://github.com/kentcdodds/p-s/commits?author=sxn) [📖](https://github.com/kentcdodds/p-s/commits?author=sxn) | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Agunnx) [💻](https://github.com/kentcdodds/p-s/commits?author=gunnx) [⚠️](https://github.com/kentcdodds/p-s/commits?author=gunnx) | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Amartellaj) [💻](https://github.com/kentcdodds/p-s/commits?author=martellaj) [⚠️](https://github.com/kentcdodds/p-s/commits?author=martellaj) | [<img src="https://avatars.githubusercontent.com/u/1887854?v=3" width="100px;"/><br /><sub>Martin Segado</sub>](https://github.com/msegado)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=msegado) | [<img src="https://avatars.githubusercontent.com/u/36491?v=3" width="100px;"/><br /><sub>Bram Borggreve</sub>](http://colmena.io/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Abeeman) [💻](https://github.com/kentcdodds/p-s/commits?author=beeman) | [<img src="https://avatars.githubusercontent.com/u/86454?v=3" width="100px;"/><br /><sub>Elijah Manor</sub>](http://elijahmanor.com)<br />📹 | [<img src="https://avatars.githubusercontent.com/u/10691183?v=3" width="100px;"/><br /><sub>Ragu Ramaswamy</sub>](https://github.com/rrag)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rrag) [⚠️](https://github.com/kentcdodds/p-s/commits?author=rrag) |
-| [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox) |
+| [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox) | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub>Aditya Pratap Singh</sub>](http://blog.adityapsingh.com)<br />👀 |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -455,4 +463,3 @@ MIT
 [scripty]: https://npmjs.com/package/scripty
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/p-s-video
-[omelette]: https://npmjs.com/package/omelette

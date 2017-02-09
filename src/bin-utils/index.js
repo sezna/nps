@@ -1,15 +1,12 @@
 import {resolve} from 'path'
 import {readFileSync} from 'fs'
-import {remove, includes, isPlainObject, isUndefined, isEmpty, isFunction} from 'lodash'
+import {includes, isPlainObject, isUndefined, isFunction} from 'lodash'
 import typeOf from 'type-detect'
-import shellEscape from 'shell-escape'
 import chalk from 'chalk'
 import {safeLoad} from 'js-yaml'
-
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
 import initialize from './initialize'
-import autocomplete, {install as installAutocomplete} from './autocomplete'
 
 const log = getLogger()
 
@@ -71,7 +68,7 @@ function loadConfig(configPath, input) {
 }
 
 export {
-  getScriptsAndArgs, initialize, help, autocomplete, installAutocomplete,
+  initialize, help,
   getModuleRequirePath, preloadModule, loadConfig,
 }
 
@@ -91,32 +88,6 @@ function loadYAMLConfig(configPath) {
     })
     return undefined
   }
-}
-
-function getScriptsAndArgs(program) {
-  let scripts = []
-  let args = ''
-  const {rawArgs} = program
-  if (!isEmpty(program.args)) {
-    const [scriptsString] = program.args
-    scripts = scriptsString.split(',')
-    remove(rawArgs, arg => arg === scriptsString)
-    args = getArgs(program.args.slice(1), rawArgs, scripts)
-  }
-  return {scripts, args}
-}
-
-function getArgs(args, rawArgs, scripts) {
-  const allArgs = rawArgs.slice(2)
-  const psArgs = ['-c', '--config', '-r', '--require']
-  const psFlags = ['-s', '--silent']
-  const cleanedArgs = remove(allArgs, (item, index, array) => {
-    const isArgOrFlag = includes(psArgs, item) || includes(psFlags, item)
-    const isArgValue = includes(psArgs, array[index - 1])
-    const isInScripts = includes(scripts, item)
-    return !isArgOrFlag && !isArgValue && !isInScripts
-  })
-  return shellEscape(cleanedArgs)
 }
 
 /**

@@ -1,6 +1,12 @@
 const transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
 const cleanDist = 'rimraf dist'
-const validate = ['build.andValidate', 'test', 'lint']
+// const npsBin = 'babel-node src/bin/nps.js'
+const npsBin = 'nps'
+const validate = [
+  'build.andValidate',
+  'test',
+  'lint',
+]
 
 module.exports = {
   scripts: {
@@ -8,6 +14,7 @@ module.exports = {
       description: 'This uses commitizen to help us generate beautifully formatted commit messages',
       script: 'git-cz',
     },
+    temp: 'sleep 8; exit 0',
     test: {
       default: 'jest --config=test/jest.src.config.json --coverage',
       watch: 'jest --config=test/jest.src.config.json --watch',
@@ -26,7 +33,7 @@ module.exports = {
       },
       andValidate: {
         description: 'Runs the normal build first, then validates the CLI',
-        script: 'nps build,test.cli',
+        script: 'nps build && nps test.cli',
       },
     },
     lint: {
@@ -60,8 +67,12 @@ module.exports = {
 }
 
 function concurrent(scripts) {
-  process.env.FORCE_COLOR = true // this is required until https://github.com/kimmobrunfeldt/concurrently/issues/86
   const names = scripts.join(',')
-  const quotedScripts = `"nps ${scripts.join('" "nps ')}"`
-  return `concurrently --prefix "[{name}]" --names "${names}" ${quotedScripts}`
+  const quotedScripts = `"${npsBin} ${scripts.join(`" "${npsBin} `)}"`
+  const colors = [
+    ['bgBlue.bold'],
+    ['bgMagenta.bold'],
+    ['bgGreen.bold'],
+  ]
+  return `concurrently --prefix-colors "${colors.join(',')}" --prefix "[{name}]" --names "${names}" ${quotedScripts}`
 }
