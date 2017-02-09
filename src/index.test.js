@@ -1,6 +1,5 @@
 /* eslint import/newline-after-import:0, global-require:0 */
 import {resolve} from 'path'
-import Promise from 'bluebird'
 import {spy} from 'sinon'
 import chalk from 'chalk'
 import managePath from 'manage-path'
