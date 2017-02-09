@@ -1,5 +1,4 @@
 import spawn from 'spawn-command-with-kill'
-import Promise from 'bluebird'
 import chalk from 'chalk'
 import {isString, clone} from 'lodash'
 import {sync as findUpSync} from 'find-up'
