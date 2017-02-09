@@ -89,3 +89,26 @@ test('initialize without a test script should not add a test to the package.json
     start: 'nps',
   })
 })
+
+test('initialize without any scripts should successfully create an empty package-scripts.js file', () => {
+  const packageJsonDestination = resolve('./src/bin-utils/initialize/fixtures/_package-no-scripts.json')
+  const mockWriteFileSync = spy()
+  const mockFindUpSync = spy(file => {
+    if (file === 'package.json') {
+      return packageJsonDestination
+    }
+    throw new Error('Should not look for anything but package.json')
+  })
+  jest.resetModules()
+  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
+  const initialize = require('./index').default
+
+  initialize()
+  const [, packageJsonStringResult] = mockWriteFileSync.firstCall.args
+  const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
+
+  expect(packageJsonScripts).toEqual({
+    start: 'nps',
+  })
+})

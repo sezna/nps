@@ -10,7 +10,7 @@ function initialize(configType = 'js') {
   /* eslint global-require:0,import/no-dynamic-require:0 */
   const packageJsonPath = findUpSync('package.json')
   const packageJson = require(packageJsonPath)
-  const {scripts} = packageJson
+  const {scripts = {}} = packageJson
   packageJson.scripts = {
     start: 'nps',
     test: scripts.test ? 'nps test' : undefined,
