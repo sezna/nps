@@ -3,7 +3,7 @@ import {readFileSync} from 'fs'
 import {remove, includes, isPlainObject, isUndefined, isEmpty, isFunction} from 'lodash'
 import typeOf from 'type-detect'
 import shellEscape from 'shell-escape'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 import {safeLoad} from 'js-yaml'
 
 import getLogger from '../get-logger'
@@ -20,7 +20,7 @@ const log = getLogger()
  */
 const preloadModule = getAttemptModuleRequireFn((moduleName, requirePath) => {
   log.warn({
-    message: colors.yellow(`Unable to preload "${moduleName}". Attempted to require as "${requirePath}"`),
+    message: chalk.yellow(`Unable to preload "${moduleName}". Attempted to require as "${requirePath}"`),
     ref: 'unable-to-preload-module',
   })
   return undefined
@@ -28,7 +28,7 @@ const preloadModule = getAttemptModuleRequireFn((moduleName, requirePath) => {
 
 const loadJSConfig = getAttemptModuleRequireFn(function onFail(configPath, requirePath) {
   log.error({
-    message: colors.red(`Unable to find JS config at "${configPath}". Attempted to require as "${requirePath}"`),
+    message: chalk.red(`Unable to find JS config at "${configPath}". Attempted to require as "${requirePath}"`),
     ref: 'unable-to-find-config',
   })
   return undefined
@@ -59,7 +59,7 @@ function loadConfig(configPath, input) {
   }
   if (!isPlainObject(config)) {
     log.error({
-      message: colors.red(
+      message: chalk.red(
         `The package-scripts configuration ("${configPath}") ` +
         'must be an object or a function that returns an object.',
       ),
@@ -86,7 +86,7 @@ function loadYAMLConfig(configPath) {
       throw e
     }
     log.error({
-      message: colors.red(`Unable to find YML config at "${configPath}".`),
+      message: chalk.red(`Unable to find YML config at "${configPath}".`),
       ref: 'unable-to-find-config',
     })
     return undefined
@@ -97,22 +97,18 @@ function getScriptsAndArgs(program) {
   let scripts = []
   let args = ''
   const {rawArgs} = program
-  const parallel = !isEmpty(program.parallel)
-  if (parallel) {
-    scripts = program.parallel.split(',')
-    args = getArgs(program.args, program.rawArgs, scripts)
-  } else if (!isEmpty(program.args)) {
+  if (!isEmpty(program.args)) {
     const [scriptsString] = program.args
     scripts = scriptsString.split(',')
     remove(rawArgs, arg => arg === scriptsString)
     args = getArgs(program.args.slice(1), rawArgs, scripts)
   }
-  return {scripts, args, parallel}
+  return {scripts, args}
 }
 
 function getArgs(args, rawArgs, scripts) {
   const allArgs = rawArgs.slice(2)
-  const psArgs = ['-p', '--parallel', '-c', '--config', '-r', '--require']
+  const psArgs = ['-c', '--config', '-r', '--require']
   const psFlags = ['-s', '--silent']
   const cleanedArgs = remove(allArgs, (item, index, array) => {
     const isArgOrFlag = includes(psArgs, item) || includes(psFlags, item)
@@ -165,11 +161,11 @@ function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
   const filteredScripts = availableScripts.filter(script => !script.hiddenFromHelp)
   const scriptLines = filteredScripts.map(({name, description, script}) => {
-    const coloredName = colors.green(name)
-    const coloredScript = colors.gray(script)
+    const coloredName = chalk.green(name)
+    const coloredScript = chalk.gray(script)
     let line
     if (description) {
-      line = [coloredName, colors.white(description), coloredScript]
+      line = [coloredName, chalk.white(description), coloredScript]
     } else {
       line = [coloredName, coloredScript]
     }
@@ -180,7 +176,7 @@ function help({scripts}) {
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
     return message
   } else {
-    return colors.yellow('There are no scripts available')
+    return chalk.yellow('There are no scripts available')
   }
 }
 

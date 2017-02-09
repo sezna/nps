@@ -3,7 +3,7 @@
 import findUp from 'find-up'
 import {merge, includes, indexOf} from 'lodash'
 import program from 'commander'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 import {keyInYN} from 'readline-sync'
 import runPackageScript from '../index'
 import {
@@ -23,7 +23,6 @@ program
   .version(version)
   .allowUnknownOption()
   .option('-s, --silent', 'Silent nps output')
-  .option('-p, --parallel <script-name1,script-name2>', 'Scripts to run in parallel (comma seprated)')
   .option('-c, --config <filepath>', 'Config file to use (defaults to nearest package-scripts.yml or package-scripts.js)')
   .option('-l, --log-level <level>', 'The log level to use (error, warn, info [default])')
   .option('-r, --require <module>', 'Module to preload')
@@ -58,7 +57,6 @@ function loadAndRun(psConfig) {
     args: scriptsAndArgs.args,
     options: merge(psConfig.options, {
       silent: program.silent,
-      parallel: scriptsAndArgs.parallel,
       logLevel: program.logLevel,
     }),
   }).catch(error => {
@@ -73,7 +71,7 @@ function getPSConfig() {
   }
   const configFilepath = getPSConfigFilepath()
   if (!configFilepath) {
-    log.warn(colors.yellow('Unable to find a config file and none was specified.'))
+    log.warn(chalk.yellow('Unable to find a config file and none was specified.'))
     return {scripts: {}} // empty config
   }
   const config = loadConfig(configFilepath, scriptsAndArgs)
@@ -89,18 +87,18 @@ function getPSConfigFilepath() {
 
 function onInit() {
   if (getPSConfigFilepath()) {
-    if (!keyInYN(colors.yellow(`Do you want to overwrite your existing config file?`))) {
+    if (!keyInYN(chalk.yellow(`Do you want to overwrite your existing config file?`))) {
       process.exit(FAIL_CODE)
     }
   }
   shouldRun = false
   const {packageScriptsPath} = initialize(getConfigType())
-  log.info(`Your scripts have been saved at ${colors.green(packageScriptsPath)}`)
-  log.info(colors.gray(
+  log.info(`Your scripts have been saved at ${chalk.green(packageScriptsPath)}`)
+  log.info(chalk.gray(
     'Check out your scripts in there. Go ahead and update them and add descriptions to the ones that need it',
   ))
-  log.info(colors.gray('Your package.json scripts have also been updated. Run `npm start help` for help'))
-  log.info(colors.gray(
+  log.info(chalk.gray('Your package.json scripts have also been updated. Run `npm start help` for help'))
+  log.info(chalk.gray(
     'You may also want to install the package globally and installing autocomplete script. You can do so by running\n' +
     '  npm install --global p-s\n' +
     '  nps completion <optionally-your-bash-profile-file>\n' +
