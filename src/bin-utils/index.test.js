@@ -1,6 +1,6 @@
 /* eslint import/newline-after-import:0, global-require:0 */
 import path from 'path'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 import {spy} from 'sinon'
 import {getScriptsAndArgs, help, preloadModule, loadConfig} from './index'
 
@@ -21,14 +21,6 @@ test('getScriptsAndArgs: gets scripts in series', () => {
   expect(args).toEqual('')
 })
 
-test('getScriptsAndArgs: gets parallel scripts', () => {
-  const {scripts} = getScriptsAndArgs({
-    parallel: 'boo,baz',
-    rawArgs: ['node', 'p-s', '-p', 'boo,baz'],
-  })
-  expect(scripts).toEqual(['boo', 'baz'])
-})
-
 test('getScriptsAndArgs: passes args to scripts', () => {
   const {args, scripts} = getScriptsAndArgs({
     args: ['boo'],
@@ -38,7 +30,7 @@ test('getScriptsAndArgs: passes args to scripts', () => {
   expect(args).toBe('--watch --verbose')
 })
 
-test('getScriptsAndArgs: returns empty scripts and args if not parallel and no args', () => {
+test('getScriptsAndArgs: returns empty scripts and args if no args', () => {
   const {args, scripts} = getScriptsAndArgs({
     args: [],
     rawArgs: ['node', 'p-s'],
@@ -62,8 +54,8 @@ test('preloadModule: resolves an absolute path', () => {
 })
 
 test('preloadModule: resolves a node_module', () => {
-  const val = preloadModule('colors/safe')
-  expect(val).toBe(colors)
+  const val = preloadModule('chalk')
+  expect(val).toBe(chalk)
 })
 
 test('preloadModule: logs a warning when the module cannot be required', () => {
@@ -221,14 +213,14 @@ test('help: formats a nice message', () => {
   const expected = `
 Available scripts (camel or kebab case accepted)
 
-${colors.green('foo')} - ${colors.white('the foo script')} - ${colors.gray('echo "foo"')}
-${colors.green('bar')} - ${colors.white('stuff')} - ${colors.gray('echo "bar default"')}
-${colors.green('bar.baz')} - ${colors.gray('echo "baz"')}
-${colors.green('bar.barBub')} - ${colors.gray('echo "barBub"')}
-${colors.green('build')} - ${colors.gray('webpack')}
-${colors.green('build.x')} - ${colors.white('webpack with x env')} - ${colors.gray('webpack --env.x')}
-${colors.green('build.x.y')} - ${colors.white('build X-Y')} - ${colors.gray('echo "build x-y"')}
-${colors.green('foobar')} - ${colors.gray('echo "foobar"')}
+${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray('echo "foo"')}
+${chalk.green('bar')} - ${chalk.white('stuff')} - ${chalk.gray('echo "bar default"')}
+${chalk.green('bar.baz')} - ${chalk.gray('echo "baz"')}
+${chalk.green('bar.barBub')} - ${chalk.gray('echo "barBub"')}
+${chalk.green('build')} - ${chalk.gray('webpack')}
+${chalk.green('build.x')} - ${chalk.white('webpack with x env')} - ${chalk.gray('webpack --env.x')}
+${chalk.green('build.x.y')} - ${chalk.white('build X-Y')} - ${chalk.gray('echo "build x-y"')}
+${chalk.green('foobar')} - ${chalk.gray('echo "foobar"')}
 `.trim()
 
   expect(message).toBe(expected)
@@ -237,7 +229,7 @@ ${colors.green('foobar')} - ${colors.gray('echo "foobar"')}
 test('help: returns no scripts available', () => {
   const config = {scripts: {}}
   const message = help(config)
-  const expected = colors.yellow('There are no scripts available')
+  const expected = chalk.yellow('There are no scripts available')
   expect(message).toBe(expected)
 })
 
@@ -252,7 +244,7 @@ test('help: do not display scripts with flag hiddenFromHelp set to true', () => 
     },
   }
   const message = help(config)
-  const expected = colors.yellow('There are no scripts available')
+  const expected = chalk.yellow('There are no scripts available')
   expect(message).toBe(expected)
 })
 

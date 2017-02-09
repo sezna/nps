@@ -44,7 +44,7 @@ module.exports = {
     default: 'node index.js',
     lint: 'eslint .',
     test: {
-      // learn more about Jest here: https://kcd.im/egghead-jest
+      // learn more about Jest here: https://facebook.github.io/jest
       default: 'jest',
       watch: {
         script: 'jest --watch',
@@ -52,10 +52,12 @@ module.exports = {
       }
     },
     build: {
+      // learn more about Webpack here: https://webpack.js.org/
       default: 'webpack',
       prod: 'webpack -p',
     },
-    validate: 'nps --parallel lint,test,build',
+    // learn more about concurrently here: https://npm.im/concurrently
+    validate: 'concurrently "nps lint" "nps test" "nps build"',
   },
 }
 ```
@@ -75,7 +77,7 @@ scripts:
     build:
         default: webpack
         prod: webpack -p
-    validate: nps --parallel lint,test,build
+    validate: concurrently "nps lint" "nps test" "nps build"
 ```
 
 To use `p-s`, it's recommended that you either install it globally (`npm i -g p-s`) or add `./node_modules/bin` to your
@@ -84,7 +86,7 @@ To use `p-s`, it's recommended that you either install it globally (`npm i -g p-
 Then you can run:
 
 ```console
-p-s --help
+nps --help
 ```
 
 Which will output:
@@ -97,7 +99,6 @@ Which will output:
     -h, --help                                  output usage information
     -V, --version                               output the version number
     -s, --silent                                Silent nps output
-    -p, --parallel <script-name1,script-name2>  Scripts to run in parallel (comma seprated)
     -c, --config <filepath>                     Config file to use (defaults to nearest package-scripts.yml or package-scripts.js)
     -l, --log-level <level>                     The log level to use (error, warn, info [default])
     -r, --require <module>                      Module to preload
@@ -109,7 +110,7 @@ test - jest
 test.watch - run in the amazingly intelligent Jest watch mode - jest --watch
 build - webpack
 build.prod - webpack -p
-validate - nps --parallel lint,test,build
+validate - concurrently "nps lint" "nps test" "nps build"
 ```
 
 **Because `p-s` is harder to type, it is recommended that you use the alias `nps` to interact with `p-s`, which is much
@@ -243,14 +244,6 @@ config).
 By default, `nps` will log out to the console before running the command. You can add `-s` to your command to silence
 this.
 
-##### -p, --parallel
-
-Run the given scripts in parallel. This enables handy workflows like this:
-
-```console
-nps -p lint,build,cover && nps check-coverage && nps report-coverage
-```
-
 ##### -c, --config
 
 Use a different config
@@ -283,7 +276,7 @@ nps lint --fix # --fix will be passed on to the lint script
 
 ##### scripts
 
-If you don't use `-p` (because you don't need parallelism) then you can simply provide the name of the script like so:
+To run a script, you simply provide the name of the script like so:
 
 ```console
 nps cover
@@ -377,6 +370,10 @@ Log levels available:
 
 ## FAQ
 
+### How do I do ___ ?
+
+Have you looked at the examples in [other/EXAMPLES.md][examples]?
+
 ### Why `npm start`?
 
 _Just to be clear:_ You do **not** have to use the `start` script. You can use whatever you like. But I recommend using
@@ -403,24 +400,6 @@ This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
 - [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
 a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
 benefits of npm scripts I wanted to keep).
-
-## In the wild
-
-- [react-component-template](https://github.com/nkbt/react-component-template) uses `p-s` to implement shareable npm
-scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them.
-
-GOTCHAS:
-  - use `process.cwd()` as the base for all paths
-
-- [Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests) uses `p-s` to automate benchmark running
-and reporting in node and the browser.  `package-scripts.js` enables us to keep our scripts DRY.  Combined with
-[grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob
-patterns.
-
-- [SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers) is an [electron](https://electron.atom.io)
-based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s` to dynamically find the current
-platform and execute the dev environment. Now we don't have to manually update the `package.json` scripts when you are
-on a different platform!
 
 ## Contributors
 

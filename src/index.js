@@ -1,6 +1,6 @@
 import spawn from 'spawn-command-with-kill'
 import Promise from 'bluebird'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 import {isString, clone} from 'lodash'
 import {sync as findUpSync} from 'find-up'
 import managePath from 'manage-path'
@@ -18,50 +18,12 @@ function runPackageScripts({scriptConfig, scripts, args, options = {}}) {
     scripts = ['default']
   }
   const scriptNames = arrify(scripts)
-  if (options.parallel) {
-    return runParallel()
-  } else {
-    return runSeries()
-  }
 
-  function runSeries() {
-    return scriptNames.reduce((res, scriptName) => {
-      return res.then(() => (
-        runPackageScript({scriptConfig, options, scriptName, args})
-      ))
-    }, Promise.resolve())
-  }
-
-  function runParallel() {
-    const results = scriptNames.map(script => ({script, code: undefined}))
-    let aborted = false
-
-    const promises = scriptNames.map(scriptName => {
-      return runPackageScript({scriptConfig, options, scriptName, args})
-    })
-
-    const allPromise = Promise.all(promises.map((promise, index) => {
-      return promise.then(code => {
-        results[index].code = code
-      })
-    })).then(() => results)
-
-    allPromise.catch(() => {
-      /* istanbul ignore if */
-      if (aborted) {
-        // this is very unlikely to happen
-      } else {
-        abortAll()
-      }
-    })
-
-    return allPromise
-
-    function abortAll() {
-      aborted = true
-      promises.forEach(p => p.abort())
-    }
-  }
+  return scriptNames.reduce((res, scriptName) => {
+    return res.then(() => (
+      runPackageScript({scriptConfig, options, scriptName, args})
+    ))
+  }, Promise.resolve())
 }
 
 
@@ -70,7 +32,7 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
   const script = getScriptToRun(scripts, scriptName)
   if (!isString(script)) {
     return Promise.reject({
-      message: colors.red(
+      message: chalk.red(
         `Scripts must resolve to strings. There is no script that can be resolved from "${scriptName}"`,
       ),
       ref: 'missing-script',
@@ -78,15 +40,14 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
   }
   const command = [script, args].join(' ').trim()
   const log = getLogger(getLogLevel(options))
-  log.info(colors.gray('nps executing: ') + colors.green(command))
+  log.info(chalk.gray('nps executing: ') + chalk.green(command))
   let child
   const promise = new Promise((resolve, reject) => {
     child = spawn(command, {stdio: 'inherit', env: getEnv()})
 
     child.on('error', error => {
-      child = null
       reject({
-        message: colors.red(
+        message: chalk.red(
           `The script called "${scriptName}" which runs "${command}" emitted an error`,
         ),
         ref: 'emitted-an-error',
@@ -95,12 +56,11 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
     })
 
     child.on('close', code => {
-      child = null
       if (code === NON_ERROR) {
         resolve(code)
       } else {
         reject({
-          message: colors.red(
+          message: chalk.red(
             `The script called "${scriptName}" which runs "${command}" failed with exit code ${code}`,
           ),
           ref: 'failed-with-exit-code',
@@ -109,13 +69,6 @@ function runPackageScript({scriptConfig, options, scriptName, args}) {
       }
     })
   })
-
-  promise.abort = function abort() {
-    if (child !== null) {
-      child.kill()
-      child = null
-    }
-  }
 
   return promise
 }
