@@ -1,5 +1,5 @@
 /* eslint import/newline-after-import:0, global-require:0 */
-import {resolve} from 'path'
+import path from 'path'
 import colors from 'colors/safe'
 import {spy} from 'sinon'
 import {getScriptsAndArgs, help, preloadModule, loadConfig} from './index'
@@ -56,8 +56,7 @@ test('preloadModule: resolves a relative path', () => {
 })
 
 test('preloadModule: resolves an absolute path', () => {
-  const relativePath = './fixtures/my-module'
-  const absolutePath = resolve(__dirname, relativePath)
+  const absolutePath = getAbsoluteFixturePath('my-module')
   const val = preloadModule(absolutePath)
   expect(val).toBe('hello')
 })
@@ -74,9 +73,48 @@ test('preloadModule: logs a warning when the module cannot be required', () => {
   const {preloadModule: proxiedPreloadModule} = require('./index')
   const val = proxiedPreloadModule('./module-that-does-exist')
   expect(val).toBeUndefined()
-  expect(mockWarn.calledOnce)
+  expect(mockWarn.calledOnce).toBe(true)
   const [{message}] = mockWarn.firstCall.args
   expect(message).toMatch(/Unable to preload "\.\/module-that-does-exist"/)
+})
+
+test('loadConfig: calls the config function if it is a function', () => {
+  jest.resetModules()
+  const {loadConfig: proxiedLoadConfig} = require('./index')
+  const val = proxiedLoadConfig(getAbsoluteFixturePath('function-config.js'))
+  expect(val).toEqual({
+    scripts: {
+      functionConfig: 'echo worked!',
+    },
+  })
+})
+
+test('loadConfig: logs and throws an error for a config that exports the wrong data type', () => {
+  const mockError = jest.fn()
+  jest.resetModules()
+  jest.mock('../get-logger', () => () => ({error: mockError}))
+  const {loadConfig: proxiedLoadConfig} = require('./index')
+  const fixturePath = getAbsoluteFixturePath('bad-data-type-config.js')
+  expect(() => proxiedLoadConfig(fixturePath)).toThrowError(/Your config.*string/)
+  expect(mockError).toHaveBeenCalledTimes(1)
+  expect(mockError).toHaveBeenCalledWith({
+    message: expect.stringMatching(fixturePath),
+    ref: 'config-must-be-an-object',
+  })
+})
+
+test('loadConfig: logs and throws an error for a config that exports a function that returns the wrong data type', () => {
+  const mockError = jest.fn()
+  jest.resetModules()
+  jest.mock('../get-logger', () => () => ({error: mockError}))
+  const {loadConfig: proxiedLoadConfig} = require('./index')
+  const fixturePath = getAbsoluteFixturePath('bad-function-data-type-config.js')
+  expect(() => proxiedLoadConfig(fixturePath)).toThrowError(/Your config.*function.*Array/)
+  expect(mockError).toHaveBeenCalledTimes(1)
+  expect(mockError).toHaveBeenCalledWith({
+    message: expect.stringMatching(fixturePath),
+    ref: 'config-must-be-an-object',
+  })
 })
 
 test('loadConfig: logs a warning when the JS module cannot be required', () => {
@@ -93,7 +131,7 @@ test('loadConfig: logs a warning when the JS module cannot be required', () => {
 
 test('loadConfig: does not swallow JS syntax errors', () => {
   const originalCwd = process.cwd
-  process.cwd = jest.fn(() => resolve(__dirname, '../..'))
+  process.cwd = jest.fn(() => path.resolve(__dirname, '../..'))
   const relativePath = './src/bin-utils/fixtures/syntax-error-module'
   expect(() => loadConfig(relativePath)).toThrowError()
   process.cwd = originalCwd
@@ -112,7 +150,7 @@ test('loadConfig: can load ES6 module', () => {
 
 test('loadConfig: does not swallow YAML syntax errors', () => {
   const originalCwd = process.cwd
-  process.cwd = jest.fn(() => resolve(__dirname, '../..'))
+  process.cwd = jest.fn(() => path.resolve(__dirname, '../..'))
   const relativePath = './src/bin-utils/fixtures/syntax-error-config.yml'
   expect(() => loadConfig(relativePath)).toThrowError()
   process.cwd = originalCwd
@@ -217,3 +255,7 @@ test('help: do not display scripts with flag hiddenFromHelp set to true', () => 
   const expected = colors.yellow('There are no scripts available')
   expect(message).toBe(expected)
 })
+
+function getAbsoluteFixturePath(fixture) {
+  return path.join(__dirname, 'fixtures', fixture)
+}

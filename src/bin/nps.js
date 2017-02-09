@@ -32,13 +32,13 @@ program
   .on('--help', onHelp)
   .parse(process.argv)
 
+const scriptsAndArgs = getScriptsAndArgs(program)
 
 if (shouldAutocomplete) {
   autocomplete(getPSConfig())
 } else if (shouldRun) {
   const psConfig = getPSConfig()
   const hasDefaultScript = !!psConfig.scripts.default
-  const scriptsAndArgs = getScriptsAndArgs(program)
   const hasHelpScript = !!psConfig.scripts.help
   const scriptIsHelp = scriptsAndArgs.scripts[0] === 'help'
   const scriptSpecified = scriptsAndArgs.scripts.length >= 1
@@ -47,11 +47,11 @@ if (shouldAutocomplete) {
   } else if (!hasHelpScript && scriptIsHelp) { // eslint-disable-line no-negated-condition
     program.outputHelp()
   } else {
-    loadAndRun(scriptsAndArgs, psConfig)
+    loadAndRun(psConfig)
   }
 }
 
-function loadAndRun(scriptsAndArgs, psConfig) {
+function loadAndRun(psConfig) {
   runPackageScript({
     scriptConfig: psConfig.scripts,
     scripts: scriptsAndArgs.scripts,
@@ -76,7 +76,7 @@ function getPSConfig() {
     log.warn(colors.yellow('Unable to find a config file and none was specified.'))
     return {scripts: {}} // empty config
   }
-  const config = loadConfig(configFilepath)
+  const config = loadConfig(configFilepath, scriptsAndArgs)
   if (!config) {
     process.exit(FAIL_CODE)
   }

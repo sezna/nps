@@ -45,3 +45,11 @@ This means that the child process for the specified script emitted an error.
 Look at the error and try to figure out why the script would be failing.
 
 Try to run the script without `p-s` and verify that the script is working. If not, fix that. If it's working without `p-s` it could be a problem with `p-s`. Please file an issue.
+
+## Config Must be an Object
+
+Your `package-scripts.js`, `package-scripts.yml`, or whatever you specified as the `--config` must be an object or a function that returns an object.
+
+### To Fix:
+
+Make sure that your config is an object or a function that returns an object.
