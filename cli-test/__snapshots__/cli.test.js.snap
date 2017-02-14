@@ -1,7 +1,18 @@
+exports[`test with --get-yargs-completions 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "like
+lint
+lint.sub.thing
+lint.sub.hiddenThing
+",
+}
+`;
+
 exports[`test with --require 1`] = `
 Object {
   "stderr": "",
-  "stdout": "[90mnps executing: [39m[32mecho \"log\"[39m
+  "stdout": "nps executing: echo \"log\"
 log
 ",
 }
@@ -17,7 +28,7 @@ Object {
 
 exports[`test with a missing config 1`] = `
 Object {
-  "stderr": "[31mUnable to find JS config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\"[39m https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
+  "stderr": "Unable to find JS config at \"./something-that-does-not-exist.js\". Attempted to require as \"<projectRootDir>/cli-test/fixtures/something-that-does-not-exist.js\" https://github.com/kentcdodds/p-s/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
 ",
   "stdout": "",
 }
@@ -26,32 +37,8 @@ Object {
 exports[`test with config with default script 1`] = `
 Object {
   "stderr": "",
-  "stdout": "[90mnps executing: [39m[32mecho \"default script\"[39m
+  "stdout": "nps executing: echo \"default script\"
 default script
-",
-}
-`;
-
-exports[`test without arguments 1`] = `
-Object {
-  "stderr": "",
-  "stdout": "
-  Usage: nps [options]
-
-  Options:
-
-    -h, --help               output usage information
-    -V, --version            output the version number
-    -s, --silent             Silent nps output
-    -c, --config <filepath>  Config file to use (defaults to nearest package-scripts.yml or package-scripts.js)
-    -l, --log-level <level>  The log level to use (error, warn, info [default])
-    -r, --require <module>   Module to preload
-
-Available scripts (camel or kebab case accepted)
-
-[32mtest[39m - [90mecho \"test script\"[39m
-[32mlint[39m - [90mecho \"lint.default\"[39m
-[32mlint.sub.thing[39m - [37mthis is a description[39m - [90mecho \"deeply nested thing\"[39m
 ",
 }
 `;

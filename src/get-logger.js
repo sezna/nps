@@ -1,16 +1,21 @@
 import console from 'console'
 import arrify from 'arrify'
-import {isPlainObject} from 'lodash'
+import {isPlainObject, includes} from 'lodash'
 
 const {version} = require('../package.json')
 
 const shouldLog = {
-  error: getShouldLogFn('error'),
-  warn: getShouldLogFn('warn', 'error'),
-  info: getShouldLogFn('info', 'warn', 'error'),
+  // fn called         logLevels
+  info: getShouldLogFn('', 'debug', 'info'),
+  warn: getShouldLogFn('', 'debug', 'info', 'warn'),
+  error: getShouldLogFn('', 'debug', 'info', 'warn', 'error'),
 }
 
+// eslint-disable-next-line func-style
+const getLogLevel = ({silent, logLevel}) => (silent ? 'disable' : logLevel)
+
 export default getLogger
+export {getLogLevel}
 
 function getLogger(logLevel) {
   return {
@@ -21,7 +26,7 @@ function getLogger(logLevel) {
 
   function getLogFn(name) {
     return function logFn(...args) {
-      if (shouldLog[name](logLevel || process.env.LOG_LEVEL)) {
+      if (shouldLog[name](process.env.LOG_LEVEL || logLevel)) {
         const message = getMessage(...args)
         console[name](...message) // eslint-disable-line no-console
       }
@@ -47,9 +52,8 @@ function getLink(ref) {
 }
 
 function getShouldLogFn(...acceptableValues) {
-  acceptableValues = ['', 'debug', ...acceptableValues]
   return function shouldLogWithLevel(logLevel = '') {
     logLevel = logLevel.toLowerCase()
-    return !logLevel || acceptableValues.some(v => logLevel === v)
+    return !logLevel || includes(acceptableValues, logLevel)
   }
 }

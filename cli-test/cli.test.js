@@ -4,11 +4,6 @@ import runNPS from './run-nps'
 const fixturesPath = resolve(__dirname, './fixtures')
 
 test(
-  'without arguments',
-  () => snapshot(),
-)
-
-test(
   'with config with default script',
   () => snapshot('-c ./package-scripts-with-default.js'),
 )
@@ -26,6 +21,11 @@ test(
 test(
   'with --require',
   () => snapshot('--config ./es6-package-scripts.js --require babel-register log'),
+)
+
+test(
+  'with --get-yargs-completions',
+  () => snapshot('--config ./package-scripts.js --get-yargs-completions li'),
 )
 
 function snapshot(args) {

@@ -69,7 +69,6 @@ module.exports = {
 }
 
 function concurrent(scripts) {
-  process.env.FORCE_COLOR = true // this is necessary until https://github.com/kimmobrunfeldt/concurrently/issues/86
   const names = scripts.join(',')
   const quotedScripts = `"nps ${scripts.join('" "nps ')}"`
   return `concurrently --prefix "[{name}]" --names "${names}" ${quotedScripts}`

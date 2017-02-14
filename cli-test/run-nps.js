@@ -21,7 +21,9 @@ function runNPS(cwd, args = '') {
     let stdout = ''
     let stderr = ''
     const command = `node ${NPS_PATH} ${args}`
-    const child = spawn(command, {cwd})
+    const env = Object.assign({}, process.env)
+    delete env.FORCE_COLOR
+    const child = spawn(command, {cwd, env})
 
     child.on('error', error => {
       reject(error)
