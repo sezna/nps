@@ -2,42 +2,7 @@
 import path from 'path'
 import chalk from 'chalk'
 import {spy} from 'sinon'
-import {getScriptsAndArgs, help, preloadModule, loadConfig} from './index'
-
-test('getScriptsAndArgs: gets scripts', () => {
-  const {scripts} = getScriptsAndArgs({
-    args: ['boo'],
-    rawArgs: ['node', 'p-s', 'boo'],
-  })
-  expect(scripts).toEqual(['boo'])
-})
-
-test('getScriptsAndArgs: gets scripts in series', () => {
-  const {scripts, args} = getScriptsAndArgs({
-    args: ['boo,bar'],
-    rawArgs: ['node', 'p-s', 'boo,bar'],
-  })
-  expect(scripts).toEqual(['boo', 'bar'])
-  expect(args).toEqual('')
-})
-
-test('getScriptsAndArgs: passes args to scripts', () => {
-  const {args, scripts} = getScriptsAndArgs({
-    args: ['boo'],
-    rawArgs: ['node', 'p-s', 'boo', '--watch', '--verbose'],
-  })
-  expect(scripts).toEqual(['boo'])
-  expect(args).toBe('--watch --verbose')
-})
-
-test('getScriptsAndArgs: returns empty scripts and args if no args', () => {
-  const {args, scripts} = getScriptsAndArgs({
-    args: [],
-    rawArgs: ['node', 'p-s'],
-  })
-  expect(scripts.length).toBe(0)
-  expect(args).toBe('')
-})
+import {help, preloadModule, loadConfig} from './index'
 
 test('preloadModule: resolves a relative path', () => {
   // this is relative to process.cwd() I think...

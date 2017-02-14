@@ -3,6 +3,7 @@
     "<rootDir>/src"
   ],
   "testEnvironment": "jest-environment-node",
+  "coveragePathIgnorePatterns": ["/node_modules/", "/fixtures/", "/helpers/"],
   "coverageThreshold": {
     "global": {
       "branches": 100,

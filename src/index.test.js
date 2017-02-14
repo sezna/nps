@@ -60,25 +60,14 @@ test('options: logLevel sets the log level', () => {
   })
 })
 
-test('passes on additional arguments', () => {
-  const lintCommand = 'eslint'
-  const argsToPassOn = 'src/ scripts/'
-  return testSpawnCall({lint: lintCommand}, 'lint', {}, argsToPassOn).then(({command}) => {
-    expect(command).toBe(`${lintCommand} ${argsToPassOn}`)
-  })
-})
-
 test('runs scripts serially if given an array of input', () => {
   const lintCommand = 'eslint'
   const buildCommand = 'babel'
-  const args = 'src/ scripts/'
-  const resolveSpy = spy(Promise, 'resolve')
   const {runPackageScript, mockSpawnStubSpy} = setup()
-  const scripts = ['lint', 'build']
+  const scripts = ['lint src/ scripts/', 'build src/ scripts/']
   const scriptConfig = {build: buildCommand, lint: lintCommand}
   const options = {}
-  runPackageScript({scriptConfig, scripts, args, options}).then(() => {
-    expect(resolveSpy.calledOnce)
+  runPackageScript({scriptConfig, scripts, options}).then(() => {
     expect(mockSpawnStubSpy.calledTwice)
     const [command1] = mockSpawnStubSpy.firstCall.args
     const [command2] = mockSpawnStubSpy.secondCall.args
@@ -168,12 +157,12 @@ test('an error from the child process logs an error', () => {
 // util functions
 
 function testSpawnCallWithDefaults(options) {
-  return testSpawnCall(undefined, undefined, options, undefined)
+  return testSpawnCall(undefined, undefined, options)
 }
-function testSpawnCall(scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions, args) {
+function testSpawnCall(scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions) {
   /* eslint max-params:[2, 6] */ // TODO: refactor
   const {runPackageScript, mockSpawnStubSpy, ...otherRet} = setup()
-  return runPackageScript({scriptConfig, options: psOptions, scripts, args})
+  return runPackageScript({scriptConfig, options: psOptions, scripts})
     .then(result => {
       expect(mockSpawnStubSpy.calledOnce)
       const [command, options] = mockSpawnStubSpy.firstCall.args
@@ -195,6 +184,7 @@ function setup(mockSpawnStubSpy) {
   const spawnStub = () => ({on: onSpy, kill: killSpy}) // eslint-disable-line func-style
   const infoSpy = spy()
   const mockGetLogger = spy(() => ({info: infoSpy}))
+  mockGetLogger.getLogLevel = () => 'info'
   mockSpawnStubSpy = mockSpawnStubSpy || spy(spawnStub)
   jest.resetModules()
   jest.mock('spawn-command-with-kill', () => mockSpawnStubSpy)

@@ -30,7 +30,7 @@ This happens when you use the `--require` flag and the module you specify cannot
 
 ## Failed with exit code
 
-This means that one of the scripts p-s tried to run resulted in a non-zero exit code (a failing exit code)
+This means that one of the scripts `p-s` tried to run resulted in a non-zero exit code (a failing exit code)
 
 ### To Fix:
 
@@ -53,3 +53,11 @@ Your `package-scripts.js`, `package-scripts.yml`, or whatever you specified as t
 ### To Fix:
 
 Make sure that your config is an object or a function that returns an object.
+
+## Invalid flags
+
+This happens if you pass flags to `p-s` that are not valid (like `p-s --invalid-flag-name`). This most often happens when you're trying to forward arguments to a script like: `p-s build --fast`
+
+### To Fix:
+
+Make sure you put your scripts and the relevant arguments in quotes: `p-s "build --fast"`
