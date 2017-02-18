@@ -2,18 +2,18 @@
 
 ## Links to projects
 
-Examples of how people us `p-s`:
+Examples of how people us `nps`:
 
-- **[p-s](https://github.com/kentcdodds/p-s):** [scripts](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package.json#L6-L10), [`package-scripts.js`](https://github.com/kentcdodds/p-s/blob/7a00d750611f08e8a95f24e78dd1cdc0a2213e51/package-scripts.js)
-- **[react-component-template](https://github.com/nkbt/react-component-template)** uses `p-s` to implement shareable npm
+- **[nps](https://github.com/kentcdodds/nps):** [scripts](https://github.com/kentcdodds/nps/blob/master/package.json), [`package-scripts.js`](https://github.com/kentcdodds/nps/blob/master/package-scripts.js)
+- **[react-component-template](https://github.com/nkbt/react-component-template)** uses `nps` to implement shareable npm
 scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them. (Gotcha: - use
 `process.cwd()` as the base for all paths).
-- **[Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests)** uses `p-s` to automate benchmark
+- **[Hypercubed/EventsSpeedTests](https://github.com/Hypercubed/EventsSpeedTests)** uses `nps` to automate benchmark
 running and reporting in node and the browser. `package-scripts.js` enables us to keep our scripts DRY. Combined with
 [grunion](https://github.com/Hypercubed/grunion) allows benchmarks to be run, serially or concurrently, on glob
 patterns.
 - **[SmithersAssistant/Smithers](https://github.com/SmithersAssistant/smithers)** is an
-[electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `p-s`
+[electron](https://electron.atom.io) based personal assistant. Smithers works on multiple platforms. Smithers uses `nps`
 to dynamically find the current platform and execute the dev environment. Now we don't have to manually update the
 `package.json` scripts when you are on a different platform!
 [scripts](https://github.com/SmithersAssistant/smithers/blob/0732fed616d64ff4696110574e51c300cd409d4c/package.json#L67-L70),
@@ -77,12 +77,12 @@ function concurrent(scripts) {
 
 ## Instructions
 
-Thanks for using `p-s`! I'm glad/I hope it's been helpful to you. Please add a link to your example here. If you're
+Thanks for using `nps`! I'm glad/I hope it's been helpful to you. Please add a link to your example here. If you're
 adding a GitHub link, please make sure you hard-link so future changes in your codebase don't break the link. The
 keyboard shortcut for this is `y`.
 
-Also, if you'd like to be included as a [contributor](https://github.com/kentcdodds/p-s#contributors), please follow the
-[Contribution Guidelines](https://github.com/kentcdodds/p-s/blob/master/CONTRIBUTING.md) and add yourself as a
+Also, if you'd like to be included as a [contributor](https://github.com/kentcdodds/nps#contributors), please follow the
+[Contribution Guidelines](https://github.com/kentcdodds/nps/blob/master/CONTRIBUTING.md) and add yourself as a
 contributor to the `.all-contributorsrc`. The best way to do this is by running:
 
 ```console

@@ -1,8 +1,8 @@
-# p-s
-
-> aka npm-package-scripts or `nps` for short
+# nps
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
+
+> `nps` is short for `npm-package-scripts`
 
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
@@ -20,11 +20,11 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 
 ## Quick Video Intro :tv:
 
-<a href="http://kcd.im/p-s-video" title="Pull out npm scripts into another file with p-s">
+<a href="http://kcd.im/nps-video" title="Pull out npm scripts into another file with nps">
   <img src="other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
 </a>
 
-[Pull out npm scripts into another file with p-s][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
+[Pull out npm scripts into another file with nps][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
 
 ## The problem
 
@@ -34,7 +34,7 @@ which has fundamental issues (like no comments).
 
 ## This solution
 
-`p-s` is a package that solves this problem by allowing you to move your scripts to a `package-scripts.js` file. Because
+`nps` is a package that solves this problem by allowing you to move your scripts to a `package-scripts.js` file. Because
 this file is a JavaScript file, you can do a lot more with your project scripts. Here's an example of a
 `package-scripts.js` file:
 
@@ -81,7 +81,7 @@ scripts:
     validate: concurrently "nps lint" "nps test" "nps build"
 ```
 
-To use `p-s`, it's recommended that you either install it globally (`npm i -g p-s`) or add `./node_modules/bin` to your
+To use `nps`, it's recommended that you either install it globally (`npm i -g nps`) or add `./node_modules/bin` to your
 `$PATH` (be careful that you know what you're doing when doing this, find out how [here](https://youtu.be/2WZ5iS_3Jgs)).
 
 Then you can run:
@@ -96,7 +96,7 @@ Which will output:
 Usage: nps [options] <script>...
 
 Commands:
-  init        automatically migrate from npm scripts to p-s
+  init        automatically migrate from npm scripts to nps
   completion  generate bash completion script
 
 Options:
@@ -128,7 +128,7 @@ build.prod - webpack -p
 validate - concurrently "nps lint" "nps test" "nps build"
 ```
 
-**Because `p-s` is harder to type, it is recommended that you use the alias `nps` to interact with `p-s`, which is much
+**Because `nps` is harder to type, it is recommended that you use the alias `nps` to interact with `nps`, which is much
 easier to type and the rest of the documentation will use `nps`**
 
 Now, to run a script, you can run:
@@ -181,7 +181,7 @@ This module is distributed via [npm][npm] which is bundled with [node][node] and
 be installed as one of your project's `devDependencies`:
 
 ```
-npm install --save-dev p-s
+npm install --save-dev nps
 ```
 
 ### global installation
@@ -189,10 +189,10 @@ npm install --save-dev p-s
 You can install this module globally also (this is recommended):
 
 ```
-npm install --global p-s
+npm install --global nps
 ```
 
-From here you can use `p-s` on the command line via one of the installed aliases: `nps` or `p-s`.
+From here you can use `nps` on the command line via one of the installed aliases: `nps` or `nps`.
 
 If you do this, you may also be interested in installing the shell autocompletion script. See more about this below.
 
@@ -237,7 +237,7 @@ nps completion >> <your-bash-profile-file>
 Normally `<your-bash-profile-file>` will be `~/.bash_profile`, `~/.bashrc`, or `~/.zshrc`.
 
 Note: you should probably only do this if you have the package installed globally. In that case you should probably also
-normally use the `nps` alias rather than `p-s` because it's easier to type.
+normally use the `nps` alias rather than `nps` because it's easier to type.
 
 #### CLI options
 
@@ -325,7 +325,7 @@ module.exports = {
         // your scripts will be run with node_modules/.bin in the PATH, so you can use locally installed packages.
         // this is done in a cross-platform way, so your scripts will work on Mac and Windows :)
         // NOTE: if you need to set environment variables, I recommend you check out the cross-env package, which works
-        // great with p-s
+        // great with nps
       },
       otherStuff: {
         // this one can be executed two different ways:
@@ -414,11 +414,11 @@ benefits of npm scripts I wanted to keep).
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/p-s/commits?author=kentcdodds) 🚇 💡 📹 👀 | [<img src="https://avatars.githubusercontent.com/u/532272?v=3" width="100px;"/><br /><sub>David Wells</sub>](http://davidwells.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=DavidWells) | [<img src="https://avatars.githubusercontent.com/u/802242?v=3" width="100px;"/><br /><sub>Abhishek Shende</sub>](https://twitter.com/abhishekisnot)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=abhishekisnot) [⚠️](https://github.com/kentcdodds/p-s/commits?author=abhishekisnot) | [<img src="https://avatars.githubusercontent.com/u/185649?v=3" width="100px;"/><br /><sub>Rowan Oulton</sub>](http://travelog.io)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) [📖](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) [⚠️](https://github.com/kentcdodds/p-s/commits?author=rowanoulton) | [<img src="https://avatars.githubusercontent.com/u/1915716?v=3" width="100px;"/><br /><sub>Gilad Goldberg</sub>](https://github.com/giladgo)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=giladgo) | [<img src="https://avatars.githubusercontent.com/u/14267457?v=3" width="100px;"/><br /><sub>Tim McGee</sub>](https://github.com/tim-mcgee)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=tim-mcgee) [📖](https://github.com/kentcdodds/p-s/commits?author=tim-mcgee) | [<img src="https://avatars.githubusercontent.com/u/175264?v=3" width="100px;"/><br /><sub>Nik Butenko</sub>](http://butenko.me)<br />💡 [💻](https://github.com/kentcdodds/p-s/commits?author=nkbt) |
+| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](http://kent.doddsfamily.us)<br />[💻](https://github.com/kentcdodds/nps/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/nps/commits?author=kentcdodds) 🚇 💡 📹 👀 | [<img src="https://avatars.githubusercontent.com/u/532272?v=3" width="100px;"/><br /><sub>David Wells</sub>](http://davidwells.io)<br />[💻](https://github.com/kentcdodds/nps/commits?author=DavidWells) | [<img src="https://avatars.githubusercontent.com/u/802242?v=3" width="100px;"/><br /><sub>Abhishek Shende</sub>](https://twitter.com/abhishekisnot)<br />[💻](https://github.com/kentcdodds/nps/commits?author=abhishekisnot) [⚠️](https://github.com/kentcdodds/nps/commits?author=abhishekisnot) | [<img src="https://avatars.githubusercontent.com/u/185649?v=3" width="100px;"/><br /><sub>Rowan Oulton</sub>](http://travelog.io)<br />[💻](https://github.com/kentcdodds/nps/commits?author=rowanoulton) [📖](https://github.com/kentcdodds/nps/commits?author=rowanoulton) [⚠️](https://github.com/kentcdodds/nps/commits?author=rowanoulton) | [<img src="https://avatars.githubusercontent.com/u/1915716?v=3" width="100px;"/><br /><sub>Gilad Goldberg</sub>](https://github.com/giladgo)<br />[💻](https://github.com/kentcdodds/nps/commits?author=giladgo) | [<img src="https://avatars.githubusercontent.com/u/14267457?v=3" width="100px;"/><br /><sub>Tim McGee</sub>](https://github.com/tim-mcgee)<br />[💻](https://github.com/kentcdodds/nps/commits?author=tim-mcgee) [📖](https://github.com/kentcdodds/nps/commits?author=tim-mcgee) | [<img src="https://avatars.githubusercontent.com/u/175264?v=3" width="100px;"/><br /><sub>Nik Butenko</sub>](http://butenko.me)<br />💡 [💻](https://github.com/kentcdodds/nps/commits?author=nkbt) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/p-s/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/p-s/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/p-s/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](https://robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 [📖](https://github.com/kentcdodds/p-s/commits?author=edm00se) | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
-| [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=sxn) [⚠️](https://github.com/kentcdodds/p-s/commits?author=sxn) [📖](https://github.com/kentcdodds/p-s/commits?author=sxn) | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Agunnx) [💻](https://github.com/kentcdodds/p-s/commits?author=gunnx) [⚠️](https://github.com/kentcdodds/p-s/commits?author=gunnx) | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Amartellaj) [💻](https://github.com/kentcdodds/p-s/commits?author=martellaj) [⚠️](https://github.com/kentcdodds/p-s/commits?author=martellaj) | [<img src="https://avatars.githubusercontent.com/u/1887854?v=3" width="100px;"/><br /><sub>Martin Segado</sub>](https://github.com/msegado)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=msegado) | [<img src="https://avatars.githubusercontent.com/u/36491?v=3" width="100px;"/><br /><sub>Bram Borggreve</sub>](http://colmena.io/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Abeeman) [💻](https://github.com/kentcdodds/p-s/commits?author=beeman) | [<img src="https://avatars.githubusercontent.com/u/86454?v=3" width="100px;"/><br /><sub>Elijah Manor</sub>](http://elijahmanor.com)<br />📹 | [<img src="https://avatars.githubusercontent.com/u/10691183?v=3" width="100px;"/><br /><sub>Ragu Ramaswamy</sub>](https://github.com/rrag)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rrag) [⚠️](https://github.com/kentcdodds/p-s/commits?author=rrag) |
-| [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox) | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub>Aditya Pratap Singh</sub>](http://blog.adityapsingh.com)<br />👀 |
+| [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/nps/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/nps/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/nps/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/nps/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/nps/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](https://robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 [📖](https://github.com/kentcdodds/nps/commits?author=edm00se) | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
+| [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/nps/commits?author=sxn) [⚠️](https://github.com/kentcdodds/nps/commits?author=sxn) [📖](https://github.com/kentcdodds/nps/commits?author=sxn) | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/nps/issues?q=author%3Agunnx) [💻](https://github.com/kentcdodds/nps/commits?author=gunnx) [⚠️](https://github.com/kentcdodds/nps/commits?author=gunnx) | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/nps/issues?q=author%3Amartellaj) [💻](https://github.com/kentcdodds/nps/commits?author=martellaj) [⚠️](https://github.com/kentcdodds/nps/commits?author=martellaj) | [<img src="https://avatars.githubusercontent.com/u/1887854?v=3" width="100px;"/><br /><sub>Martin Segado</sub>](https://github.com/msegado)<br />[📖](https://github.com/kentcdodds/nps/commits?author=msegado) | [<img src="https://avatars.githubusercontent.com/u/36491?v=3" width="100px;"/><br /><sub>Bram Borggreve</sub>](http://colmena.io/)<br />[🐛](https://github.com/kentcdodds/nps/issues?q=author%3Abeeman) [💻](https://github.com/kentcdodds/nps/commits?author=beeman) | [<img src="https://avatars.githubusercontent.com/u/86454?v=3" width="100px;"/><br /><sub>Elijah Manor</sub>](http://elijahmanor.com)<br />📹 | [<img src="https://avatars.githubusercontent.com/u/10691183?v=3" width="100px;"/><br /><sub>Ragu Ramaswamy</sub>](https://github.com/rrag)<br />[💻](https://github.com/kentcdodds/nps/commits?author=rrag) [⚠️](https://github.com/kentcdodds/nps/commits?author=rrag) |
+| [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/nps/issues?q=author%3Aerikfox) | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub>Aditya Pratap Singh</sub>](http://blog.adityapsingh.com)<br />👀 |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -430,36 +430,36 @@ MIT
 
 [scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
-[roadmap]: https://github.com/kentcdodds/p-s/blob/master/other/ROADMAP.md
-[examples]: https://github.com/kentcdodds/p-s/blob/master/other/EXAMPLES.md
+[roadmap]: https://github.com/kentcdodds/nps/blob/master/other/ROADMAP.md
+[examples]: https://github.com/kentcdodds/nps/blob/master/other/EXAMPLES.md
 [quick-run]: https://npmjs.com/package/npm-quick-run
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/kentcdodds/p-s/master.svg?style=flat-square
-[build]: https://travis-ci.org/kentcdodds/p-s
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/p-s.svg?style=flat-square
-[coverage]: https://codecov.io/github/kentcdodds/p-s
-[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/p-s/badge?style=flat-square
-[dependencyci]: https://dependencyci.com/github/kentcdodds/p-s
-[version-badge]: https://img.shields.io/npm/v/p-s.svg?style=flat-square
-[package]: https://www.npmjs.com/package/p-s
-[downloads-badge]: https://img.shields.io/npm/dm/p-s.svg?style=flat-square
-[npm-stat]: http://npm-stat.com/charts.html?package=p-s&from=2016-04-01
-[license-badge]: https://img.shields.io/npm/l/p-s.svg?style=flat-square
-[license]: https://github.com/kentcdodds/p-s/blob/master/LICENSE
+[build-badge]: https://img.shields.io/travis/kentcdodds/nps/master.svg?style=flat-square
+[build]: https://travis-ci.org/kentcdodds/nps
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/nps.svg?style=flat-square
+[coverage]: https://codecov.io/github/kentcdodds/nps
+[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/nps/badge?style=flat-square
+[dependencyci]: https://dependencyci.com/github/kentcdodds/nps
+[version-badge]: https://img.shields.io/npm/v/nps.svg?style=flat-square
+[package]: https://www.npmjs.com/package/nps
+[downloads-badge]: https://img.shields.io/npm/dm/nps.svg?style=flat-square
+[npm-stat]: http://npm-stat.com/charts.html?package=nps&from=2016-04-01
+[license-badge]: https://img.shields.io/npm/l/nps.svg?style=flat-square
+[license]: https://github.com/kentcdodds/nps/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
 [donate-badge]: https://img.shields.io/badge/%EF%BC%84-support-green.svg?style=flat-square
 [donate]: http://kcd.im/donate
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/p-s/blob/master/other/CODE_OF_CONDUCT.md
+[coc]: https://github.com/kentcdodds/nps/blob/master/other/CODE_OF_CONDUCT.md
 [roadmap-badge]: https://img.shields.io/badge/%F0%9F%93%94-roadmap-CD9523.svg?style=flat-square
 [examples-badge]: https://img.shields.io/badge/%F0%9F%92%A1-examples-8C8E93.svg?style=flat-square
 [tweet]: https://twitter.com/sindresorhus/status/724259780676575232
 [sindre]: https://github.com/sindresorhus
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[clarity]: https://github.com/kentcdodds/p-s/issues/1
+[clarity]: https://github.com/kentcdodds/nps/issues/1
 [scripty]: https://npmjs.com/package/scripty
 [npm scripts]: https://docs.npmjs.com/misc/scripts
-[video]: http://kcd.im/p-s-video
+[video]: http://kcd.im/nps-video

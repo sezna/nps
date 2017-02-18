@@ -1,5 +1,5 @@
 {
-  "name": "p-s",
+  "name": "nps",
   "version": "0.0.0-semantically-released",
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
@@ -11,8 +11,7 @@
     "precommit": "opt --in pre-commit --exec \"npm start validate\""
   },
   "bin": {
-    "nps": "./dist/bin/nps.js",
-    "p-s": "./dist/bin/nps.js"
+    "nps": "./dist/bin/nps.js"
   },
   "files": [
     "dist"
@@ -79,10 +78,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kentcdodds/p-s.git"
+    "url": "https://github.com/kentcdodds/nps.git"
   },
   "bugs": {
-    "url": "https://github.com/kentcdodds/p-s/issues"
+    "url": "https://github.com/kentcdodds/nps/issues"
   },
-  "homepage": "https://github.com/kentcdodds/p-s#readme"
+  "homepage": "https://github.com/kentcdodds/nps#readme"
 }
