@@ -405,6 +405,11 @@ Effectively this will allow you to have a script run when `npm start` is execute
 
 This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
 
+## Thanks
+
+Big thank you to [@tmpvar][tmpvar] for giving up the name `nps`! The original `nps` is now
+called [`npmsearch-cli`](https://www.npmjs.com/package/npmsearch-cli).
+
 ## Other Solutions
 
 - [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
@@ -467,6 +472,7 @@ MIT
 [examples-badge]: https://img.shields.io/badge/%F0%9F%92%A1-examples-8C8E93.svg?style=flat-square
 [tweet]: https://twitter.com/sindresorhus/status/724259780676575232
 [sindre]: https://github.com/sindresorhus
+[tmpvar]: https://github.com/tmpvar
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [clarity]: https://github.com/kentcdodds/nps/issues/1
