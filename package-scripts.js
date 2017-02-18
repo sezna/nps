@@ -87,7 +87,8 @@ function concurrent(scripts) {
     names: [],
   })
   const flags = [
-    '--kil-others',
+    //   https://github.com/kimmobrunfeldt/concurrently/issues/91
+    //   '--kill-others',
     `--prefix-colors "${colors.join(',')}"`,
     '--prefix "[{name}]"',
     `--names "${names.join(',')}"`,
