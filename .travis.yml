@@ -7,7 +7,6 @@ notifications:
   email: false
 node_js:
   - '6'
-  - '4'
 script:
   - yarn start validate
 after_success:

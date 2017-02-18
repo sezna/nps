@@ -4,6 +4,8 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 
 > `nps` is short for `npm-package-scripts`
 
+> [What happened to p-s?](#what-happened-to-p-s)
+
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
 [![Dependencies][dependencyci-badge]][dependencyci]
@@ -409,6 +411,14 @@ This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
 a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
 benefits of npm scripts I wanted to keep).
 
+### FAQ
+
+#### What happened to p-s?
+
+This project _is_ p-s! It was just renamed during a major version bump. There were a few 
+breaking changes for this to happen and those are documented on the [releases][release]
+page.
+
 ## Contributors
 
 Thanks goes to these people ([emoji key][emojis]):
@@ -463,3 +473,4 @@ MIT
 [scripty]: https://npmjs.com/package/scripty
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/nps-video
+[releases]: https://github.com/kentcdodds/nps/releases/tag/v5.0.0
