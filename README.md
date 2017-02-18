@@ -416,7 +416,7 @@ benefits of npm scripts I wanted to keep).
 #### What happened to p-s?
 
 This project _is_ p-s! It was just renamed during a major version bump. There were a few 
-breaking changes for this to happen and those are documented on the [releases][release]
+breaking changes for this to happen and those are documented on the [releases][releases]
 page.
 
 ## Contributors
