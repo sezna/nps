@@ -1,12 +1,5 @@
 const transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
 const cleanDist = 'rimraf dist'
-// const npsBin = 'babel-node src/bin/nps.js'
-const npsBin = 'nps'
-const validate = [
-  'build.andValidate',
-  'test',
-  'lint',
-]
 
 module.exports = {
   scripts: {
@@ -14,7 +7,6 @@ module.exports = {
       description: 'This uses commitizen to help us generate beautifully formatted commit messages',
       script: 'git-cz',
     },
-    temp: 'sleep 8; exit 0',
     test: {
       default: 'jest --config=test/jest.src.config.json --coverage',
       watch: 'jest --config=test/jest.src.config.json --watch',
@@ -50,7 +42,20 @@ module.exports = {
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: concurrent(validate),
+      script: concurrent({
+        'build-and-validate': {
+          script: 'nps build.andValidate',
+          color: 'bgBlue.bold',
+        },
+        test: {
+          script: 'nps test',
+          color: 'bgMagenta.bold',
+        },
+        lint: {
+          script: 'nps lint',
+          color: 'bgGreen.bold',
+        },
+      }),
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',
@@ -67,12 +72,42 @@ module.exports = {
 }
 
 function concurrent(scripts) {
-  const names = scripts.join(',')
-  const quotedScripts = `"${npsBin} ${scripts.join(`" "${npsBin} `)}"`
-  const colors = [
-    ['bgBlue.bold'],
-    ['bgMagenta.bold'],
-    ['bgGreen.bold'],
+  const {
+    colors,
+    scripts: quotedScripts,
+    names,
+  } = Object.keys(scripts).reduce(reduceScripts, {
+    colors: [],
+    scripts: [],
+    names: [],
+  })
+  const flags = [
+    '--kil-others',
+    `--prefix-colors "${colors.join(',')}"`,
+    '--prefix "[{name}]"',
+    `--names "${names.join(',')}"`,
+    quotedScripts.join(' '),
   ]
-  return `concurrently --prefix-colors "${colors.join(',')}" --prefix "[{name}]" --names "${names}" ${quotedScripts}`
+  return `concurrently ${flags.join(' ')}`
+
+  function reduceScripts(accumulator, scriptName) {
+    const {script, color} = scripts[scriptName]
+    accumulator.names.push(scriptName)
+    accumulator.colors.push(color)
+    accumulator.scripts.push(`"${script}"`)
+    return accumulator
+  }
 }
+
+// this is not transpiled
+/*
+  eslint
+  comma-dangle: [
+    2,
+    {
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
+      functions: 'never'
+    }
+  ]
+ */

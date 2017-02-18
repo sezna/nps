@@ -48,7 +48,7 @@ function getMessage(first, ...rest) {
 }
 
 function getLink(ref) {
-  return `https://github.com/kentcdodds/p-s/blob/v${version}/other/ERRORS_AND_WARNINGS.md#${ref}`
+  return `https://github.com/kentcdodds/nps/blob/v${version}/other/ERRORS_AND_WARNINGS.md#${ref}`
 }
 
 function getShouldLogFn(...acceptableValues) {

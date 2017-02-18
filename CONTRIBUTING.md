@@ -41,7 +41,7 @@ Once you are ready to commit the changes, please use the below commands
 
 ## Help needed
 
-Please checkout the [other/ROADMAP.md](https://github.com/kentcdodds/p-s/blob/master/other/ROADMAP.md) and raise an issue to discuss
+Please checkout the [other/ROADMAP.md](https://github.com/kentcdodds/nps/blob/master/other/ROADMAP.md) and raise an issue to discuss
 any of the items in the want to do or might do list.
 
 Also, please watch the repo and respond to questions/bug reports/feature requests! Thanks!

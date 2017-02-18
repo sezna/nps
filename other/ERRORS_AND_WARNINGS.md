@@ -1,6 +1,6 @@
 # Errors and Warnings
 
-If you were directed here, you probably saw a warning or error in your console when using `p-s` for your npm scripts.
+If you were directed here, you probably saw a warning or error in your console when using `nps` for your npm scripts.
 
 ## Unable to find config
 
@@ -30,11 +30,11 @@ This happens when you use the `--require` flag and the module you specify cannot
 
 ## Failed with exit code
 
-This means that one of the scripts `p-s` tried to run resulted in a non-zero exit code (a failing exit code)
+This means that one of the scripts `nps` tried to run resulted in a non-zero exit code (a failing exit code)
 
 ### To Fix:
 
-Try to run the script without `p-s` and verify that the script is working. If not, fix that. If it's working without `p-s` it could be a problem with `p-s`. Please file an issue.
+Try to run the script without `nps` and verify that the script is working. If not, fix that. If it's working without `nps` it could be a problem with `nps`. Please file an issue.
 
 ## Emitted an error
 
@@ -44,7 +44,7 @@ This means that the child process for the specified script emitted an error.
 
 Look at the error and try to figure out why the script would be failing.
 
-Try to run the script without `p-s` and verify that the script is working. If not, fix that. If it's working without `p-s` it could be a problem with `p-s`. Please file an issue.
+Try to run the script without `nps` and verify that the script is working. If not, fix that. If it's working without `nps` it could be a problem with `nps`. Please file an issue.
 
 ## Config Must be an Object
 
@@ -56,8 +56,8 @@ Make sure that your config is an object or a function that returns an object.
 
 ## Invalid flags
 
-This happens if you pass flags to `p-s` that are not valid (like `p-s --invalid-flag-name`). This most often happens when you're trying to forward arguments to a script like: `p-s build --fast`
+This happens if you pass flags to `nps` that are not valid (like `nps --invalid-flag-name`). This most often happens when you're trying to forward arguments to a script like: `nps build --fast`
 
 ### To Fix:
 
-Make sure you put your scripts and the relevant arguments in quotes: `p-s "build --fast"`
+Make sure you put your scripts and the relevant arguments in quotes: `nps "build --fast"`

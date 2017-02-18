@@ -112,7 +112,7 @@ function parse(rawArgv) {
 
   function getInitCommand() {
     const command = 'init'
-    const description = 'automatically migrate from npm scripts to p-s'
+    const description = 'automatically migrate from npm scripts to nps'
     return [command, description, getConfig, onInit]
 
     function getConfig(initYargs) {
@@ -146,7 +146,7 @@ function parse(rawArgv) {
       log.info(chalk.gray('Your package.json scripts have also been updated. Run `npm start help` for help'))
       log.info(chalk.gray(
         'You may also want to install the package globally and installing autocomplete script. You can do so by running\n' +
-        '  npm install --global p-s\n' +
+        '  npm install --global nps\n' +
         '  nps completion >> <your-bash-profile-file>',
       ))
     }

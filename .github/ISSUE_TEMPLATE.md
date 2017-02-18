@@ -8,7 +8,7 @@ I'll probably ask you to submit the fix (after giving some direction). If you've
 Check this free short video tutorial to learn how: http://kcd.im/pull-request
 -->
 
-- `p-s` version:
+- `nps` version:
 - `node` version:
 - `npm` version:
 
