@@ -219,7 +219,7 @@ array.prototype.find@^2.0.1:
     define-properties "^1.1.2"
     es-abstract "^1.7.0"
 
-arrify@1.0.1, arrify@^1.0.0, arrify@^1.0.1:
+arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
@@ -948,7 +948,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@3.4.7, bluebird@^3.4.1, bluebird@^3.4.6:
+bluebird@^3.4.1, bluebird@^3.4.6:
   version "3.4.7"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
 
@@ -1270,11 +1270,7 @@ colors@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
 
-colors@1.1.2, colors@>=0.6.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
-
-colors@~0.6.0-1:
+colors@>=0.6.2, colors@~0.6.0-1:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-0.6.2.tgz#2423fe6678ac0c5dae8852e5d0e5be08c997abcc"
 
@@ -1336,9 +1332,9 @@ concat-stream@^1.4.6, concat-stream@^1.4.7, concat-stream@^1.5.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-concurrently@^3.3.0:
+"concurrently@https://github.com/kentcdodds/concurrently.git#pr/kill-others-fix":
   version "3.3.0"
-  resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-3.3.0.tgz#d8eb7a9765fdf0b28d12220dc058e14d03c7dd4f"
+  resolved "https://github.com/kentcdodds/concurrently.git#9ebe0d71a1d52071f6e76fbeb626efc9086902dc"
   dependencies:
     chalk "0.5.1"
     commander "2.6.0"
@@ -1348,12 +1344,6 @@ concurrently@^3.3.0:
     spawn-command "^0.0.2-1"
     supports-color "^3.2.3"
     tree-kill "^1.1.0"
-
-condition-node-version@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/condition-node-version/-/condition-node-version-1.3.0.tgz#bd3284b204cf715fe21b948cde7e373a373cb717"
-  dependencies:
-    semver "5.1.0"
 
 config-chain@~1.1.8:
   version "1.1.11"
@@ -1946,7 +1936,7 @@ espree@^3.4.0:
     acorn "4.0.4"
     acorn-jsx "^3.0.0"
 
-esprima@^2.6.0, esprima@^2.7.1:
+esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
 
@@ -2149,18 +2139,18 @@ find-root@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/find-root/-/find-root-0.1.2.tgz#98d2267cff1916ccaf2743b3a0eea81d79d7dcd1"
 
-find-up@2.1.0, find-up@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
-  dependencies:
-    locate-path "^2.0.0"
-
 find-up@^1.0.0, find-up@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-1.1.2.tgz#6b2e9822b1a2ce0a60ab64d610eccad53cb24d0f"
   dependencies:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
+
+find-up@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
+  dependencies:
+    locate-path "^2.0.0"
 
 findup-sync@0.4.2:
   version "0.4.2"
@@ -3141,13 +3131,6 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
-js-yaml@3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^2.6.0"
-
 js-yaml@^3.4.3, js-yaml@^3.5.1, js-yaml@^3.7.0:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.1.tgz#782ba50200be7b9e5a8537001b7804db3ad02628"
@@ -3502,13 +3485,13 @@ lodash@4.17.2:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
-lodash@4.17.4, lodash@^4.0.0, lodash@^4.11.2, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.1:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
 lodash@^3.6.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+
+lodash@^4.0.0, lodash@^4.11.2, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.1:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 lodash@~1.3.1:
   version "1.3.1"
@@ -3940,6 +3923,24 @@ npmlog@^1.2.1:
     are-we-there-yet "~1.0.0"
     gauge "~1.2.0"
 
+nps@*:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/nps/-/nps-5.0.2.tgz#6a770247d3a618f14ea4ba9d36d4653140fb82a7"
+  dependencies:
+    arrify "^1.0.1"
+    chalk "^1.1.3"
+    common-tags "^1.4.0"
+    find-up "^2.1.0"
+    js-yaml "^3.7.0"
+    lodash "^4.17.4"
+    manage-path "^2.0.0"
+    prefix-matches "^0.0.9"
+    prettier-eslint-cli "^1.1.1"
+    readline-sync "^1.4.6"
+    spawn-command-with-kill "^1.0.0"
+    type-detect "^4.0.0"
+    yargs "^6.6.0"
+
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
@@ -3966,10 +3967,6 @@ object.omit@^2.0.0:
   dependencies:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
-
-omelette@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/omelette/-/omelette-0.3.1.tgz#73e26defe0cfd7e93497db60da758bec201087b6"
 
 once@^1.3.0, once@^1.3.3, once@^1.4.0:
   version "1.4.0"
@@ -4073,24 +4070,6 @@ p-locate@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-locate/-/p-locate-2.0.0.tgz#20a0103b222a70c8fd39cc2e580680f3dde5ec43"
   dependencies:
     p-limit "^1.1.0"
-
-p-s@*:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/p-s/-/p-s-3.1.0.tgz#edcf021ce847b2ae3b9b6d2297d5b15fc8cc6cc0"
-  dependencies:
-    arrify "1.0.1"
-    bluebird "3.4.7"
-    colors "1.1.2"
-    commander "2.9.0"
-    find-up "2.1.0"
-    js-yaml "3.7.0"
-    lodash "4.17.4"
-    manage-path "2.0.0"
-    omelette "0.3.1"
-    prefix-matches "0.0.9"
-    readline-sync "1.4.5"
-    shell-escape "0.2.0"
-    spawn-command-with-kill "1.0.0"
 
 pad-right@^0.2.2:
   version "0.2.2"
@@ -4230,7 +4209,7 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-prefix-matches@0.0.9, prefix-matches@^0.0.9:
+prefix-matches@^0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/prefix-matches/-/prefix-matches-0.0.9.tgz#5887019e2b9566b38917f7529b6ce0fc2c72d68c"
   dependencies:
@@ -4435,10 +4414,6 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
-
-readline-sync@1.4.5:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/readline-sync/-/readline-sync-1.4.5.tgz#c70d2b1473ecabc1e4d533cbaf3e8249fb77e992"
 
 readline-sync@^1.4.6:
   version "1.4.6"
@@ -4772,10 +4747,6 @@ semver-regex@1.0.0:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
 
-semver@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.1.0.tgz#85f2cf8550465c4df000cf7d86f6b054106ab9e5"
-
 semver@~5.0.1:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.0.3.tgz#77466de589cd5d3c95f138aa78bc569a3cb5d27a"
@@ -4811,10 +4782,6 @@ shebang-command@^1.2.0:
 shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
-
-shell-escape@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/shell-escape/-/shell-escape-0.2.0.tgz#68fd025eb0490b4f567a027f0bf22480b5f84133"
 
 shelljs@0.7.5, shelljs@^0.7.5:
   version "0.7.5"
@@ -4885,7 +4852,7 @@ source-map@~0.2.0:
   dependencies:
     amdefine ">=0.0.4"
 
-spawn-command-with-kill@1.0.0, spawn-command-with-kill@^1.0.0:
+spawn-command-with-kill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/spawn-command-with-kill/-/spawn-command-with-kill-1.0.0.tgz#803ad79f2f56e44dd926183768aac2faec7d0ce6"
   dependencies:

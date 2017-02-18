@@ -46,7 +46,7 @@
     "cli-tester": "^2.0.0",
     "codecov": "^1.0.1",
     "commitizen": "^2.9.5",
-    "concurrently": "^3.3.0",
+    "concurrently": "https://github.com/kentcdodds/concurrently.git#pr/kill-others-fix",
     "cross-env": "^3.1.4",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.15.0",
@@ -54,8 +54,8 @@
     "husky": "^0.13.1",
     "jest-cli": "^18.1.0",
     "lint-staged": "^3.3.0",
-    "opt-cli": "^1.5.1",
     "nps": "*",
+    "opt-cli": "^1.5.1",
     "rimraf": "^2.5.4",
     "semantic-release": "^6.3.6",
     "sinon": "^1.17.7",
@@ -75,6 +75,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "eslint",
       "prettier-eslint --write --ignore \"**/fixtures/**\"",
       "git add"
     ]
