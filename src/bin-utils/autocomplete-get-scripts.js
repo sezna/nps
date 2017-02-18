@@ -1,4 +1,10 @@
-import {includes, kebabCase, camelCase, isPlainObject, startsWith} from 'lodash'
+import {
+  includes,
+  kebabCase,
+  camelCase,
+  isPlainObject,
+  startsWith,
+} from 'lodash'
 
 const excludedKeys = ['default', 'script', 'description', 'hiddenFromHelp']
 
@@ -21,14 +27,15 @@ function getScripts(objWithScripts, prefix = '') {
 
     // default to kebab-case
     // eslint-disable-next-line
-    const keyToPush = !isKebab(prefixToMatch) ? camelKey : kebabKey
+    const keyToPush = !isKebab(prefixToMatch) ? camelKey : kebabKey;
 
     if (isPlainObject(value)) {
       if ((value.default || value.script) && !remainingToMatch.length) {
         acc.push(keyToPush)
       }
-      const subscripts = getScripts(value, remainingToMatch.join('.'))
-        .map(scriptName => `${keyToPush}.${scriptName}`)
+      const subscripts = getScripts(value, remainingToMatch.join('.')).map(
+        scriptName => `${keyToPush}.${scriptName}`,
+      )
       acc = [...acc, ...subscripts]
     } else if (!remainingToMatch.length) {
       acc.push(keyToPush)

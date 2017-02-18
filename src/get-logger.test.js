@@ -1,5 +1,6 @@
 /* eslint import/newline-after-import:0 global-require:0 */
 import console from 'console'
+import {oneLineTrim} from 'common-tags'
 import getLogger, {getLogLevel} from './get-logger'
 
 jest.mock('console')
@@ -28,14 +29,22 @@ test('allows you to log warnings', () => {
 test('allows you to log warnings/errors with a ref', () => {
   const log = getLogger()
   const message = [`Han Solo is Kylo Ren's dad`, '😱']
-  log.warn({
-    message,
-    ref: 'han-solo',
-  }, 'this is extra', 'stuff')
+  log.warn(
+    {
+      message,
+      ref: 'han-solo',
+    },
+    'this is extra',
+    'stuff',
+  )
   expect(console.warn).toHaveBeenCalledTimes(1)
   expect(console.warn).toHaveBeenCalledWith(
     ...message,
-    'https://github.com/kentcdodds/nps/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#han-solo',
+    oneLineTrim`
+      https://github.com/kentcdodds/nps
+      /blob/v0.0.0-semantically-released
+      /other/ERRORS_AND_WARNINGS.md#han-solo
+    `,
     'this is extra',
     'stuff',
   )
@@ -59,13 +68,16 @@ test('allows you to disable errors', () => {
   process.env.LOG_LEVEL = LOG_LEVEL
 })
 
-test('allows you to specify a logLevel of your own for errors/warnings/info', () => {
-  const logLevel = 'info'
-  const log = getLogger(logLevel)
-  log.info('sup')
-  expect(console.info).toHaveBeenCalledTimes(1)
-  expect(console.info).toHaveBeenCalledWith('sup')
-})
+test(
+  'allows you to specify a logLevel of your own for errors/warnings/info',
+  () => {
+    const logLevel = 'info'
+    const log = getLogger(logLevel)
+    log.info('sup')
+    expect(console.info).toHaveBeenCalledTimes(1)
+    expect(console.info).toHaveBeenCalledWith('sup')
+  },
+)
 
 test('getLogLevel: returns disable if silent', () => {
   expect(getLogLevel({silent: true})).toBe('disable')

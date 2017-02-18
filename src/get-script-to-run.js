@@ -7,13 +7,15 @@ export default getScriptToRun
 
 function getScriptToRun(config, input) {
   config = kebabAndCamelCasify(config)
-  // remove the default objects/strings so we can check if the prefix works with another script first
+  // remove the default objects/strings so we cancheck
+  // if the prefix works with another script first
   const defaultlessConfig = removeDefaults(cloneDeep(config))
   const scriptString = getScriptString(defaultlessConfig, input)
   if (scriptString) {
     return scriptString
   } else {
-    // fallback to the defaults if no other script was found with the given input
+    // fallback to the defaults if no other script was
+    // found with the given input
     return getScriptString(config, input)
   }
 }

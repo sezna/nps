@@ -1,5 +1,6 @@
 /* eslint import/newline-after-import:0, global-require:0 */
 import {resolve} from 'path'
+import {oneLine} from 'common-tags'
 import {spy} from 'sinon'
 import chalk from 'chalk'
 import managePath from 'manage-path'
@@ -38,7 +39,13 @@ test('returns a log object when no script is found', () => {
   const scriptConfig = {lint: {script: 42}}
   return runPackageScript({scriptConfig, scripts: ['lint']}).catch(error => {
     expect(error).toEqual({
-      message: chalk.red('Scripts must resolve to strings. There is no script that can be resolved from "lint"'),
+      message: chalk.red(
+        oneLine`
+          Scripts must resolve to strings.
+          There is no script that can be
+          resolved from "lint"
+        `,
+      ),
       ref: 'missing-script',
     })
   })
@@ -76,43 +83,49 @@ test('runs scripts serially if given an array of input', () => {
   })
 })
 
-test('stops running scripts when running serially if any given script fails', () => {
-  const FAIL_CODE = 1
-  const badCommand = 'bad'
-  const goodCommand = 'good'
-  const scripts = ['badS', 'goodS']
-  const scriptConfig = {
-    goodS: goodCommand,
-    badS: badCommand,
-  }
-  function spawnStub(cmd) {
-    return {
-      on(event, cb) {
-        if (event === 'close') {
-          if (cmd === badCommand) {
-            cb(FAIL_CODE)
-          } else {
-            cb(0)
-          }
-        }
-      },
-      kill() {
-      },
+test(
+  'stops running scripts when running serially if any given script fails',
+  () => {
+    const FAIL_CODE = 1
+    const badCommand = 'bad'
+    const goodCommand = 'good'
+    const scripts = ['badS', 'goodS']
+    const scriptConfig = {
+      goodS: goodCommand,
+      badS: badCommand,
     }
-  }
-  const mockSpawnStubSpy = spy(spawnStub)
-  const {runPackageScript} = setup(mockSpawnStubSpy)
-  return runPackageScript({scriptConfig, scripts}).then(() => {
-    throw new Error('the promise should be rejected')
-  }, ({message, ref, code}) => {
-    expect(code).toBe(FAIL_CODE)
-    expect(typeof ref === 'string')
-    expect(typeof message === 'string')
-    expect(mockSpawnStubSpy.calledOnce) // only called with the bad script, not for the good one
-    const [command1] = mockSpawnStubSpy.firstCall.args
-    expect(command1).toBe('bad')
-  })
-})
+    function spawnStub(cmd) {
+      return {
+        on(event, cb) {
+          if (event === 'close') {
+            if (cmd === badCommand) {
+              cb(FAIL_CODE)
+            } else {
+              cb(0)
+            }
+          }
+        },
+        kill() {},
+      }
+    }
+    const mockSpawnStubSpy = spy(spawnStub)
+    const {runPackageScript} = setup(mockSpawnStubSpy)
+    return runPackageScript({scriptConfig, scripts}).then(
+      () => {
+        throw new Error('the promise should be rejected')
+      },
+      ({message, ref, code}) => {
+        expect(code).toBe(FAIL_CODE)
+        expect(typeof ref === 'string')
+        expect(typeof message === 'string')
+        // only called with the bad script, not for the good one
+        expect(mockSpawnStubSpy.calledOnce)
+        const [command1] = mockSpawnStubSpy.firstCall.args
+        expect(command1).toBe('bad')
+      },
+    )
+  },
+)
 
 test('runs the default script if no scripts provided', () => {
   return testSpawnCall({default: 'echo foo'}, []).then(({command}) => {
@@ -136,22 +149,24 @@ test('an error from the child process logs an error', () => {
           cb(ERROR)
         }
       },
-      kill() {
-      },
+      kill() {},
     }
   }
   const mockSpawnStubSpy = jest.fn(spawnStub)
   const {runPackageScript} = setup(mockSpawnStubSpy)
-  return runPackageScript({scriptConfig, scripts}).then(() => {
-    throw new Error('the promise should be rejected')
-  }, ({message, ref, error}) => {
-    expect(error).toBe(ERROR)
-    expect(typeof ref === 'string')
-    expect(typeof message === 'string')
-    expect(mockSpawnStubSpy).toHaveBeenCalledTimes(1)
-    const [[command1]] = mockSpawnStubSpy.mock.calls
-    expect(command1).toBe(badCommand)
-  })
+  return runPackageScript({scriptConfig, scripts}).then(
+    () => {
+      throw new Error('the promise should be rejected')
+    },
+    ({message, ref, error}) => {
+      expect(error).toBe(ERROR)
+      expect(typeof ref === 'string')
+      expect(typeof message === 'string')
+      expect(mockSpawnStubSpy).toHaveBeenCalledTimes(1)
+      const [[command1]] = mockSpawnStubSpy.mock.calls
+      expect(command1).toBe(badCommand)
+    },
+  )
 })
 
 // util functions
@@ -159,19 +174,41 @@ test('an error from the child process logs an error', () => {
 function testSpawnCallWithDefaults(options) {
   return testSpawnCall(undefined, undefined, options)
 }
-function testSpawnCall(scriptConfig = {build: 'webpack'}, scripts = 'build', psOptions) {
+function testSpawnCall(
+  scriptConfig = {build: 'webpack'},
+  scripts = 'build',
+  psOptions,
+) {
   /* eslint max-params:[2, 6] */ // TODO: refactor
   const {runPackageScript, mockSpawnStubSpy, ...otherRet} = setup()
-  return runPackageScript({scriptConfig, options: psOptions, scripts})
-    .then(result => {
+  return runPackageScript({
+    scriptConfig,
+    options: psOptions,
+    scripts,
+  }).then(
+    result => {
       expect(mockSpawnStubSpy.calledOnce)
       const [command, options] = mockSpawnStubSpy.firstCall.args
-      return Promise.resolve({result, command, options, mockSpawnStubSpy, ...otherRet})
-    }, error => {
+      return Promise.resolve({
+        result,
+        command,
+        options,
+        mockSpawnStubSpy,
+        ...otherRet,
+      })
+    },
+    error => {
       expect(mockSpawnStubSpy.calledOnce)
       const [command, options] = mockSpawnStubSpy.firstCall.args
-      return Promise.reject({error, command, options, mockSpawnStubSpy, ...otherRet})
-    })
+      return Promise.reject({
+        error,
+        command,
+        options,
+        mockSpawnStubSpy,
+        ...otherRet,
+      })
+    },
+  )
 }
 
 function setup(mockSpawnStubSpy) {
@@ -181,7 +218,6 @@ function setup(mockSpawnStubSpy) {
       cb(0)
     }
   })
-  const spawnStub = () => ({on: onSpy, kill: killSpy}) // eslint-disable-line func-style
   const infoSpy = spy()
   const mockGetLogger = spy(() => ({info: infoSpy}))
   mockGetLogger.getLogLevel = () => 'info'
@@ -190,5 +226,15 @@ function setup(mockSpawnStubSpy) {
   jest.mock('spawn-command-with-kill', () => mockSpawnStubSpy)
   jest.mock('./get-logger', () => mockGetLogger)
   const runPackageScript = require('./index').default
-  return {mockSpawnStubSpy, infoSpy, mockGetLogger, onSpy, killSpy, runPackageScript}
+  return {
+    mockSpawnStubSpy,
+    infoSpy,
+    mockGetLogger,
+    onSpy,
+    killSpy,
+    runPackageScript,
+  }
+  function spawnStub() {
+    return {on: onSpy, kill: killSpy}
+  }
 }

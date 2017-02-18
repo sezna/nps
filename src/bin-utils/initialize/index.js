@@ -25,7 +25,10 @@ function initialize(configType = 'js') {
 }
 
 function dumpJSConfig(packageJsonPath, scripts) {
-  const packageScriptsPath = resolve(dirname(packageJsonPath), './package-scripts.js')
+  const packageScriptsPath = resolve(
+    dirname(packageJsonPath),
+    './package-scripts.js',
+  )
   const fileContents = generatePackageScriptsFileContents(scripts)
   writeFileSync(packageScriptsPath, fileContents)
 
@@ -33,7 +36,10 @@ function dumpJSConfig(packageJsonPath, scripts) {
 }
 
 function dumpYAMLConfig(packageJsonPath, scripts) {
-  const packageScriptsPath = resolve(dirname(packageJsonPath), './package-scripts.yml')
+  const packageScriptsPath = resolve(
+    dirname(packageJsonPath),
+    './package-scripts.yml',
+  )
   const fileContents = safeDump({scripts: structureScripts(scripts)})
   writeFileSync(packageScriptsPath, fileContents)
 
@@ -53,13 +59,18 @@ function structureScripts(scripts) {
     const keyParts = key.split(':')
     let deepKey = [...keyParts, 'default'].join('.')
     if (key.indexOf('start') === 0) {
-      deepKey = ['default', ...keyParts.slice(1, keyParts.length), 'default'].join('.')
+      deepKey = [
+        'default',
+        ...keyParts.slice(1, keyParts.length),
+        'default',
+      ].join('.')
     }
     const script = scripts[key]
     set(obj, deepKey, script)
     return obj
   }, {})
-  // traverse the object and replace all objects that only have `default` with just the script itself.
+  // traverse the object and replace all objects that
+  // only have `default` with just the script itself.
   traverse(defaultedScripts, removeDefaultOnly)
   return defaultedScripts
 
@@ -82,26 +93,31 @@ function traverse(object, fn) {
 }
 
 function jsObjectStringify(object, indent) {
-  return Object.keys(object).reduce((string, key, index) => {
-    const script = object[key]
-    let value
-    if (isPlainObject(script)) {
-      value = `{${jsObjectStringify(script, `${indent}  `)}\n${indent}}`
-    } else {
-      value = `'${escapeSingleQuote(script)}'`
-    }
-    const camelKey = camelCase(key)
-    const comma = isLast(object, index) ? '' : ','
-    return `${string}\n${indent}${camelKey}: ${value}${comma}`
-  }, '')
+  return Object.keys(object).reduce(
+    (string, key, index) => {
+      const script = object[key]
+      let value
+      if (isPlainObject(script)) {
+        value = `{${jsObjectStringify(script, `${indent}  `)}\n${indent}}`
+      } else {
+        value = `'${escapeSingleQuote(script)}'`
+      }
+      const camelKey = camelCase(key)
+      const comma = isLast(object, index) ? '' : ','
+      return `${string}\n${indent}${camelKey}: ${value}${comma}`
+    },
+    '',
+  )
 }
 
 function isOnlyDefault(script) {
-  return isPlainObject(script) && Object.keys(script).length === 1 && script.default
+  return isPlainObject(script) &&
+    Object.keys(script).length === 1 &&
+    script.default
 }
 
 function escapeSingleQuote(string) {
-  return string.replace(/'/g, '\\\'')
+  return string.replace(/'/g, "\\'")
 }
 
 function isLast(object, index) {

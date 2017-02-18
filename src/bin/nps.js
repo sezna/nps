@@ -16,15 +16,21 @@ if (argv && psConfig) {
       silent: argv.silent,
       logLevel: argv.logLevel,
     }),
-  }).then(() => {
-    // make this explicit
-    // because sometimes we can't explain
-    // everything about life that confuses us...
-    process.exitCode = 0
-  }, error => {
-    const logLevel = getLogLevel({silent: argv.silent, logLevel: argv.logLevel})
-    const log = getLogger(logLevel)
-    log.error(error)
-    process.exitCode = error.code || FAIL_CODE
-  })
+  }).then(
+    () => {
+      // make this explicit
+      // because sometimes we can't explain
+      // everything about life that confuses us...
+      process.exitCode = 0
+    },
+    error => {
+      const logLevel = getLogLevel({
+        silent: argv.silent,
+        logLevel: argv.logLevel,
+      })
+      const log = getLogger(logLevel)
+      log.error(error)
+      process.exitCode = error.code || FAIL_CODE
+    },
+  )
 }
