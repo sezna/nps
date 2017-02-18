@@ -237,6 +237,16 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "bumbleblym",
+      "name": "bumbleblym",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7687132?v=3",
+      "profile": "https://github.com/bumbleblym",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ]
 }
