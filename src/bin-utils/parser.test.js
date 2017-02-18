@@ -1,6 +1,7 @@
 /* eslint import/namespace:0 */
 import mockFindUp from 'find-up'
 import mockReadLine from 'readline-sync'
+import {oneLine} from 'common-tags'
 import * as mockBinUtils from '../bin-utils'
 import mockGetLogger from '../get-logger'
 import parse from './parser'
@@ -81,11 +82,7 @@ const valid = [
   '-r sup',
 ]
 
-const invalid = [
-  '--foo bar',
-  '--baz',
-  '-b',
-]
+const invalid = ['--foo bar', '--baz', '-b']
 
 beforeEach(() => {
   jest.resetModules()
@@ -104,10 +101,12 @@ invalid.forEach(argvString => {
   test(`${argvString} is invalid`, () => {
     expect(() => parse(argvString)).toThrow(/invalid flag\(s\) passed/)
     expect(mockGetLogger.mock.error).toHaveBeenCalledTimes(1)
-    expect(mockGetLogger.mock.error).toHaveBeenCalledWith(expect.objectContaining({
-      message: expect.stringMatching('invalid flag'),
-      ref: 'invalid-flags',
-    }))
+    expect(mockGetLogger.mock.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: expect.stringMatching('invalid flag'),
+        ref: 'invalid-flags',
+      }),
+    )
   })
 })
 
@@ -127,60 +126,92 @@ test('no config filepath found', () => {
   mockFindUp.mock.syncReturn = undefined
   expect(parse('"build --fast"')).toBe(undefined)
   expect(mockGetLogger.mock.warn).toHaveBeenCalledTimes(1)
-  expect(mockGetLogger.mock.warn).toHaveBeenCalledWith(expect.objectContaining({
-    message: expect.stringMatching(/find.*config file/i),
-    ref: 'unable-to-find-config',
-  }))
+  expect(mockGetLogger.mock.warn).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message: expect.stringMatching(/find.*config file/i),
+      ref: 'unable-to-find-config',
+    }),
+  )
   delete mockFindUp.mock.syncReturn
 })
 
-test('init with an existing config will prompt for overriding which will do nothing if `no` is the response', () => {
-  mockReadLine.mock.keyInYNReturn = false
-  mockFindUp.mock.syncReturn = '/some/path/to/things'
+test(
+  oneLine`
+    init with an existing config will prompt for overriding
+    which will do nothing if \`no\` is the response
+  `,
+  () => {
+    mockReadLine.mock.keyInYNReturn = false
+    mockFindUp.mock.syncReturn = '/some/path/to/things'
 
-  const result = parse('init --config foo.js')
-  expect(result).toBe(undefined)
-  expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(1)
-  expect(mockReadLine.keyInYN).toHaveBeenCalledWith(expect.stringMatching(/overwrite.*file/))
-  expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(1)
-  expect(mockGetLogger.mock.info).toHaveBeenCalledWith(expect.stringMatching(/Exiting.*different/))
+    const result = parse('init --config foo.js')
+    expect(result).toBe(undefined)
+    expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(1)
+    expect(mockReadLine.keyInYN).toHaveBeenCalledWith(
+      expect.stringMatching(/overwrite.*file/),
+    )
+    expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(1)
+    expect(mockGetLogger.mock.info).toHaveBeenCalledWith(
+      expect.stringMatching(/Exiting.*different/),
+    )
 
-  delete mockReadLine.mock.keyInYNReturn
-  delete mockFindUp.mock.syncReturn
-})
+    delete mockReadLine.mock.keyInYNReturn
+    delete mockFindUp.mock.syncReturn
+  },
+)
 
-test('init with an existing config will prompt for overriding which will initialize if `yes` is the response', () => {
-  mockReadLine.mock.keyInYNReturn = true
-  mockFindUp.mock.syncReturn = '/some/path/to/things'
+test(
+  oneLine`
+    init with an existing config will prompt for overriding
+    which will initialize if \`yes\` is the response
+  `,
+  () => {
+    mockReadLine.mock.keyInYNReturn = true
+    mockFindUp.mock.syncReturn = '/some/path/to/things'
 
-  const result = parse('init foo.js')
-  expect(result).toBe(undefined)
-  expect(mockGetLogger.mock.info).toHaveBeenCalledWith(expect.stringMatching(/saved/))
+    const result = parse('init foo.js')
+    expect(result).toBe(undefined)
+    expect(mockGetLogger.mock.info).toHaveBeenCalledWith(
+      expect.stringMatching(/saved/),
+    )
 
-  delete mockReadLine.mock.keyInYNReturn
-  delete mockFindUp.mock.syncReturn
-})
+    delete mockReadLine.mock.keyInYNReturn
+    delete mockFindUp.mock.syncReturn
+  },
+)
 
-test('init without an existing config will initialize package-scripts.js', () => {
-  mockFindUp.mock.syncReturn = null
-  const result = parse('init')
-  expect(result).toBe(undefined)
-  expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(0)
-  expect(mockGetLogger.mock.info).toHaveBeenCalledWith(expect.stringMatching(/saved/))
+test(
+  'init without an existing config will initialize package-scripts.js',
+  () => {
+    mockFindUp.mock.syncReturn = null
+    const result = parse('init')
+    expect(result).toBe(undefined)
+    expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(0)
+    expect(mockGetLogger.mock.info).toHaveBeenCalledWith(
+      expect.stringMatching(/saved/),
+    )
 
-  delete mockReadLine.mock.keyInYNReturn
-  delete mockFindUp.mock.syncReturn
-})
+    delete mockReadLine.mock.keyInYNReturn
+    delete mockFindUp.mock.syncReturn
+  },
+)
 
-test('if there is a help script in the psConfig, does not show the help', () => {
-  mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
-  expect(parse('help')).not.toBe(undefined)
-  expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
-})
+test(
+  'if there is a help script in the psConfig, does not show the help',
+  () => {
+    mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
+    expect(parse('help')).not.toBe(undefined)
+    expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
+  },
+)
 
 // https://github.com/yargs/yargs/issues/782
 // we can't test this functionality reasonably with unit tests
-// test('prompts for completions when --get-yargs-completions is specified', () => {
-//   const result = expect(parse('--get-yargs-completions f'))
-//   console.log(result)
-// })
+// so we've got an e2e test for it
+// test(
+//   'prompts for completions when --get-yargs-completions is specified',
+//   () => {
+//     const result = expect(parse('--get-yargs-completions f'))
+//     console.log(result)
+//   }
+// )

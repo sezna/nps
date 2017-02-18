@@ -10,13 +10,22 @@ test('allows a multi-level prefix to be provided', () => {
   expect(script).toBe('watch stuff')
 })
 
-test('falls back to using `get` for the full name if no prefix is provided', () => {
-  const script = getScriptToRun({build: {watch: 'watch stuff'}}, 'build.watch')
-  expect(script).toBe('watch stuff')
-})
+test(
+  'falls back to using `get` for the full name if no prefix is provided',
+  () => {
+    const script = getScriptToRun(
+      {build: {watch: 'watch stuff'}},
+      'build.watch',
+    )
+    expect(script).toBe('watch stuff')
+  },
+)
 
 test('can accept snake-case representation of a camelCase name', () => {
-  const script = getScriptToRun({checkCoverage: 'checking coverage'}, 'check-coverage')
+  const script = getScriptToRun(
+    {checkCoverage: 'checking coverage'},
+    'check-coverage',
+  )
   expect(script).toBe('checking coverage')
 })
 

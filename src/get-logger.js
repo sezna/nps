@@ -1,5 +1,6 @@
 import console from 'console'
 import arrify from 'arrify'
+import {oneLineTrim} from 'common-tags'
 import {isPlainObject, includes} from 'lodash'
 
 const {version} = require('../package.json')
@@ -10,9 +11,6 @@ const shouldLog = {
   warn: getShouldLogFn('', 'debug', 'info', 'warn'),
   error: getShouldLogFn('', 'debug', 'info', 'warn', 'error'),
 }
-
-// eslint-disable-next-line func-style
-const getLogLevel = ({silent, logLevel}) => (silent ? 'disable' : logLevel)
 
 export default getLogger
 export {getLogLevel}
@@ -48,7 +46,12 @@ function getMessage(first, ...rest) {
 }
 
 function getLink(ref) {
-  return `https://github.com/kentcdodds/nps/blob/v${version}/other/ERRORS_AND_WARNINGS.md#${ref}`
+  return oneLineTrim`
+    https://github.com/kentcdodds/nps/blob/v
+    ${version}
+    /other/ERRORS_AND_WARNINGS.md#
+    ${ref}
+  `
 }
 
 function getShouldLogFn(...acceptableValues) {
@@ -56,4 +59,8 @@ function getShouldLogFn(...acceptableValues) {
     logLevel = logLevel.toLowerCase()
     return !logLevel || includes(acceptableValues, logLevel)
   }
+}
+
+function getLogLevel({silent, logLevel}) {
+  return silent ? 'disable' : logLevel
 }

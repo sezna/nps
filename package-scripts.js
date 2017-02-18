@@ -51,11 +51,16 @@ module.exports = {
           script: 'nps test',
           color: 'bgMagenta.bold',
         },
-        lint: {
-          script: 'nps lint',
+        'lint-staged': {
+          script: 'nps lintStaged',
           color: 'bgGreen.bold',
         },
       }),
+    },
+    lintStaged: 'lint-staged',
+    format: {
+      description: 'auto-formats the code',
+      script: 'prettier-eslint --write "src/**/*.js" --ignore "**/fixtures/**"',
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',
@@ -102,6 +107,7 @@ function concurrent(scripts) {
 // this is not transpiled
 /*
   eslint
+  max-len: 0,
   comma-dangle: [
     2,
     {

@@ -2,6 +2,7 @@
 import path from 'path'
 import chalk from 'chalk'
 import {spy} from 'sinon'
+import {oneLine} from 'common-tags'
 import {help, preloadModule, loadConfig} from './index'
 
 test('preloadModule: resolves a relative path', () => {
@@ -46,33 +47,52 @@ test('loadConfig: calls the config function if it is a function', () => {
   })
 })
 
-test('loadConfig: logs and throws an error for a config that exports the wrong data type', () => {
-  const mockError = jest.fn()
-  jest.resetModules()
-  jest.mock('../get-logger', () => () => ({error: mockError}))
-  const {loadConfig: proxiedLoadConfig} = require('./index')
-  const fixturePath = getAbsoluteFixturePath('bad-data-type-config.js')
-  expect(() => proxiedLoadConfig(fixturePath)).toThrowError(/Your config.*string/)
-  expect(mockError).toHaveBeenCalledTimes(1)
-  expect(mockError).toHaveBeenCalledWith({
-    message: expect.stringMatching(fixturePath),
-    ref: 'config-must-be-an-object',
-  })
-})
+test(
+  oneLine`
+    loadConfig: logs and throws an error
+    for a config that exports the wrong data type
+  `,
+  () => {
+    const mockError = jest.fn()
+    jest.resetModules()
+    jest.mock('../get-logger', () => () => ({error: mockError}))
+    const {loadConfig: proxiedLoadConfig} = require('./index')
+    const fixturePath = getAbsoluteFixturePath('bad-data-type-config.js')
+    expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
+      /Your config.*string/,
+    )
+    expect(mockError).toHaveBeenCalledTimes(1)
+    expect(mockError).toHaveBeenCalledWith({
+      message: expect.stringMatching(fixturePath),
+      ref: 'config-must-be-an-object',
+    })
+  },
+)
 
-test('loadConfig: logs and throws an error for a config that exports a function that returns the wrong data type', () => {
-  const mockError = jest.fn()
-  jest.resetModules()
-  jest.mock('../get-logger', () => () => ({error: mockError}))
-  const {loadConfig: proxiedLoadConfig} = require('./index')
-  const fixturePath = getAbsoluteFixturePath('bad-function-data-type-config.js')
-  expect(() => proxiedLoadConfig(fixturePath)).toThrowError(/Your config.*function.*Array/)
-  expect(mockError).toHaveBeenCalledTimes(1)
-  expect(mockError).toHaveBeenCalledWith({
-    message: expect.stringMatching(fixturePath),
-    ref: 'config-must-be-an-object',
-  })
-})
+test(
+  oneLine`
+    loadConfig: logs and throws an error for a
+    config that exports a function that returns
+    the wrong data type
+  `,
+  () => {
+    const mockError = jest.fn()
+    jest.resetModules()
+    jest.mock('../get-logger', () => () => ({error: mockError}))
+    const {loadConfig: proxiedLoadConfig} = require('./index')
+    const fixturePath = getAbsoluteFixturePath(
+      'bad-function-data-type-config.js',
+    )
+    expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
+      /Your config.*function.*Array/,
+    )
+    expect(mockError).toHaveBeenCalledTimes(1)
+    expect(mockError).toHaveBeenCalledWith({
+      message: expect.stringMatching(fixturePath),
+      ref: 'config-must-be-an-object',
+    })
+  },
+)
 
 test('loadConfig: logs a warning when the JS module cannot be required', () => {
   const mockError = spy()
@@ -83,7 +103,9 @@ test('loadConfig: logs a warning when the JS module cannot be required', () => {
   expect(val).toBeUndefined()
   expect(mockError.calledOnce)
   const [{message}] = mockError.firstCall.args
-  expect(message).toMatch(/Unable to find JS config at "\.\/config-that-does-exist"/)
+  expect(message).toMatch(
+    /Unable to find JS config at "\.\/config-that-does-exist"/,
+  )
 })
 
 test('loadConfig: does not swallow JS syntax errors', () => {
@@ -122,7 +144,9 @@ test('loadConfig: logs a warning when the YAML file cannot be located', () => {
   expect(val).toBeUndefined()
   expect(mockError.calledOnce)
   const [{message}] = mockError.firstCall.args
-  expect(message).toMatch(/Unable to find YML config at "\.\/config-that-does-not-exist.yml"/)
+  expect(message).toMatch(
+    /Unable to find YML config at "\.\/config-that-does-not-exist.yml"/,
+  )
 })
 
 test('loadConfig: can load config from YML file', () => {
@@ -178,13 +202,21 @@ test('help: formats a nice message', () => {
   const expected = `
 Available scripts (camel or kebab case accepted)
 
-${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray('echo "foo"')}
-${chalk.green('bar')} - ${chalk.white('stuff')} - ${chalk.gray('echo "bar default"')}
+${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray(
+    'echo "foo"',
+  )}
+${chalk.green('bar')} - ${chalk.white('stuff')} - ${chalk.gray(
+    'echo "bar default"',
+  )}
 ${chalk.green('bar.baz')} - ${chalk.gray('echo "baz"')}
 ${chalk.green('bar.barBub')} - ${chalk.gray('echo "barBub"')}
 ${chalk.green('build')} - ${chalk.gray('webpack')}
-${chalk.green('build.x')} - ${chalk.white('webpack with x env')} - ${chalk.gray('webpack --env.x')}
-${chalk.green('build.x.y')} - ${chalk.white('build X-Y')} - ${chalk.gray('echo "build x-y"')}
+${chalk.green('build.x')} - ${chalk.white('webpack with x env')} - ${chalk.gray(
+    'webpack --env.x',
+  )}
+${chalk.green('build.x.y')} - ${chalk.white('build X-Y')} - ${chalk.gray(
+    'echo "build x-y"',
+  )}
 ${chalk.green('foobar')} - ${chalk.gray('echo "foobar"')}
 `.trim()
 
@@ -198,20 +230,23 @@ test('help: returns no scripts available', () => {
   expect(message).toBe(expected)
 })
 
-test('help: do not display scripts with flag hiddenFromHelp set to true', () => {
-  const config = {
-    scripts: {
-      foo: {
-        description: 'the foo script',
-        script: 'echo "foo"',
-        hiddenFromHelp: true,
+test(
+  'help: do not display scripts with flag hiddenFromHelp set to true',
+  () => {
+    const config = {
+      scripts: {
+        foo: {
+          description: 'the foo script',
+          script: 'echo "foo"',
+          hiddenFromHelp: true,
+        },
       },
-    },
-  }
-  const message = help(config)
-  const expected = chalk.yellow('There are no scripts available')
-  expect(message).toBe(expected)
-})
+    }
+    const message = help(config)
+    const expected = chalk.yellow('There are no scripts available')
+    expect(message).toBe(expected)
+  },
+)
 
 function getAbsoluteFixturePath(fixture) {
   return path.join(__dirname, 'fixtures', fixture)

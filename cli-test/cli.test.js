@@ -3,30 +3,19 @@ import runNPS from './run-nps'
 
 const fixturesPath = resolve(__dirname, './fixtures')
 
-test(
-  'with config with default script',
-  () => snapshot('-c ./package-scripts-with-default.js'),
-)
+test('with config with default script', () =>
+  snapshot('-c ./package-scripts-with-default.js'))
 
-test(
-  'with a missing config',
-  () => snapshot('-c ./something-that-does-not-exist.js'),
-)
+test('with a missing config', () =>
+  snapshot('-c ./something-that-does-not-exist.js'))
 
-test(
-  'with --silent',
-  () => snapshot('test --silent'),
-)
+test('with --silent', () => snapshot('test --silent'))
 
-test(
-  'with --require',
-  () => snapshot('--config ./es6-package-scripts.js --require babel-register log'),
-)
+test('with --require', () =>
+  snapshot('--config ./es6-package-scripts.js --require babel-register log'))
 
-test(
-  'with --get-yargs-completions',
-  () => snapshot('--config ./package-scripts.js --get-yargs-completions li'),
-)
+test('with --get-yargs-completions', () =>
+  snapshot('--config ./package-scripts.js --get-yargs-completions li'))
 
 function snapshot(args) {
   return runNPS(fixturesPath, args).then(results => {
@@ -36,13 +25,17 @@ function snapshot(args) {
 }
 
 /**
- * This takes the results object and removes environment-specific elements from the path.
+ * This takes the results object and removes environment-specific
+ * elements from the path.
  * @param {Object} results - This is the results object from runNPS
  * @return {Object} - The new results object with the clean paths
  */
 function relativizePaths(results) {
   return Object.keys(results).reduce((obj, key) => {
-    obj[key] = results[key].replace(resolve(__dirname, '../'), '<projectRootDir>')
+    obj[key] = results[key].replace(
+      resolve(__dirname, '../'),
+      '<projectRootDir>',
+    )
     return obj
   }, {})
 }

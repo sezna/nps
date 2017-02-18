@@ -1,5 +1,6 @@
 import spawn from 'spawn-command-with-kill'
 import chalk from 'chalk'
+import {oneLine} from 'common-tags'
 import {isString, clone} from 'lodash'
 import {sync as findUpSync} from 'find-up'
 import managePath from 'manage-path'
@@ -18,13 +19,13 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
   }
   const scriptNames = arrify(scripts)
 
-  return scriptNames.reduce((res, input) => {
-    return res.then(() => (
-      runPackageScript({scriptConfig, options, input})
-    ))
-  }, Promise.resolve())
+  return scriptNames.reduce(
+    (res, input) => {
+      return res.then(() => runPackageScript({scriptConfig, options, input}))
+    },
+    Promise.resolve(),
+  )
 }
-
 
 function runPackageScript({scriptConfig, options, input}) {
   const [scriptPrefix, ...args] = input.split(' ')
@@ -33,7 +34,10 @@ function runPackageScript({scriptConfig, options, input}) {
   if (!isString(script)) {
     return Promise.reject({
       message: chalk.red(
-        `Scripts must resolve to strings. There is no script that can be resolved from "${scriptPrefix}"`,
+        oneLine`
+          Scripts must resolve to strings.
+          There is no script that can be resolved from "${scriptPrefix}"
+        `,
       ),
       ref: 'missing-script',
     })
@@ -48,7 +52,10 @@ function runPackageScript({scriptConfig, options, input}) {
     child.on('error', error => {
       reject({
         message: chalk.red(
-          `The script called "${scriptPrefix}" which runs "${command}" emitted an error`,
+          oneLine`
+            The script called "${scriptPrefix}"
+            which runs "${command}" emitted an error
+          `,
         ),
         ref: 'emitted-an-error',
         error,
@@ -61,7 +68,10 @@ function runPackageScript({scriptConfig, options, input}) {
       } else {
         reject({
           message: chalk.red(
-            `The script called "${scriptPrefix}" which runs "${command}" failed with exit code ${code}`,
+            oneLine`
+              The script called "${scriptPrefix}"
+              which runs "${command}" failed with exit code ${code}
+            `,
           ),
           ref: 'failed-with-exit-code',
           code,

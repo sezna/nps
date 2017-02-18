@@ -17,14 +17,19 @@ test('script can be an object', () => {
 
 test('get the default from the script object', () => {
   const buildCommand = 'webpack'
-  const command = resolveScriptObjectToString({default: {script: buildCommand}})
+  const command = resolveScriptObjectToString({
+    default: {script: buildCommand},
+  })
   expect(command).toBe(buildCommand)
 })
 
-test('returns undefined if the object with default cannot be resolved to a string', () => {
-  const result = resolveScriptObjectToString({default: {blah: 'stuff'}})
-  expect(result).toBeUndefined()
-})
+test(
+  'returns undefined if the object with default cannot be resolved to a string',
+  () => {
+    const result = resolveScriptObjectToString({default: {blah: 'stuff'}})
+    expect(result).toBeUndefined()
+  },
+)
 
 test('resolves default to the script if it is a string', () => {
   const result = resolveScriptObjectToString({default: 'string'})
