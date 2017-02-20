@@ -2,7 +2,7 @@
 
 ## Links to projects
 
-Examples of how people us `nps`:
+Examples of how people use `nps`:
 
 - **[nps](https://github.com/kentcdodds/nps):** [scripts](https://github.com/kentcdodds/nps/blob/master/package.json), [`package-scripts.js`](https://github.com/kentcdodds/nps/blob/master/package-scripts.js)
 - **[react-component-template](https://github.com/nkbt/react-component-template)** uses `nps` to implement shareable npm

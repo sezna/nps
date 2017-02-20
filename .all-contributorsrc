@@ -248,6 +248,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "Attrash-Islam",
+      "name": "Islam Attrash",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7091543?v=3",
+      "profile": "https://twitter.com/IslamAttrash",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
