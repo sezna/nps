@@ -415,6 +415,7 @@ called [`npmsearch-cli`](https://www.npmjs.com/package/npmsearch-cli).
 - [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
 a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
 benefits of npm scripts I wanted to keep).
+- [nabs][nabs] is a compiler that turns a nicely structured YAML file into script entries in your package.json
 
 ### FAQ
 
@@ -477,6 +478,7 @@ MIT
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [clarity]: https://github.com/kentcdodds/nps/issues/1
 [scripty]: https://npmjs.com/package/scripty
+[nabs]: https://npmjs.com/package/nabs
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/nps-video
 [releases]: https://github.com/kentcdodds/nps/releases/tag/v5.0.0
