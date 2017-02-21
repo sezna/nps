@@ -60,7 +60,7 @@ module.exports = {
     lintStaged: 'lint-staged',
     format: {
       description: 'auto-formats the code',
-      script: 'prettier-eslint --write "src/**/*.js" --ignore "**/fixtures/**"',
+      script: 'prettier-eslint --write "src/**/*.js"',
     },
     addContributor: {
       description: 'When new people contribute to the project, run this',

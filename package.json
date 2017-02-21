@@ -55,7 +55,7 @@
     "lint-staged": "^3.3.0",
     "nps": "*",
     "opt-cli": "^1.5.1",
-    "prettier-eslint-cli": "^1.2.0",
+    "prettier-eslint-cli": "^3.0.0",
     "rimraf": "^2.6.0",
     "semantic-release": "^6.3.6",
     "sinon": "^1.17.7",
