@@ -478,6 +478,7 @@ MIT
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [clarity]: https://github.com/kentcdodds/nps/issues/1
 [scripty]: https://npmjs.com/package/scripty
+[nabs]: https://npmjs.com/package/nabs
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/nps-video
 [releases]: https://github.com/kentcdodds/nps/releases/tag/v5.0.0
