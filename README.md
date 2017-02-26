@@ -204,7 +204,7 @@ If you're already using npm scripts, you can get up and going really quickly wit
 ```
 or
 ```
-./node_modules/.bin/nps init --type yaml
+./node_modules/.bin/nps init --type yml
 ```
 
 This will use your `package.json` `scripts` to generate a `package-scripts.js` (respectively a `package-scripts.yml`)
