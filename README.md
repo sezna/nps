@@ -13,7 +13,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-26-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -131,9 +131,6 @@ build.prod - webpack -p
 validate - concurrently "nps lint" "nps test" "nps build"
 ```
 
-**Because `nps` is harder to type, it is recommended that you use the alias `nps` to interact with `nps`, which is much
-easier to type and the rest of the documentation will use `nps`**
-
 Now, to run a script, you can run:
 
 ```console
@@ -208,7 +205,7 @@ If you're already using npm scripts, you can get up and going really quickly wit
 ```
 or
 ```
-./node_modules/.bin/nps init --type yaml
+./node_modules/.bin/nps init --type yml
 ```
 
 This will use your `package.json` `scripts` to generate a `package-scripts.js` (respectively a `package-scripts.yml`)
@@ -421,12 +418,13 @@ called [`npmsearch-cli`](https://www.npmjs.com/package/npmsearch-cli).
 - [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
 a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
 benefits of npm scripts I wanted to keep).
+- [nabs][nabs] is a compiler that turns a nicely structured YAML file into script entries in your package.json
 
 ### FAQ
 
 #### What happened to p-s?
 
-This project _is_ p-s! It was just renamed during a major version bump. There were a few 
+This project _is_ p-s! It was just renamed during a major version bump. There were a few
 breaking changes for this to happen and those are documented on the [releases][releases]
 page.
 
@@ -439,7 +437,7 @@ Thanks goes to these people ([emoji key][emojis]):
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [<img src="https://avatars.githubusercontent.com/u/1972567?v=3" width="100px;"/><br /><sub>Tommy</sub>](http://www.tommyleunen.com)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Atleunen) [💻](https://github.com/kentcdodds/p-s/commits?author=tleunen) [⚠️](https://github.com/kentcdodds/p-s/commits?author=tleunen) 👀 | [<img src="https://avatars.githubusercontent.com/u/509946?v=3" width="100px;"/><br /><sub>Jayson Harshbarger</sub>](http://www.hypercubed.com)<br />💡 👀 | [<img src="https://avatars.githubusercontent.com/u/1355481?v=3" width="100px;"/><br /><sub>JD Isaacks</sub>](http://www.jisaacks.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=jisaacks) [⚠️](https://github.com/kentcdodds/p-s/commits?author=jisaacks) | [<img src="https://avatars.githubusercontent.com/u/924465?v=3" width="100px;"/><br /><sub>Christopher Hiller</sub>](https://boneskull.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/1834413?v=3" width="100px;"/><br /><sub>Robin Malfait</sub>](https://robinmalfait.com)<br />💡 | [<img src="https://avatars.githubusercontent.com/u/622118?v=3" width="100px;"/><br /><sub>Eric McCormick</sub>](https://ericmccormick.io)<br />👀 [📖](https://github.com/kentcdodds/p-s/commits?author=edm00se) | [<img src="https://avatars.githubusercontent.com/u/1913805?v=3" width="100px;"/><br /><sub>Sam Verschueren</sub>](https://twitter.com/SamVerschueren)<br />👀 |
 | [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=sxn) [⚠️](https://github.com/kentcdodds/p-s/commits?author=sxn) [📖](https://github.com/kentcdodds/p-s/commits?author=sxn) | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Agunnx) [💻](https://github.com/kentcdodds/p-s/commits?author=gunnx) [⚠️](https://github.com/kentcdodds/p-s/commits?author=gunnx) | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Amartellaj) [💻](https://github.com/kentcdodds/p-s/commits?author=martellaj) [⚠️](https://github.com/kentcdodds/p-s/commits?author=martellaj) | [<img src="https://avatars.githubusercontent.com/u/1887854?v=3" width="100px;"/><br /><sub>Martin Segado</sub>](https://github.com/msegado)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=msegado) | [<img src="https://avatars.githubusercontent.com/u/36491?v=3" width="100px;"/><br /><sub>Bram Borggreve</sub>](http://colmena.io/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Abeeman) [💻](https://github.com/kentcdodds/p-s/commits?author=beeman) | [<img src="https://avatars.githubusercontent.com/u/86454?v=3" width="100px;"/><br /><sub>Elijah Manor</sub>](http://elijahmanor.com)<br />📹 | [<img src="https://avatars.githubusercontent.com/u/10691183?v=3" width="100px;"/><br /><sub>Ragu Ramaswamy</sub>](https://github.com/rrag)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rrag) [⚠️](https://github.com/kentcdodds/p-s/commits?author=rrag) [🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Arrag) |
-| [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox) | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub>Aditya Pratap Singh</sub>](http://blog.adityapsingh.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/7687132?v=3" width="100px;"/><br /><sub>bumbleblym</sub>](https://github.com/bumbleblym)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=bumbleblym) [📖](https://github.com/kentcdodds/p-s/commits?author=bumbleblym) | [<img src="https://avatars.githubusercontent.com/u/7091543?v=3" width="100px;"/><br /><sub>Islam Attrash</sub>](https://twitter.com/IslamAttrash)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=Attrash-Islam) |
+| [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox) | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub>Aditya Pratap Singh</sub>](http://blog.adityapsingh.com)<br />👀 | [<img src="https://avatars.githubusercontent.com/u/7687132?v=3" width="100px;"/><br /><sub>bumbleblym</sub>](https://github.com/bumbleblym)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=bumbleblym) [📖](https://github.com/kentcdodds/p-s/commits?author=bumbleblym) | [<img src="https://avatars.githubusercontent.com/u/7091543?v=3" width="100px;"/><br /><sub>Islam Attrash</sub>](https://twitter.com/IslamAttrash)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=Attrash-Islam) | [<img src="https://avatars.githubusercontent.com/u/7215306?v=3" width="100px;"/><br /><sub>JasonSooter</sub>](https://github.com/JasonSooter)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=JasonSooter) |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -483,6 +481,7 @@ MIT
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [clarity]: https://github.com/kentcdodds/nps/issues/1
 [scripty]: https://npmjs.com/package/scripty
+[nabs]: https://npmjs.com/package/nabs
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/nps-video
 [releases]: https://github.com/kentcdodds/nps/releases/tag/v5.0.0
