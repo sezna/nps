@@ -8,7 +8,7 @@
     "test": "nps test",
     "localstart": "npm start build && node ./dist/bin/nps.js",
     "commitmsg": "opt --in commit-msg --exec \"validate-commit-msg\"",
-    "precommit": "opt --in pre-commit --exec \"npm start validate\""
+    "precommit": "opt --in pre-commit --exec \"lint-staged && npm start validate\""
   },
   "bin": {
     "nps": "./dist/bin/nps.js"
@@ -42,10 +42,8 @@
     "babel-preset-env": "^1.1.8",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.23.0",
-    "cli-tester": "^2.0.0",
     "codecov": "^1.0.1",
     "commitizen": "^2.9.6",
-    "concurrently": "^3.3.0",
     "cross-env": "^3.1.4",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.15.0",
@@ -54,9 +52,9 @@
     "jest-cli": "^18.1.0",
     "lint-staged": "^3.3.0",
     "nps": "*",
+    "nps-utils": "^1.1.0",
     "opt-cli": "^1.5.1",
     "prettier-eslint-cli": "^3.0.0",
-    "rimraf": "^2.6.0",
     "semantic-release": "^6.3.6",
     "sinon": "^1.17.7",
     "validate-commit-msg": "^2.11.1"

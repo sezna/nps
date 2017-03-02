@@ -1,5 +1,7 @@
+const {series, concurrent, rimraf} = require('nps-utils')
+
 const transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
-const cleanDist = 'rimraf dist'
+const cleanDist = rimraf('dist')
 
 module.exports = {
   scripts: {
@@ -18,14 +20,14 @@ module.exports = {
     build: {
       default: {
         description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
-        script: [cleanDist, transpile].join('&&'),
+        script: series(cleanDist, transpile),
       },
       watch: {
-        script: [cleanDist, `${transpile} --watch`].join('&&'),
+        script: series(cleanDist, `${transpile} --watch`),
       },
       andValidate: {
         description: 'Runs the normal build first, then validates the CLI',
-        script: 'nps build && nps test.cli',
+        script: series.nps('build', 'test.cli'),
       },
     },
     lint: {
@@ -38,26 +40,16 @@ module.exports = {
     },
     release: {
       description: 'We automate releases with semantic-release. This should only be run on travis',
-      script: 'semantic-release pre && npm publish && semantic-release post',
+      script: series(
+        'semantic-release pre',
+        'npm publish',
+        'semantic-release post'
+      ),
     },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
-      script: concurrent({
-        'build-and-validate': {
-          script: 'nps build.andValidate',
-          color: 'bgBlue.bold',
-        },
-        test: {
-          script: 'nps test',
-          color: 'bgMagenta.bold',
-        },
-        'lint-staged': {
-          script: 'nps lintStaged',
-          color: 'bgGreen.bold',
-        },
-      }),
+      script: concurrent.nps('test', 'build.andValidate'),
     },
-    lintStaged: 'lint-staged',
     format: {
       description: 'auto-formats the code',
       script: 'prettier-eslint --write "src/**/*.js"',
@@ -74,35 +66,6 @@ module.exports = {
   options: {
     silent: false,
   },
-}
-
-function concurrent(scripts) {
-  const {
-    colors,
-    scripts: quotedScripts,
-    names,
-  } = Object.keys(scripts).reduce(reduceScripts, {
-    colors: [],
-    scripts: [],
-    names: [],
-  })
-  const flags = [
-    //   https://github.com/kimmobrunfeldt/concurrently/issues/91
-    //   '--kill-others',
-    `--prefix-colors "${colors.join(',')}"`,
-    '--prefix "[{name}]"',
-    `--names "${names.join(',')}"`,
-    quotedScripts.join(' '),
-  ]
-  return `concurrently ${flags.join(' ')}`
-
-  function reduceScripts(accumulator, scriptName) {
-    const {script, color} = scripts[scriptName]
-    accumulator.names.push(scriptName)
-    accumulator.colors.push(color)
-    accumulator.scripts.push(`"${script}"`)
-    return accumulator
-  }
 }
 
 // this is not transpiled

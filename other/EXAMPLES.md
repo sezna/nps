@@ -1,5 +1,11 @@
 # package-scripts examples
 
+## nps-utils
+
+Many common patterns in `nps` can be accomplished with the
+[`nps-utils`](https://github.com/kentcdodds/nps-utils) package. Definitely
+recommended to check it out!
+
 ## Links to projects
 
 Examples of how people use `nps`:
@@ -53,25 +59,30 @@ get the idea 😄. This is a pretty nice win over traditional npm scripts 👍
 ### parallel scripts
 
 Often, scripts can run concurrently because they are not interdependent. We recommend
-[`concurrently`](http://npm.im/concurrently) for this:
+[`nps-utils`](http://npm.im/nps-utils) which uses `concurrently` for this:
 
 ```javascript
+const npsUtils = require('nps-utils')
+
 module.exports = {
   scripts: {
-    validate: concurrent([
+    sayThings: npsUtils.concurrent({
+      hi: {script: 'echo hi'},
+      hey: {script: 'echo hey', color: 'blue.bgGreen.dim'},
+      hello: 'echo hello there',
+    }),
+    validate: npsUtils.concurrent.nps(
       'build',
       'lint',
       'test',
       'order.sandwich',
-    ]),
+    ),
+    build: 'webpack',
+    lint: 'eslint .',
+    test: 'jest',
+    order: {sandwich: 'makemeasandwich'}
     // etc...
   }
-}
-
-function concurrent(scripts) {
-  const names = scripts.join(',')
-  const quotedScripts = `"nps ${scripts.join('" "nps ')}"`
-  return `concurrently --prefix "[{name}]" --names "${names}" ${quotedScripts}`
 }
 ```
 
