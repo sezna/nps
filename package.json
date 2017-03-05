@@ -8,7 +8,7 @@
     "test": "nps test",
     "localstart": "npm start build && node ./dist/bin/nps.js",
     "commitmsg": "opt --in commit-msg --exec \"validate-commit-msg\"",
-    "precommit": "opt --in pre-commit --exec \"lint-staged && npm start validate\""
+    "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\""
   },
   "bin": {
     "nps": "./dist/bin/nps.js"
