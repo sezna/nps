@@ -23,7 +23,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 ## Quick Video Intro :tv:
 
 <a href="http://kcd.im/nps-video" title="Pull out npm scripts into another file with nps">
-  <img src="other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
+  <img src="https://github.com/kentcdodds/nps/raw/master/other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
 </a>
 
 [Pull out npm scripts into another file with nps][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
@@ -41,6 +41,8 @@ this file is a JavaScript file, you can do a lot more with your project scripts.
 `package-scripts.js` file:
 
 ```javascript
+const npsUtils = require('nps-utils') // not required, but handy!
+
 module.exports = {
   scripts: {
     default: 'node index.js',
@@ -58,9 +60,8 @@ module.exports = {
       default: 'webpack',
       prod: 'webpack -p',
     },
-    // learn more about concurrently here: https://npm.im/concurrently
-    validate: 'concurrently "nps lint" "nps test" "nps build"',
-    // concurrently script too verbose for your liking? Check out other/EXAMPLES.md!
+    // learn more about npsUtils here: https://npm.im/nps-utils
+    validate: npsUtils.concurrently.nps('lint', 'test', 'build'),
   },
 }
 ```
@@ -407,6 +408,11 @@ This was inspired by [a tweet][tweet] by [@sindresorhus][sindre].
 Big thank you to [@tmpvar][tmpvar] for giving up the name `nps`! The original `nps` is now
 called [`npmsearch-cli`](https://www.npmjs.com/package/npmsearch-cli).
 
+## Related Packages
+
+- [`nps-utils`][nps-utils] - a collection of utilities to make cross-platform scripts and many other patterns
+(like running concurrent/parallel scripts)
+
 ## Other Solutions
 
 - [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
@@ -479,3 +485,4 @@ MIT
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [video]: http://kcd.im/nps-video
 [releases]: https://github.com/kentcdodds/nps/releases/tag/v5.0.0
+[nps-utils]: https://github.com/kentcdodds/nps-utils
