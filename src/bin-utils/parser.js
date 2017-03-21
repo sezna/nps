@@ -138,7 +138,7 @@ function parse(rawArgv) {
     function onInit(initArgv) {
       commandExecuted = true
       const path = getPSConfigFilepath(initArgv)
-      const fileExists = Boolean(findUp.sync(path))
+      const fileExists = typeof path === 'string' && Boolean(findUp.sync(path))
       if (fileExists) {
         if (
           !keyInYN(
