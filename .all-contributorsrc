@@ -272,7 +272,9 @@
       "name": "Nate Cavanaugh",
       "avatar_url": "https://avatars1.githubusercontent.com/u/116871?v=3",
       "profile": "http://alterform.com",
-      "contributions": []
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
