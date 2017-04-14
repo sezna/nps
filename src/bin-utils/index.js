@@ -114,9 +114,7 @@ function loadYAMLConfig(configPath) {
  * @return {String} the module path to require
  */
 function getModuleRequirePath(moduleName) {
-  return moduleName[0] === '.' ?
-    resolve(process.cwd(), moduleName) :
-    moduleName
+  return moduleName[0] === '.' ? resolve(process.cwd(), moduleName) : moduleName
 }
 
 function getAttemptModuleRequireFn(onFail) {
@@ -173,8 +171,11 @@ function help({scripts}) {
   }
 }
 
-function getAvailableScripts(config, prefix = []) {
-  const excluded = ['description', 'script', 'default']
+function getAvailableScripts(config, prefix = [], rootLevel = true) {
+  const excluded = ['description', 'script']
+  if (!rootLevel) {
+    excluded.push('default')
+  }
   return Object.keys(config).reduce((scripts, key) => {
     const val = config[key]
     if (includes(excluded, key)) {
@@ -190,7 +191,7 @@ function getAvailableScripts(config, prefix = []) {
       ]
     }
     if (isPlainObject(val)) {
-      return [...scripts, ...getAvailableScripts(val, prefixed)]
+      return [...scripts, ...getAvailableScripts(val, prefixed, false)]
     }
     return scripts
   }, [])
