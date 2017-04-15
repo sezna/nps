@@ -163,6 +163,10 @@ test('loadConfig: can load config from YML file', () => {
 test('help: formats a nice message', () => {
   const config = {
     scripts: {
+      default: {
+        description: 'the default script',
+        script: 'echo "default"',
+      },
       foo: {
         description: 'the foo script',
         script: 'echo "foo"',
@@ -202,21 +206,14 @@ test('help: formats a nice message', () => {
   const expected = `
 Available scripts (camel or kebab case accepted)
 
-${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray(
-    'echo "foo"',
-  )}
-${chalk.green('bar')} - ${chalk.white('stuff')} - ${chalk.gray(
-    'echo "bar default"',
-  )}
+${chalk.green('default')} - ${chalk.white('the default script')} - ${chalk.gray('echo "default"')}
+${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray('echo "foo"')}
+${chalk.green('bar')} - ${chalk.white('stuff')} - ${chalk.gray('echo "bar default"')}
 ${chalk.green('bar.baz')} - ${chalk.gray('echo "baz"')}
 ${chalk.green('bar.barBub')} - ${chalk.gray('echo "barBub"')}
 ${chalk.green('build')} - ${chalk.gray('webpack')}
-${chalk.green('build.x')} - ${chalk.white('webpack with x env')} - ${chalk.gray(
-    'webpack --env.x',
-  )}
-${chalk.green('build.x.y')} - ${chalk.white('build X-Y')} - ${chalk.gray(
-    'echo "build x-y"',
-  )}
+${chalk.green('build.x')} - ${chalk.white('webpack with x env')} - ${chalk.gray('webpack --env.x')}
+${chalk.green('build.x.y')} - ${chalk.white('build X-Y')} - ${chalk.gray('echo "build x-y"')}
 ${chalk.green('foobar')} - ${chalk.gray('echo "foobar"')}
 `.trim()
 
@@ -230,23 +227,20 @@ test('help: returns no scripts available', () => {
   expect(message).toBe(expected)
 })
 
-test(
-  'help: do not display scripts with flag hiddenFromHelp set to true',
-  () => {
-    const config = {
-      scripts: {
-        foo: {
-          description: 'the foo script',
-          script: 'echo "foo"',
-          hiddenFromHelp: true,
-        },
+test('help: do not display scripts with flag hiddenFromHelp set to true', () => {
+  const config = {
+    scripts: {
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+        hiddenFromHelp: true,
       },
-    }
-    const message = help(config)
-    const expected = chalk.yellow('There are no scripts available')
-    expect(message).toBe(expected)
-  },
-)
+    },
+  }
+  const message = help(config)
+  const expected = chalk.yellow('There are no scripts available')
+  expect(message).toBe(expected)
+})
 
 function getAbsoluteFixturePath(fixture) {
   return path.join(__dirname, 'fixtures', fixture)
