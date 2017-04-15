@@ -285,6 +285,16 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "Miklet",
+      "name": "Paweł Mikołajczyk",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12592677?v=3",
+      "profile": "https://github.com/Miklet",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }

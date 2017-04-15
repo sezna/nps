@@ -19,9 +19,13 @@ test('with --get-yargs-completions', () =>
 
 function snapshot(args) {
   return runNPS(fixturesPath, args).then(results => {
-    const snapshottableResults = relativizePaths(results)
+    const snapshottableResults = convertResultToLinuxSpecific(results)
     expect(snapshottableResults).toMatchSnapshot()
   })
+}
+
+function convertResultToLinuxSpecific(results) {
+  return removeUnwantedQuotes(relativizePaths(results))
 }
 
 /**
@@ -32,10 +36,27 @@ function snapshot(args) {
  */
 function relativizePaths(results) {
   return Object.keys(results).reduce((obj, key) => {
-    obj[key] = results[key].replace(
-      resolve(__dirname, '../'),
-      '<projectRootDir>',
-    )
+    obj[key] = results[key]
+      .replace(':/', ':\\')
+      .replace(resolve(__dirname, '../'), '<projectRootDir>')
+      .replace(/\\/g, '/')
     return obj
   }, {})
+}
+
+/**
+ * This takes the results object and removes unwanted quotes
+ * @param {Object} results - This is the results object from runNPS
+ * @return {Object} - The new results object without unwanted quotes
+ */
+function removeUnwantedQuotes(results) {
+  const splittedStdout = results.stdout.split(/\r?\n/)
+  const {length} = splittedStdout
+  if (length > 1) {
+    splittedStdout[length - 2] = splittedStdout[length - 2].replace(/"/g, '')
+  }
+  const joinedStdoutResult = splittedStdout.join('\n')
+  return Object.assign(results, {
+    stdout: joinedStdoutResult,
+  })
 }
