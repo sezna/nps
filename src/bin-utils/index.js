@@ -77,7 +77,7 @@ function loadConfig(configPath, input) {
       message: chalk.red(
         oneLine`
           The package-scripts configuration
-          ("${configPath}") must be an object
+          ("${configPath.replace(/\\/g, '/')}") must be an object
           or a function that returns an object.
         `,
       ),
@@ -114,7 +114,9 @@ function loadYAMLConfig(configPath) {
  * @return {String} the module path to require
  */
 function getModuleRequirePath(moduleName) {
-  return moduleName[0] === '.' ? resolve(process.cwd(), moduleName) : moduleName
+  return moduleName[0] === '.' ?
+    resolve(process.cwd(), moduleName) :
+    moduleName
 }
 
 function getAttemptModuleRequireFn(onFail) {
