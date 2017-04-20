@@ -57,7 +57,9 @@ test(
     jest.resetModules()
     jest.mock('../get-logger', () => () => ({error: mockError}))
     const {loadConfig: proxiedLoadConfig} = require('./index')
-    const fixturePath = getAbsoluteFixturePath('bad-data-type-config.js')
+    const fixturePath = getAbsoluteFixturePath(
+      'bad-data-type-config.js',
+    ).replace(/\\/g, '/')
     expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
       /Your config.*string/,
     )
@@ -82,7 +84,7 @@ test(
     const {loadConfig: proxiedLoadConfig} = require('./index')
     const fixturePath = getAbsoluteFixturePath(
       'bad-function-data-type-config.js',
-    )
+    ).replace(/\\/g, '/')
     expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
       /Your config.*function.*Array/,
     )
@@ -227,20 +229,23 @@ test('help: returns no scripts available', () => {
   expect(message).toBe(expected)
 })
 
-test('help: do not display scripts with flag hiddenFromHelp set to true', () => {
-  const config = {
-    scripts: {
-      foo: {
-        description: 'the foo script',
-        script: 'echo "foo"',
-        hiddenFromHelp: true,
+test(
+  'help: do not display scripts with flag hiddenFromHelp set to true',
+  () => {
+    const config = {
+      scripts: {
+        foo: {
+          description: 'the foo script',
+          script: 'echo "foo"',
+          hiddenFromHelp: true,
+        },
       },
-    },
-  }
-  const message = help(config)
-  const expected = chalk.yellow('There are no scripts available')
-  expect(message).toBe(expected)
-})
+    }
+    const message = help(config)
+    const expected = chalk.yellow('There are no scripts available')
+    expect(message).toBe(expected)
+  },
+)
 
 function getAbsoluteFixturePath(fixture) {
   return path.join(__dirname, 'fixtures', fixture)
