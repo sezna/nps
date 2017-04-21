@@ -57,16 +57,23 @@ function structureScripts(scripts) {
   // start out by giving every script a `default`
   const defaultedScripts = Object.keys(scripts).reduce((obj, key) => {
     const keyParts = key.split(':')
-    let deepKey = [...keyParts, 'default'].join('.')
+    const isKeyScriptHook = isScriptHook(keyParts[0]);
+    let deepKey = keyParts.map(key => camelCase(key)).join('.')
+    let defaultDeepKey = `${deepKey}.default`
     if (key.indexOf('start') === 0) {
-      deepKey = [
+      defaultDeepKey = [
         'default',
         ...keyParts.slice(1, keyParts.length),
         'default',
       ].join('.')
     }
-    const script = scripts[key]
-    set(obj, deepKey, script)
+    let script = scripts[key]
+    if (!isKeyScriptHook) {
+      const preHook = scripts[`pre${key}`] ? `nps pre${deepKey} && ` : ''
+      const postHook = scripts[`post${key}`] ? ` && nps post${deepKey}` : ''
+      script = `${preHook}${script}${postHook}`
+    }
+    set(obj, defaultDeepKey, script)
     return obj
   }, {})
   // traverse the object and replace all objects that
@@ -102,9 +109,8 @@ function jsObjectStringify(object, indent) {
       } else {
         value = `'${escapeSingleQuote(script)}'`
       }
-      const camelKey = camelCase(key)
       const comma = isLast(object, index) ? '' : ','
-      return `${string}\n${indent}${camelKey}: ${value}${comma}`
+      return `${string}\n${indent}${key}: ${value}${comma}`
     },
     '',
   )
@@ -123,3 +129,7 @@ function escapeSingleQuote(string) {
 function isLast(object, index) {
   return Object.keys(object).length - 1 === index
 }
+
+function isScriptHook(script) {
+  return script.indexOf('pre') === 0 || script.indexOf('post') === 0
+} 

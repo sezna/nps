@@ -3,12 +3,17 @@
     "start": "echo start",
     "start:stuff": "echo start:stuff",
     "test": "echo test",
+    "prefoo": "echo prefoo",
     "foo": "echo foo",
     "bar": "echo bar",
+    "postbar": "echo postbar",
+    "prefoo-bar": "echo prefoo-bar",
     "foo-bar": "echo foo-bar",
     "foobar": "echo \"foo bar\"",
     "baz": "echo 'baz buzz'",
+    "prefoo:bar": "echo prefoo:bar",
     "foo:bar": "echo foo:bar",
+    "postfoo:bar": "echo postfoo:bar",
     "foo:bar:baz": "echo foo:bar:baz"
   }
 }

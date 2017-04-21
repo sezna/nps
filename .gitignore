@@ -6,3 +6,4 @@ dist
 .opt-out
 npm-debug.log
 .idea/
+.vscode/

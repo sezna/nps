@@ -5,16 +5,25 @@ module.exports = {
       stuff: 'echo start:stuff'
     },
     test: 'echo test',
+    prefoo: {
+      default: 'echo prefoo',
+      bar: 'echo prefoo:bar'
+    },
     foo: {
-      default: 'echo foo',
+      default: 'nps prefoo && echo foo',
       bar: {
-        default: 'echo foo:bar',
+        default: 'nps prefoo.bar && echo foo:bar && nps postfoo.bar',
         baz: 'echo foo:bar:baz'
       }
     },
-    bar: 'echo bar',
-    fooBar: 'echo foo-bar',
+    bar: 'echo bar && nps postbar',
+    postbar: 'echo postbar',
+    prefooBar: 'echo prefoo-bar',
+    fooBar: 'nps prefooBar && echo foo-bar',
     foobar: 'echo "foo bar"',
-    baz: 'echo \'baz buzz\''
+    baz: 'echo \'baz buzz\'',
+    postfoo: {
+      bar: 'echo postfoo:bar'
+    }
   }
 };
