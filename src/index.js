@@ -42,7 +42,7 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
 function runPackageScript({scriptConfig, options, input}) {
   const [scriptPrefix, ...args] = input.split(' ')
   const scripts = getScriptsFromConfig(scriptConfig, scriptPrefix)
-  const script = getScriptToRun(scripts, scriptPrefix)
+  const {scriptName, script} = getScriptToRun(scripts, scriptPrefix)
   if (!isString(script)) {
     return Promise.reject({
       message: chalk.red(
@@ -56,7 +56,13 @@ function runPackageScript({scriptConfig, options, input}) {
   }
   const command = [script, ...args].join(' ').trim()
   const log = getLogger(getLogLevel(options))
-  log.info(chalk.gray('nps executing: ') + chalk.green(command))
+  log.info(
+    oneLine`
+    ${chalk.gray('nps is executing')}
+     \`${chalk.bold(scriptName)}\`:
+     ${chalk.green(command)}
+     `,
+  )
   let child
   return new Promise((resolve, reject) => {
     child = spawn(command, {stdio: 'inherit', env: getEnv()})

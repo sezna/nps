@@ -27,7 +27,7 @@
     "js-yaml": "^3.7.0",
     "lodash": "^4.17.4",
     "manage-path": "^2.0.0",
-    "prefix-matches": "^0.0.9",
+    "prefix-matches": "^1.0.1",
     "readline-sync": "^1.4.6",
     "spawn-command-with-kill": "^1.0.0",
     "type-detect": "^4.0.0",

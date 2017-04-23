@@ -2,12 +2,15 @@ import getScriptToRun from './get-script-to-run'
 
 test('allows a prefix to be provided', () => {
   const script = getScriptToRun({build: 'stuff'}, 'b')
-  expect(script).toBe('stuff')
+  expect(script).toEqual({scriptName: 'build', script: 'stuff'})
 })
 
 test('allows a multi-level prefix to be provided', () => {
   const script = getScriptToRun({build: {watch: 'watch stuff'}}, 'b.w')
-  expect(script).toBe('watch stuff')
+  expect(script).toEqual({
+    scriptName: 'build.watch',
+    script: 'watch stuff',
+  })
 })
 
 test(
@@ -17,7 +20,10 @@ test(
       {build: {watch: 'watch stuff'}},
       'build.watch',
     )
-    expect(script).toBe('watch stuff')
+    expect(script).toEqual({
+      scriptName: 'build.watch',
+      script: 'watch stuff',
+    })
   },
 )
 
@@ -26,7 +32,10 @@ test('can accept snake-case representation of a camelCase name', () => {
     {checkCoverage: 'checking coverage'},
     'check-coverage',
   )
-  expect(script).toBe('checking coverage')
+  expect(script).toEqual({
+    scriptName: 'check-coverage',
+    script: 'checking coverage',
+  })
 })
 
 test('fallsback to `default` if no prefix is found', () => {
@@ -35,7 +44,13 @@ test('fallsback to `default` if no prefix is found', () => {
   const defaultIsPrefixFallback = getScriptToRun(scripts, 'foo.def')
   const script = getScriptToRun(scripts, 'foo.de')
 
-  expect(usesDefault).toBe('echo "default"')
-  expect(defaultIsPrefixFallback).toBe('echo "default"')
-  expect(script).toBe('echo "dee"')
+  expect(usesDefault).toEqual({
+    scriptName: 'foo',
+    script: 'echo "default"',
+  })
+  expect(defaultIsPrefixFallback).toEqual({
+    scriptName: 'foo.default',
+    script: 'echo "default"',
+  })
+  expect(script).toEqual({scriptName: 'foo.dee', script: 'echo "dee"'})
 })

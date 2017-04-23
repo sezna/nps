@@ -55,22 +55,24 @@ function generatePackageScriptsFileContents(scripts) {
 
 function structureScripts(scripts) {
   // start out by giving every script a `default`
-  const defaultedScripts = Object.keys(scripts).reduce((obj, key) => {
-    const keyParts = key.split(':')
-    const isKeyScriptHook = isScriptHook(keyParts[0]);
-    let deepKey = keyParts.map(key => camelCase(key)).join('.')
+  const defaultedScripts = Object.keys(scripts).reduce((obj, scriptKey) => {
+    const keyParts = scriptKey.split(':')
+    const isKeyScriptHook = isScriptHook(keyParts[0])
+    const deepKey = keyParts.map(key => camelCase(key)).join('.')
     let defaultDeepKey = `${deepKey}.default`
-    if (key.indexOf('start') === 0) {
+    if (scriptKey.indexOf('start') === 0) {
       defaultDeepKey = [
         'default',
         ...keyParts.slice(1, keyParts.length),
         'default',
       ].join('.')
     }
-    let script = scripts[key]
+    let script = scripts[scriptKey]
     if (!isKeyScriptHook) {
-      const preHook = scripts[`pre${key}`] ? `nps pre${deepKey} && ` : ''
-      const postHook = scripts[`post${key}`] ? ` && nps post${deepKey}` : ''
+      const preHook = scripts[`pre${scriptKey}`] ? `nps pre${deepKey} && ` : ''
+      const postHook = scripts[`post${scriptKey}`] ?
+        ` && nps post${deepKey}` :
+        ''
       script = `${preHook}${script}${postHook}`
     }
     set(obj, defaultDeepKey, script)
@@ -132,4 +134,4 @@ function isLast(object, index) {
 
 function isScriptHook(script) {
   return script.indexOf('pre') === 0 || script.indexOf('post') === 0
-} 
+}

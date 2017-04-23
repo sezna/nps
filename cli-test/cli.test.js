@@ -17,6 +17,9 @@ test('with --require', () =>
 test('with --get-yargs-completions', () =>
   snapshot('--config ./package-scripts.js --get-yargs-completions li'))
 
+test('with prefix', () =>
+  snapshot('--config ./package-scripts.js lint.s.t.s'))
+
 function snapshot(args) {
   return runNPS(fixturesPath, args).then(results => {
     const snapshottableResults = convertResultToLinuxSpecific(results)
