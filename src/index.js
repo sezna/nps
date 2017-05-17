@@ -17,7 +17,19 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
   if (scripts.length === 0) {
     scripts = ['default']
   }
-  const scriptNames = arrify(scripts)
+  let scriptNames = arrify(scripts)
+
+  const separatorIndex = scriptNames.indexOf('--')
+  if (separatorIndex >= 0) {
+    const additionalOptions = scriptNames.slice(separatorIndex + 1).join(' ')
+    if (separatorIndex === 0) {
+      scriptNames = [`default ${additionalOptions}`]
+    } else {
+      scriptNames.splice(separatorIndex)
+      const lastIndex = scriptNames.length - 1
+      scriptNames[lastIndex] = `${scriptNames[lastIndex]} ${additionalOptions}`
+    }
+  }
 
   return scriptNames.reduce(
     (res, input) => {
