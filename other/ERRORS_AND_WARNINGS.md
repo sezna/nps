@@ -48,7 +48,7 @@ Try to run the script without `nps` and verify that the script is working. If no
 
 ## Config Must be an Object
 
-Your `package-scripts.js`, `package-scripts.yml`, or whatever you specified as the `--config` must be an object or a function that returns an object.
+Your `package-scripts.js`, `package-scripts.yml`, or whatever you specified as the `--config` must be a nopn-empty object or a function that returns a non-empty object.
 
 ### To Fix:
 

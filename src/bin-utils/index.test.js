@@ -73,6 +73,31 @@ test(
 
 test(
   oneLine`
+    loadConfig: logs and throws an error
+    for a config that exports an empty config
+  `,
+  () => {
+    const mockError = jest.fn()
+    jest.resetModules()
+    jest.mock('../get-logger', () => () => ({error: mockError}))
+    const {loadConfig: proxiedLoadConfig} = require('./index')
+    const fixturePath = getAbsoluteFixturePath('bad-empty-module.js').replace(
+      /\\/g,
+      '/',
+    )
+    expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
+      /Your config data type was an object, but it was empty/,
+    )
+    expect(mockError).toHaveBeenCalledTimes(1)
+    expect(mockError).toHaveBeenCalledWith({
+      message: expect.stringMatching(fixturePath),
+      ref: 'config-must-be-an-object',
+    })
+  },
+)
+
+test(
+  oneLine`
     loadConfig: logs and throws an error for a
     config that exports a function that returns
     the wrong data type
@@ -87,6 +112,31 @@ test(
     ).replace(/\\/g, '/')
     expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
       /Your config.*function.*Array/,
+    )
+    expect(mockError).toHaveBeenCalledTimes(1)
+    expect(mockError).toHaveBeenCalledWith({
+      message: expect.stringMatching(fixturePath),
+      ref: 'config-must-be-an-object',
+    })
+  },
+)
+
+test(
+  oneLine`
+    loadConfig: logs and throws an error for a
+    config that exports a function that returns
+    an empty config
+  `,
+  () => {
+    const mockError = jest.fn()
+    jest.resetModules()
+    jest.mock('../get-logger', () => () => ({error: mockError}))
+    const {loadConfig: proxiedLoadConfig} = require('./index')
+    const fixturePath = getAbsoluteFixturePath(
+      'bad-function-empty-module.js',
+    ).replace(/\\/g, '/')
+    expect(() => proxiedLoadConfig(fixturePath)).toThrowError(
+      /Your config.*function which returned an object, but it was empty/,
     )
     expect(mockError).toHaveBeenCalledTimes(1)
     expect(mockError).toHaveBeenCalledWith({
@@ -114,6 +164,14 @@ test('loadConfig: does not swallow JS syntax errors', () => {
   const originalCwd = process.cwd
   process.cwd = jest.fn(() => path.resolve(__dirname, '../..'))
   const relativePath = './src/bin-utils/fixtures/syntax-error-module'
+  expect(() => loadConfig(relativePath)).toThrowError()
+  process.cwd = originalCwd
+})
+
+test('loadConfig: does not swallow other thrown JS exceptions', () => {
+  const originalCwd = process.cwd
+  process.cwd = jest.fn(() => path.resolve(__dirname, '../..'))
+  const relativePath = './src/bin-utils/fixtures/other-error-module'
   expect(() => loadConfig(relativePath)).toThrowError()
   process.cwd = originalCwd
 })

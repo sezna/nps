@@ -1,6 +1,12 @@
 import {resolve} from 'path'
 import {readFileSync} from 'fs'
-import {includes, isPlainObject, isUndefined, isFunction} from 'lodash'
+import {
+  includes,
+  isPlainObject,
+  isUndefined,
+  isEmpty,
+  isFunction,
+} from 'lodash'
 import typeOf from 'type-detect'
 import chalk from 'chalk'
 import {safeLoad} from 'js-yaml'
@@ -33,12 +39,15 @@ const preloadModule = getAttemptModuleRequireFn((moduleName, requirePath) => {
 const loadJSConfig = getAttemptModuleRequireFn(function onFail(
   configPath,
   requirePath,
+  err,
 ) {
+  if (err) {
+    throw err
+  }
   log.error({
     message: chalk.red(
       oneLine`
         Unable to find JS config at "${configPath}".
-        Attempted to require as "${requirePath}"
       `,
     ),
     ref: 'unable-to-find-config',
@@ -62,23 +71,25 @@ function loadConfig(configPath, input) {
     // let the caller deal with this
     return config
   }
-  let typeMessage
+  let typeMessage = `Your config data type was`
   if (isFunction(config)) {
     config = config(input)
-    typeMessage = oneLine`
-      Your config was a function that returned
-      a data type of "${typeOf(config)}"
-    `
-  } else {
-    typeMessage = `Your config data type was "${typeOf(config)}"`
+    typeMessage = `${typeMessage} a function which returned`
   }
-  if (!isPlainObject(config)) {
+  const emptyConfig = isEmpty(config)
+  const plainObjectConfig = isPlainObject(config)
+  if (plainObjectConfig && emptyConfig) {
+    typeMessage = `${typeMessage} an object, but it was empty`
+  } else {
+    typeMessage = `${typeMessage} a data type of "${typeOf(config)}"`
+  }
+  if (!plainObjectConfig || emptyConfig) {
     log.error({
       message: chalk.red(
         oneLine`
           The package-scripts configuration
-          ("${configPath.replace(/\\/g, '/')}") must be an object
-          or a function that returns an object.
+          ("${configPath.replace(/\\/g, '/')}") must be a non-empty object
+          or a function that returns a non-empty object.
         `,
       ),
       ref: 'config-must-be-an-object',
@@ -115,20 +126,22 @@ function loadYAMLConfig(configPath) {
  */
 function getModuleRequirePath(moduleName) {
   return moduleName[0] === '.' ?
-    resolve(process.cwd(), moduleName) :
+    require.resolve(resolve(process.cwd(), moduleName)) :
     moduleName
 }
 
 function getAttemptModuleRequireFn(onFail) {
   return function attemptModuleRequire(moduleName) {
-    const requirePath = getModuleRequirePath(moduleName)
+    let requirePath
+    try {
+      requirePath = getModuleRequirePath(moduleName)
+    } catch (e) {
+      return onFail(moduleName)
+    }
     try {
       return requireDefaultFromModule(requirePath)
     } catch (e) {
-      if (e.constructor.name === 'SyntaxError') {
-        throw e
-      }
-      return onFail(moduleName, requirePath)
+      return onFail(moduleName, requirePath, e)
     }
   }
 }
