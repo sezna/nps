@@ -118,7 +118,11 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/924465?v=3",
       "profile": "https://boneskull.com",
       "contributions": [
-        "review"
+        "review",
+        "bug",
+        "code",
+        "doc",
+        "test"
       ]
     },
     {
