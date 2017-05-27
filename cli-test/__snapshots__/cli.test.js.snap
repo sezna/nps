@@ -12,7 +12,7 @@ lint.sub.hiddenThing
 exports[`test with --require 1`] = `
 Object {
   "stderr": "",
-  "stdout": "nps executing: echo \"log\"
+  "stdout": "nps is executing \`log\`: echo \"log\"
 log
 ",
 }
@@ -37,8 +37,17 @@ Object {
 exports[`test with config with default script 1`] = `
 Object {
   "stderr": "",
-  "stdout": "nps executing: echo \"default script\"
+  "stdout": "nps is executing \`default\`: echo \"default script\"
 default script
+",
+}
+`;
+
+exports[`test with prefix 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`lint.sub.thing.script\`: echo \"deeply nested thing\"
+deeply nested thing
 ",
 }
 `;

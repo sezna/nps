@@ -14,7 +14,7 @@ test('initialize JS normally', () => {
   const expectedPackageScripts = readFileSync(
     resolve('./src/bin-utils/initialize/fixtures/_package-scripts.js'),
     'utf-8',
-  ).replace(/\r?\n/g, '\n');
+  ).replace(/\r?\n/g, '\n')
   const mockWriteFileSync = spy()
   const mockFindUpSync = spy(file => {
     if (file === 'package.json') {
