@@ -42,13 +42,15 @@ module.exports = {
       description: 'auto-formats the code',
       script: 'prettier-eslint --write "src/**/*.js"',
     },
-    addContributor: {
-      description: 'When new people contribute to the project, run this',
-      script: 'all-contributors add',
-    },
-    generateContributors: {
-      description: 'Update the badge and contributors table',
-      script: 'all-contributors generate',
+    contributors: {
+      add: {
+        description: 'When new people contribute to the project, run this',
+        script: 'all-contributors add',
+      },
+      generate: {
+        description: 'Update the badge and contributors table',
+        script: 'all-contributors generate',
+      },
     },
   },
   options: {
