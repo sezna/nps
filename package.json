@@ -54,7 +54,6 @@
     "nps-utils": "^1.1.0",
     "opt-cli": "^1.5.1",
     "prettier-eslint-cli": "^3.0.0",
-    "semantic-release": "^6.3.6",
     "sinon": "^1.17.7",
     "validate-commit-msg": "^2.11.1"
   },
