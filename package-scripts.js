@@ -34,14 +34,6 @@ module.exports = {
       description: 'lint the code with eslint',
       script: 'eslint .',
     },
-    release: {
-      description: 'We automate releases with semantic-release. This should only be run on travis',
-      script: series(
-        'semantic-release pre',
-        'npm publish',
-        'semantic-release post'
-      ),
-    },
     validate: {
       description: 'This runs several scripts to make sure things look good before committing or on clean install',
       script: concurrent.nps('test', 'build.andValidate'),
