@@ -34,10 +34,6 @@ module.exports = {
       description: 'lint the code with eslint',
       script: 'eslint .',
     },
-    reportCoverage: {
-      description: 'Report coverage stats to codecov. This should be run after the `cover` script and only on travis',
-      script: 'codecov',
-    },
     release: {
       description: 'We automate releases with semantic-release. This should only be run on travis',
       script: series(
