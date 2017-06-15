@@ -151,6 +151,23 @@ test('runs the default script if no scripts provided', () => {
   })
 })
 
+test('returns a log object when a script does not exist', () => {
+  const {runPackageScript} = setup()
+  const scriptConfig = {lint: {script: 42}}
+  return runPackageScript({scriptConfig, scripts: ['dev']}).catch(error => {
+    expect(error).toEqual({
+      message: chalk.red(
+        oneLine`
+          Scripts must resolve to strings.
+          There is no script that can be
+          resolved from "dev"
+        `,
+      ),
+      ref: 'missing-script',
+    })
+  })
+})
+
 test('an error from the child process logs an error', () => {
   const ERROR = {message: 'there was an error', code: 2}
   const badCommand = 'bad'
