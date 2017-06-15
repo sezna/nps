@@ -42,7 +42,7 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
 function runPackageScript({scriptConfig, options, input}) {
   const [scriptPrefix, ...args] = input.split(' ')
   const scripts = getScriptsFromConfig(scriptConfig, scriptPrefix)
-  const {scriptName, script} = getScriptToRun(scripts, scriptPrefix)
+  const {scriptName, script} = getScriptToRun(scripts, scriptPrefix) || {}
   if (!isString(script)) {
     return Promise.reject({
       message: chalk.red(
