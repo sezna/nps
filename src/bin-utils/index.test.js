@@ -3,7 +3,13 @@ import path from 'path'
 import chalk from 'chalk'
 import {spy} from 'sinon'
 import {oneLine} from 'common-tags'
-import {help, preloadModule, loadConfig} from './index'
+import {
+  help,
+  preloadModule,
+  loadConfig,
+  stringifyScript,
+  specificHelpScript,
+} from './index'
 
 test('preloadModule: resolves a relative path', () => {
   // this is relative to process.cwd() I think...
@@ -304,6 +310,69 @@ test(
     expect(message).toBe(expected)
   },
 )
+
+test('specificHelpScript: returns no script available', () => {
+  const config = {scripts: {}}
+  const message = specificHelpScript(config, 'foo')
+  const expected = chalk.yellow('Script foo does not exist')
+  expect(message).toBe(expected)
+})
+
+test(
+  'specificHelpScript: do not display script with flag hiddenFromHelp=true',
+  () => {
+    const config = {
+      scripts: {
+        foo: {
+          description: 'the foo script',
+          script: 'echo "foo"',
+          hiddenFromHelp: true,
+        },
+      },
+    }
+    const message = specificHelpScript(config, 'foo')
+    const expected = chalk.yellow('Script foo does not exist')
+    expect(message).toBe(expected)
+  },
+)
+
+test('specificHelpScript: formats a nice message', () => {
+  const config = {
+    scripts: {
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+      },
+    },
+  }
+  const message = specificHelpScript(config, 'foo')
+  // normally I'd use snapshot testing
+  // but the colors here are easier to think about
+  // than `[32mfoobar[39m` sooo....
+  const expected = `
+
+  ${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray('echo "foo"')}
+  `.trim()
+
+  expect(message).toBe(expected)
+})
+
+test('stringifyScript: formats a nice message', () => {
+  const script = {
+    name: 'foo',
+    description: 'the foo script',
+    script: 'echo "foo"',
+  }
+  const message = stringifyScript(script)
+  // normally I'd use snapshot testing
+  // but the colors here are easier to think about
+  // than `[32mfoobar[39m` sooo....
+  const expected = `
+  ${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray('echo "foo"')}
+  `.trim()
+
+  expect(message).toBe(expected)
+})
 
 function getAbsoluteFixturePath(fixture) {
   return path.join(__dirname, 'fixtures', fixture)

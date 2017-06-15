@@ -27,6 +27,7 @@ jest.mock('../bin-utils', () => {
       }
     }),
     help: jest.fn(),
+    specificHelpScript: jest.fn(),
     clearAll,
     mock: {},
   }
@@ -202,6 +203,23 @@ test(
     mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
     expect(parse('help')).not.toBe(undefined)
     expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
+  },
+)
+
+test(
+  'if help is called with a script, it shows the help for that script',
+  () => {
+    mockBinUtils.mock.psConfig = {
+      scripts: {
+        foo: {
+          description: 'the foo script',
+          script: 'echo "foo"',
+        },
+      },
+    }
+    expect(parse('help foo')).toBe(undefined)
+    expect(mockBinUtils.specificHelpScript).toHaveBeenCalledTimes(1)
+    expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(1)
   },
 )
 

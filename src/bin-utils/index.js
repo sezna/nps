@@ -5,7 +5,9 @@ import {
   isPlainObject,
   isUndefined,
   isEmpty,
+  isEqual,
   isFunction,
+  find,
 } from 'lodash'
 import typeOf from 'type-detect'
 import chalk from 'chalk'
@@ -99,7 +101,15 @@ function loadConfig(configPath, input) {
   return config
 }
 
-export {initialize, help, getModuleRequirePath, preloadModule, loadConfig}
+export {
+  initialize,
+  help,
+  getModuleRequirePath,
+  preloadModule,
+  loadConfig,
+  specificHelpScript,
+  stringifyScript,
+}
 
 /****** implementations ******/
 
@@ -161,22 +171,41 @@ function requireDefaultFromModule(modulePath) {
   }
 }
 
+function stringifyScript({name, description, script}) {
+  const coloredName = chalk.green(name)
+  const coloredScript = chalk.gray(script)
+  let line
+  if (description) {
+    line = [coloredName, chalk.white(description), coloredScript]
+  } else {
+    line = [coloredName, coloredScript]
+  }
+  return line.join(' - ').trim()
+}
+
+function specificHelpScript({scripts}, scriptName) {
+  const availableScripts = getAvailableScripts(scripts)
+  const script = find(
+    availableScripts,
+    availableScript =>
+      !availableScript.hiddenFromHelp &&
+      isEqual(availableScript.name, scriptName),
+  )
+  if (isPlainObject(script)) {
+    const scriptLines = stringifyScript(script)
+    const message = `${scriptLines}`
+    return message
+  } else {
+    return chalk.yellow(`Script ${scriptName} does not exist`)
+  }
+}
+
 function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
   const filteredScripts = availableScripts.filter(
     script => !script.hiddenFromHelp,
   )
-  const scriptLines = filteredScripts.map(({name, description, script}) => {
-    const coloredName = chalk.green(name)
-    const coloredScript = chalk.gray(script)
-    let line
-    if (description) {
-      line = [coloredName, chalk.white(description), coloredScript]
-    } else {
-      line = [coloredName, coloredScript]
-    }
-    return line.join(' - ').trim()
-  })
+  const scriptLines = filteredScripts.map(stringifyScript)
   if (scriptLines.length) {
     const topMessage = 'Available scripts (camel or kebab case accepted)'
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
