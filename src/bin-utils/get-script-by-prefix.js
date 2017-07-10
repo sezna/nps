@@ -33,7 +33,7 @@ export function scriptToObject(name, scriptArg) {
   return null
 }
 
-export function isValidScript(script) {
+function isValidScript(script) {
   if (isString(script)) {
     return true
   } else if (isPlainObject(script)) {
@@ -48,13 +48,32 @@ export function isValidScript(script) {
 
 export default function getScriptByPrefix({scripts}, prefix) {
   const matches = prefixMatches(prefix, scripts)
+  // This array holds all the valid scripts in
+  // the order of priority (default scripts have lowest priority)
+  const matchedScriptsSortedByPriority = []
   for (const match of matches) {
     const matchedKeys = keys(match)
     const name = matchedKeys[0]
     const script = match[name]
     if (isValidScript(script)) {
-      return scriptToObject(name, script)
+      if (has(script, 'default')) {
+        // if it's a default script, push to the last of the array
+        matchedScriptsSortedByPriority.push({
+          name,
+          script,
+        })
+      } else {
+        // if it's not a default script, push to the first of the array
+        matchedScriptsSortedByPriority.unshift({
+          name,
+          script,
+        })
+      }
     }
+  }
+  if (matchedScriptsSortedByPriority.length) {
+    const {name, script} = matchedScriptsSortedByPriority[0]
+    return scriptToObject(name, script)
   }
   return null
 }

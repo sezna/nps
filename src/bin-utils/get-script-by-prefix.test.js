@@ -1,15 +1,15 @@
-import {isPlainObject, isNull} from 'lodash'
+import {isPlainObject} from 'lodash'
 import getScriptByPrefix, {scriptToObject} from './get-script-by-prefix'
 
 test('scriptToObject returns null when script is not object or string ', () => {
   const actual = scriptToObject('foo', 42)
-  expect(isNull(actual)).toBeTruthy()
+  expect(actual).toBeNull()
 })
 
 test('scriptToObject returns non-null object when script is string ', () => {
   const actual = scriptToObject('foo', 'hello')
   expect(isPlainObject(actual)).toBeTruthy()
-  expect(isNull(actual)).toBeFalsy()
+  expect(actual).not.toBeNull()
 })
 
 test('scriptToObject returns non-null object when script is string ', () => {
@@ -18,19 +18,19 @@ test('scriptToObject returns non-null object when script is string ', () => {
   }
   const actual = scriptToObject('foo', scriptArg)
   expect(isPlainObject(actual)).toBeTruthy()
-  expect(isNull(actual)).toBeFalsy()
+  expect(actual).not.toBeNull()
 })
 
 test('getScriptByPrefix returns null when no matching script', () => {
   const config = {scripts: {}}
   const message = getScriptByPrefix(config, 'w')
-  expect(isNull(message)).toBeTruthy()
+  expect(message).toBeNull()
 })
 
 test('getScriptByPrefix returns null when no matching script', () => {
   const config = {scripts: {}}
   const message = getScriptByPrefix(config, 'w.a.b')
-  expect(isNull(message)).toBeTruthy()
+  expect(message).toBeNull()
 })
 
 test('getScriptByPrefix resolves single prefixes with string values', () => {
@@ -202,11 +202,11 @@ describe('getScriptByPrefix resolves ambiguities with nested prefix', () => {
   })
   test('foo.bar.baz.x returns null', () => {
     const actual = getScriptByPrefix(config, 'f.b.b.x')
-    expect(isNull(actual)).toBeTruthy()
+    expect(actual).toBeNull()
   })
   test('f.x returns null', () => {
     const actual = getScriptByPrefix(config, 'f.x')
-    expect(isNull(actual)).toBeTruthy()
+    expect(actual).toBeNull()
   })
   test('d as prefix matches default', () => {
     const actual = getScriptByPrefix(config, 'f.b.b.d')
@@ -219,6 +219,73 @@ describe('getScriptByPrefix resolves ambiguities with nested prefix', () => {
   })
   test('returns null when script is a number', () => {
     const actual = getScriptByPrefix(config, 'f.b.b.i')
-    expect(isNull(actual)).toBeTruthy()
+    expect(actual).toBeNull()
   })
 })
+
+describe(
+  'getScriptByPrefix resolves ambiguities with defaults correctly',
+  () => {
+    let config
+    beforeEach(() => {
+      config = {
+        scripts: {
+          foo: {
+            bar: {
+              default: 'echo foo.bar',
+              define: 'echo define',
+            },
+            john: {
+              default: 'echo foo.john',
+            },
+          },
+        },
+      }
+    })
+    test('Resolves default when a prefix is not deep enough', () => {
+      const actual = getScriptByPrefix(config, 'f.b')
+      const expected = {
+        script: 'echo foo.bar',
+        name: 'foo.bar.default',
+        description: '',
+      }
+      expect(actual).toEqual(expected)
+    })
+
+    test(
+      'Resolves a script when prefix can match default script as well',
+      () => {
+        const actual = getScriptByPrefix(config, 'f.b.d')
+        const expected = {
+          script: 'echo define',
+          name: 'foo.bar.define',
+          description: '',
+        }
+        expect(actual).toEqual(expected)
+      },
+    )
+
+    test(
+      'Resolves a script when prefix can match default script as well',
+      () => {
+        const actual = getScriptByPrefix(config, 'f.b.d')
+        const expected = {
+          script: 'echo define',
+          name: 'foo.bar.define',
+          description: '',
+        }
+        expect(actual).toEqual(expected)
+      },
+    )
+
+    test('Resolves default script when prefix def has no other match', () => {
+      const actual = getScriptByPrefix(config, 'f.j.def')
+      const expected = {
+        script: 'echo foo.john',
+        name: 'foo.john.default',
+        description: '',
+      }
+      expect(actual).toEqual(expected)
+    })
+  },
+)
