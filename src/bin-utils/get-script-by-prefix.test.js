@@ -265,19 +265,6 @@ describe(
       },
     )
 
-    test(
-      'Resolves a script when prefix can match default script as well',
-      () => {
-        const actual = getScriptByPrefix(config, 'f.b.d')
-        const expected = {
-          script: 'echo define',
-          name: 'foo.bar.define',
-          description: '',
-        }
-        expect(actual).toEqual(expected)
-      },
-    )
-
     test('Resolves default script when prefix def has no other match', () => {
       const actual = getScriptByPrefix(config, 'f.j.def')
       const expected = {
