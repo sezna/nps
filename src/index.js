@@ -56,12 +56,13 @@ function runPackageScript({scriptConfig, options, input}) {
   }
   const command = [script, ...args].join(' ').trim()
   const log = getLogger(getLogLevel(options))
+  const showScript = options.scripts
   log.info(
     oneLine`
     ${chalk.gray('nps is executing')}
-     \`${chalk.bold(scriptName)}\`:
-     ${chalk.green(command)}
-     `,
+     \`${chalk.bold(scriptName)}\`
+     ${showScript ? `: ${chalk.green(command)}` : ''}
+  `,
   )
   let child
   return new Promise((resolve, reject) => {

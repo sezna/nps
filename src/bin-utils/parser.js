@@ -42,6 +42,11 @@ function parse(rawArgv) {
       alias: 'r',
       default: undefined,
     },
+    scripts: {
+      describe: 'Log command text for script',
+      type: 'boolean',
+      default: true,
+    },
   }
 
   const yargsInstance = yargs(rawArgv)
