@@ -28,18 +28,21 @@ test('spawn called with the expected command', () => {
 
 test('spawn called and appends options', () => {
   const testCommand = 'jest'
-  return testSpawnCall({test: testCommand}, ['test', '--', '--watch']).then((
-    {command},
-  ) => {
+  return testSpawnCall({test: testCommand}, [
+    'test',
+    '--',
+    '--watch',
+  ]).then(({command}) => {
     expect(command).toBe(`${testCommand} --watch`)
   })
 })
 
 test('spawn called and appends options to default', () => {
   const testCommand = 'jest'
-  return testSpawnCall({default: testCommand}, ['--', '--watch']).then((
-    {command},
-  ) => {
+  return testSpawnCall({default: testCommand}, [
+    '--',
+    '--watch',
+  ]).then(({command}) => {
     expect(command).toBe(`${testCommand} --watch`)
   })
 })
@@ -85,6 +88,32 @@ test('options: logLevel sets the log level', () => {
   })
 })
 
+test('options: scripts logs command text', () => {
+  const {runPackageScript, infoSpy} = setup()
+  const scriptConfig = {test: {script: 'echo test'}}
+  const options = {scripts: true}
+  return runPackageScript({
+    scriptConfig,
+    scripts: ['test'],
+    options,
+  }).then(() => {
+    expect(infoSpy.firstCall.args[0]).toMatchSnapshot()
+  })
+})
+
+test('options: scripts does not log command text when false', () => {
+  const {runPackageScript, infoSpy} = setup()
+  const scriptConfig = {test: {script: 'echo test'}}
+  const options = {scripts: false}
+  return runPackageScript({
+    scriptConfig,
+    scripts: ['test'],
+    options,
+  }).then(() => {
+    expect(infoSpy.firstCall.args[0]).toMatchSnapshot()
+  })
+})
+
 test('runs scripts serially if given an array of input', () => {
   const lintCommand = 'eslint'
   const buildCommand = 'babel'
@@ -101,49 +130,46 @@ test('runs scripts serially if given an array of input', () => {
   })
 })
 
-test(
-  'stops running scripts when running serially if any given script fails',
-  () => {
-    const FAIL_CODE = 1
-    const badCommand = 'bad'
-    const goodCommand = 'good'
-    const scripts = ['badS', 'goodS']
-    const scriptConfig = {
-      goodS: goodCommand,
-      badS: badCommand,
-    }
-    function spawnStub(cmd) {
-      return {
-        on(event, cb) {
-          if (event === 'close') {
-            if (cmd === badCommand) {
-              cb(FAIL_CODE)
-            } else {
-              cb(0)
-            }
+test('stops running scripts when running serially if any given script fails', () => {
+  const FAIL_CODE = 1
+  const badCommand = 'bad'
+  const goodCommand = 'good'
+  const scripts = ['badS', 'goodS']
+  const scriptConfig = {
+    goodS: goodCommand,
+    badS: badCommand,
+  }
+  function spawnStub(cmd) {
+    return {
+      on(event, cb) {
+        if (event === 'close') {
+          if (cmd === badCommand) {
+            cb(FAIL_CODE)
+          } else {
+            cb(0)
           }
-        },
-        kill() {},
-      }
+        }
+      },
+      kill() {},
     }
-    const mockSpawnStubSpy = spy(spawnStub)
-    const {runPackageScript} = setup(mockSpawnStubSpy)
-    return runPackageScript({scriptConfig, scripts}).then(
-      () => {
-        throw new Error('the promise should be rejected')
-      },
-      ({message, ref, code}) => {
-        expect(code).toBe(FAIL_CODE)
-        expect(typeof ref === 'string')
-        expect(typeof message === 'string')
-        // only called with the bad script, not for the good one
-        expect(mockSpawnStubSpy.calledOnce)
-        const [command1] = mockSpawnStubSpy.firstCall.args
-        expect(command1).toBe('bad')
-      },
-    )
-  },
-)
+  }
+  const mockSpawnStubSpy = spy(spawnStub)
+  const {runPackageScript} = setup(mockSpawnStubSpy)
+  return runPackageScript({scriptConfig, scripts}).then(
+    () => {
+      throw new Error('the promise should be rejected')
+    },
+    ({message, ref, code}) => {
+      expect(code).toBe(FAIL_CODE)
+      expect(typeof ref === 'string')
+      expect(typeof message === 'string')
+      // only called with the bad script, not for the good one
+      expect(mockSpawnStubSpy.calledOnce)
+      const [command1] = mockSpawnStubSpy.firstCall.args
+      expect(command1).toBe('bad')
+    },
+  )
+})
 
 test('runs the default script if no scripts provided', () => {
   return testSpawnCall({default: 'echo foo'}, []).then(({command}) => {

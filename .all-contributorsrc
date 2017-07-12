@@ -231,7 +231,10 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/2915616?v=3",
       "profile": "http://www.erikfox.co/",
       "contributions": [
-        "bug"
+        "bug",
+        "code",
+        "doc",
+        "test"
       ]
     },
     {

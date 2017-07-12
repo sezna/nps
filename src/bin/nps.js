@@ -15,6 +15,7 @@ if (argv && psConfig) {
     options: merge(psConfig.options, {
       silent: argv.silent,
       logLevel: argv.logLevel,
+      scripts: argv.scripts,
     }),
   }).then(
     () => {
@@ -27,6 +28,7 @@ if (argv && psConfig) {
       const logLevel = getLogLevel({
         silent: argv.silent,
         logLevel: argv.logLevel,
+        scripts: argv.scripts,
       })
       const log = getLogger(logLevel)
       log.error(error)

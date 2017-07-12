@@ -1,0 +1,3 @@
+exports[`test options: scripts does not log command text when false 1`] = `"[90mnps is executing[39m \`[1mtest[22m\`"`;
+
+exports[`test options: scripts logs command text 1`] = `"[90mnps is executing[39m \`[1mtest[22m\` : [32mecho test[39m"`;
