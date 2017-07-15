@@ -27,6 +27,7 @@ jest.mock('../../bin-utils', () => {
       }
     }),
     help: jest.fn(),
+    specificHelpScript: jest.fn(),
     clearAll,
     mock: {},
   }
@@ -198,6 +199,23 @@ test('if there is a help script in the psConfig, does not show the help', () => 
   expect(parse('help')).not.toBe(undefined)
   expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
 })
+
+test(
+  'if help is called with a script, it shows the help for that script',
+  () => {
+    mockBinUtils.mock.psConfig = {
+      scripts: {
+        specific: {
+          description: 'the specific script',
+          script: 'echo "specific"',
+        },
+      },
+    }
+    expect(parse('help specific')).toBe(undefined)
+    expect(mockBinUtils.specificHelpScript).toHaveBeenCalledTimes(1)
+    expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(1)
+  },
+)
 
 // https://github.com/yargs/yargs/issues/782
 // we can't test this functionality reasonably with unit tests

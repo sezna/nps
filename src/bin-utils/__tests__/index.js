@@ -3,7 +3,7 @@ import path from 'path'
 import chalk from 'chalk'
 import {spy} from 'sinon'
 import {oneLine} from 'common-tags'
-import {help, preloadModule, loadConfig} from '../'
+import {help, preloadModule, loadConfig, specificHelpScript} from '../'
 
 test('preloadModule: resolves a relative path', () => {
   // this is relative to process.cwd() I think...
@@ -311,6 +311,39 @@ test('help: do not display scripts with flag hiddenFromHelp set to true', () => 
   const message = help(config)
   const expected = chalk.yellow('There are no scripts available')
   expect(message).toBe(expected)
+})
+
+test('specificHelpScript: help: formats a nice message', () => {
+  const config = {
+    scripts: {
+      foo: {
+        bar: {
+          description: 'the foo script',
+          script: 'echo "foo"',
+        },
+      },
+    },
+  }
+  const actual = specificHelpScript(config, 'f.b')
+  const name = chalk.green('foo.bar')
+  const description = chalk.white('the foo script')
+  const script = chalk.gray('echo "foo"')
+  const expected = `${name} - ${description} - ${script}`
+  expect(actual).toBe(expected)
+})
+
+test('specificHelpScript: help: shows script not found when no match found', () => {
+  const config = {
+    scripts: {
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+      },
+    },
+  }
+  const actual = specificHelpScript(config, 'w')
+  const expected = chalk.yellow('Script matching name w was not found.')
+  expect(actual).toBe(expected)
 })
 
 function getAbsoluteFixturePath(fixture) {
