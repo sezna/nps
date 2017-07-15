@@ -3,7 +3,7 @@ import path from 'path'
 import chalk from 'chalk'
 import {spy} from 'sinon'
 import {oneLine} from 'common-tags'
-import {help, preloadModule, loadConfig} from './index'
+import {help, preloadModule, loadConfig, specificHelpScript} from './index'
 
 test('preloadModule: resolves a relative path', () => {
   // this is relative to process.cwd() I think...
@@ -302,6 +302,37 @@ test(
     const message = help(config)
     const expected = chalk.yellow('There are no scripts available')
     expect(message).toBe(expected)
+  },
+)
+
+test('specificHelpScript : help: formats a nice message', () => {
+  const config = {
+    scripts: {
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+      },
+    },
+  }
+  const actual = specificHelpScript(config, 'f')
+  const expected = `${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray('echo "foo"')}`
+  expect(actual).toBe(expected)
+})
+
+test(
+  'specificHelpScript : help: shows script not found when no match found',
+  () => {
+    const config = {
+      scripts: {
+        foo: {
+          description: 'the foo script',
+          script: 'echo "foo"',
+        },
+      },
+    }
+    const actual = specificHelpScript(config, 'w')
+    const expected = chalk.yellow('Script matching name w was not found.')
+    expect(actual).toBe(expected)
   },
 )
 

@@ -6,6 +6,7 @@ import {
   isUndefined,
   isEmpty,
   isFunction,
+  isNull,
 } from 'lodash'
 import typeOf from 'type-detect'
 import chalk from 'chalk'
@@ -13,6 +14,7 @@ import {safeLoad} from 'js-yaml'
 import {oneLine} from 'common-tags'
 import getLogger from '../get-logger'
 import {resolveScriptObjectToScript} from '../resolve-script-object-to-string'
+import getScriptByPrefix from './get-script-by-prefix'
 import initialize from './initialize'
 
 const log = getLogger()
@@ -99,7 +101,14 @@ function loadConfig(configPath, input) {
   return config
 }
 
-export {initialize, help, getModuleRequirePath, preloadModule, loadConfig}
+export {
+  initialize,
+  help,
+  getModuleRequirePath,
+  preloadModule,
+  loadConfig,
+  specificHelpScript,
+}
 
 /****** implementations ******/
 
@@ -161,28 +170,39 @@ function requireDefaultFromModule(modulePath) {
   }
 }
 
+function scriptObjectToChalk({name, description, script}) {
+  const coloredName = chalk.green(name)
+  const coloredScript = chalk.gray(script)
+  let line
+  if (description) {
+    line = [coloredName, chalk.white(description), coloredScript]
+  } else {
+    line = [coloredName, coloredScript]
+  }
+  return line.join(' - ').trim()
+}
+
 function help({scripts}) {
   const availableScripts = getAvailableScripts(scripts)
   const filteredScripts = availableScripts.filter(
     script => !script.hiddenFromHelp,
   )
-  const scriptLines = filteredScripts.map(({name, description, script}) => {
-    const coloredName = chalk.green(name)
-    const coloredScript = chalk.gray(script)
-    let line
-    if (description) {
-      line = [coloredName, chalk.white(description), coloredScript]
-    } else {
-      line = [coloredName, coloredScript]
-    }
-    return line.join(' - ').trim()
-  })
+  const scriptLines = filteredScripts.map(scriptObjectToChalk)
   if (scriptLines.length) {
     const topMessage = 'Available scripts (camel or kebab case accepted)'
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
     return message
   } else {
     return chalk.yellow('There are no scripts available')
+  }
+}
+
+function specificHelpScript(config, scriptName) {
+  const script = getScriptByPrefix(config, scriptName)
+  if (isNull(script)) {
+    return chalk.yellow(`Script matching name ${scriptName} was not found.`)
+  } else {
+    return scriptObjectToChalk(script)
   }
 }
 
