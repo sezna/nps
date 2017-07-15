@@ -11,7 +11,7 @@ module.exports = {
     },
     test: {
       default: 'jest --config=test/jest.src.config.json --coverage',
-      watch: 'jest --config=test/jest.src.config.json --watch --verbose',
+      watch: 'jest --config=test/jest.src.config.json --watch',
       cli: {
         default: 'jest --config=test/jest.cli.config.json',
         watch: 'jest --config=test/jest.cli.config.json --watch',
