@@ -118,15 +118,14 @@ function parse(rawArgv) {
       return true
     }
     const hasDefaultScript = Boolean(psConfig.scripts.default)
-    const noScriptSpecifiedAndNoDefault = !specifiedScripts.length &&
-      !hasDefaultScript
+    const noScriptSpecifiedAndNoDefault =
+      !specifiedScripts.length && !hasDefaultScript
     const hasHelpScript = Boolean(psConfig.scripts.help)
-    const commandIsHelp = isEqual(specifiedScripts[0], 'help') &&
-      !hasHelpScript
-    const shouldShowSpecificScriptHelp = commandIsHelp &&
-      specifiedScripts.length > 1
+    const commandIsHelp =
+      isEqual(specifiedScripts[0], 'help') && !hasHelpScript
+    const shouldShowSpecificScriptHelp =
+      commandIsHelp && specifiedScripts.length > 1
     if (shouldShowSpecificScriptHelp) {
-      parser.showHelp('log')
       log.info(specificHelpScript(psConfig, specifiedScripts[1]))
       return true
     } else if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
@@ -234,8 +233,9 @@ function parse(rawArgv) {
     if (config) {
       return config
     }
-    return findUp.sync('package-scripts.js') ||
-      findUp.sync('package-scripts.yml')
+    return (
+      findUp.sync('package-scripts.js') || findUp.sync('package-scripts.yml')
+    )
   }
 }
 

@@ -134,7 +134,7 @@ You can also use the help command with a script name
 ```console
 nps help test.watch
 ```
-Which will show the cli help as well as the details of the script `test.watch`:
+Which will output the details of the script `test.watch`:
 
 ```console
 test.watch - run in the amazingly intelligent Jest watch mode - jest --watch
