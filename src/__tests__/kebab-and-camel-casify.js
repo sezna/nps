@@ -1,4 +1,4 @@
-import kebabAndCamelCasify from './kebab-and-camel-casify'
+import kebabAndCamelCasify from '../kebab-and-camel-casify'
 
 testUnchanged({boo: 'baz'})
 testUnchanged({boo: {bar: 'baz', foo: 'bar'}})

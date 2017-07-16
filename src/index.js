@@ -31,12 +31,9 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
     }
   }
 
-  return scriptNames.reduce(
-    (res, input) => {
-      return res.then(() => runPackageScript({scriptConfig, options, input}))
-    },
-    Promise.resolve(),
-  )
+  return scriptNames.reduce((res, input) => {
+    return res.then(() => runPackageScript({scriptConfig, options, input}))
+  }, Promise.resolve())
 }
 
 function runPackageScript({scriptConfig, options, input}) {

@@ -1,4 +1,4 @@
-import resolveScriptObjectToString from './resolve-script-object-to-string'
+import resolveScriptObjectToString from '../resolve-script-object-to-string'
 
 test('returns undefined if a script cannot be resolved to a string', () => {
   const result = resolveScriptObjectToString(42)
@@ -23,13 +23,10 @@ test('get the default from the script object', () => {
   expect(command).toBe(buildCommand)
 })
 
-test(
-  'returns undefined if the object with default cannot be resolved to a string',
-  () => {
-    const result = resolveScriptObjectToString({default: {blah: 'stuff'}})
-    expect(result).toBeUndefined()
-  },
-)
+test('returns undefined if the object with default cannot be resolved to a string', () => {
+  const result = resolveScriptObjectToString({default: {blah: 'stuff'}})
+  expect(result).toBeUndefined()
+})
 
 test('resolves default to the script if it is a string', () => {
   const result = resolveScriptObjectToString({default: 'string'})

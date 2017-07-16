@@ -1,5 +1,5 @@
 import {resolve} from 'path'
-import runNPS from './run-nps'
+import runNPS from './helpers/run-nps'
 
 const fixturesPath = resolve(__dirname, './fixtures')
 

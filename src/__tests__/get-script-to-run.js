@@ -1,4 +1,4 @@
-import getScriptToRun from './get-script-to-run'
+import getScriptToRun from '../get-script-to-run'
 
 test('allows a prefix to be provided', () => {
   const script = getScriptToRun({build: 'stuff'}, 'b')
@@ -13,19 +13,16 @@ test('allows a multi-level prefix to be provided', () => {
   })
 })
 
-test(
-  'falls back to using `get` for the full name if no prefix is provided',
-  () => {
-    const script = getScriptToRun(
-      {build: {watch: 'watch stuff'}},
-      'build.watch',
-    )
-    expect(script).toEqual({
-      scriptName: 'build.watch',
-      script: 'watch stuff',
-    })
-  },
-)
+test('falls back to using `get` for the full name if no prefix is provided', () => {
+  const script = getScriptToRun(
+    {build: {watch: 'watch stuff'}},
+    'build.watch',
+  )
+  expect(script).toEqual({
+    scriptName: 'build.watch',
+    script: 'watch stuff',
+  })
+})
 
 test('can accept snake-case representation of a camelCase name', () => {
   const script = getScriptToRun(
