@@ -6,14 +6,12 @@ cache:
 notifications:
   email: false
 node_js:
-  - '6'
+  - '8'
 script:
-  - yarn start validate
+  - npm start validate
 after_success:
-  - yarn global add codecov semantic-release
-  - codecov
-  - semantic-release pre && npm publish && semantic-release post
+  - npx codecov
+  - npx semantic-release pre && npm publish && npx semantic-release post
 branches:
   only:
     - master
-    - next
