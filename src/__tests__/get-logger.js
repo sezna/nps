@@ -1,7 +1,7 @@
 /* eslint import/newline-after-import:0 global-require:0 */
 import console from 'console'
 import {oneLineTrim} from 'common-tags'
-import getLogger, {getLogLevel} from './get-logger'
+import getLogger, {getLogLevel} from '../get-logger'
 
 jest.mock('console')
 
@@ -68,16 +68,13 @@ test('allows you to disable errors', () => {
   process.env.LOG_LEVEL = LOG_LEVEL
 })
 
-test(
-  'allows you to specify a logLevel of your own for errors/warnings/info',
-  () => {
-    const logLevel = 'info'
-    const log = getLogger(logLevel)
-    log.info('sup')
-    expect(console.info).toHaveBeenCalledTimes(1)
-    expect(console.info).toHaveBeenCalledWith('sup')
-  },
-)
+test('allows you to specify a logLevel of your own for errors/warnings/info', () => {
+  const logLevel = 'info'
+  const log = getLogger(logLevel)
+  log.info('sup')
+  expect(console.info).toHaveBeenCalledTimes(1)
+  expect(console.info).toHaveBeenCalledWith('sup')
+})
 
 test('getLogLevel: returns disable if silent', () => {
   expect(getLogLevel({silent: true})).toBe('disable')

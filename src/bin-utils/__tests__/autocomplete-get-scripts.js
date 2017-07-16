@@ -1,4 +1,4 @@
-import getScripts from './autocomplete-get-scripts'
+import getScripts from '../autocomplete-get-scripts'
 
 const stubConfig = {
   scripts: {
@@ -14,7 +14,10 @@ const stubConfig = {
     like: 'echo "I like you"',
     test: 'test',
     camelCase: 'camelCase',
-    cover: {description: 'this is a description', script: 'this is the script'},
+    cover: {
+      description: 'this is a description',
+      script: 'this is the script',
+    },
   },
 }
 

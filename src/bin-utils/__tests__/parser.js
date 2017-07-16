@@ -2,13 +2,13 @@
 import mockFindUp from 'find-up'
 import mockReadLine from 'readline-sync'
 import {oneLine} from 'common-tags'
-import * as mockBinUtils from '../bin-utils'
-import mockGetLogger from '../get-logger'
-import parse from './parser'
+import * as mockBinUtils from '../../bin-utils'
+import mockGetLogger from '../../get-logger'
+import parse from '../parser'
 
 jest.mock('console')
-jest.mock('../get-logger')
-jest.mock('../bin-utils', () => {
+jest.mock('../../get-logger')
+jest.mock('../../bin-utils', () => {
   const defaultPsConfig = {scripts: {}, options: {}, isMock: true}
   const mockUtils = {
     preloadModule: jest.fn(),
@@ -180,30 +180,24 @@ test(
   },
 )
 
-test(
-  'init without an existing config will initialize package-scripts.js',
-  () => {
-    mockFindUp.mock.syncReturn = null
-    const result = parse('init')
-    expect(result).toBe(undefined)
-    expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(0)
-    expect(mockGetLogger.mock.info).toHaveBeenCalledWith(
-      expect.stringMatching(/saved/),
-    )
+test('init without an existing config will initialize package-scripts.js', () => {
+  mockFindUp.mock.syncReturn = null
+  const result = parse('init')
+  expect(result).toBe(undefined)
+  expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(0)
+  expect(mockGetLogger.mock.info).toHaveBeenCalledWith(
+    expect.stringMatching(/saved/),
+  )
 
-    delete mockReadLine.mock.keyInYNReturn
-    delete mockFindUp.mock.syncReturn
-  },
-)
+  delete mockReadLine.mock.keyInYNReturn
+  delete mockFindUp.mock.syncReturn
+})
 
-test(
-  'if there is a help script in the psConfig, does not show the help',
-  () => {
-    mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
-    expect(parse('help')).not.toBe(undefined)
-    expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
-  },
-)
+test('if there is a help script in the psConfig, does not show the help', () => {
+  mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
+  expect(parse('help')).not.toBe(undefined)
+  expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
+})
 
 // https://github.com/yargs/yargs/issues/782
 // we can't test this functionality reasonably with unit tests

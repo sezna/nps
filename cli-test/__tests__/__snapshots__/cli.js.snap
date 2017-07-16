@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`with --get-yargs-completions 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "like
+lint
+lint.sub.thing
+lint.sub.hiddenThing
+",
+}
+`;
+
+exports[`with --no-scripts 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`test\`
+test script
+",
+}
+`;
+
+exports[`with --require 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`log\` : echo \\"log\\"
+log
+",
+}
+`;
+
+exports[`with --silent 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "test script
+",
+}
+`;
+
+exports[`with a missing config 1`] = `
+Object {
+  "stderr": "Unable to find JS config at \\"./something-that-does-not-exist.js\\". https://github.com/kentcdodds/nps/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
+",
+  "stdout": "",
+}
+`;
+
+exports[`with config with default script 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`default\` : echo \\"default script\\"
+default script
+",
+}
+`;
+
+exports[`with prefix 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`lint.sub.thing.script\` : echo \\"deeply nested thing\\"
+deeply nested thing
+",
+}
+`;

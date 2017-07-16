@@ -1,18 +1,18 @@
 import {isPlainObject} from 'lodash'
-import getScriptByPrefix, {scriptToObject} from './get-script-by-prefix'
+import getScriptByPrefix, {scriptToObject} from '../get-script-by-prefix'
 
 test('scriptToObject returns null when script is not object or string ', () => {
   const actual = scriptToObject('foo', 42)
   expect(actual).toBeNull()
 })
 
-test('scriptToObject returns non-null object when script is string ', () => {
+test('scriptToObject returns non-null object when script is string and scriptArg is a string too', () => {
   const actual = scriptToObject('foo', 'hello')
   expect(isPlainObject(actual)).toBeTruthy()
   expect(actual).not.toBeNull()
 })
 
-test('scriptToObject returns non-null object when script is string ', () => {
+test('scriptToObject returns non-null object when script is string', () => {
   const scriptArg = {
     script: 'hello',
   }
@@ -27,7 +27,7 @@ test('getScriptByPrefix returns null when no matching script', () => {
   expect(message).toBeNull()
 })
 
-test('getScriptByPrefix returns null when no matching script', () => {
+test('getScriptByPrefix returns null when no matching script with long prefix', () => {
   const config = {scripts: {}}
   const message = getScriptByPrefix(config, 'w.a.b')
   expect(message).toBeNull()
@@ -67,49 +67,43 @@ test('getScriptByPrefix resolves nested prefixes with string values', () => {
   expect(actual).toEqual(expected)
 })
 
-test(
-  'getScriptByPrefix resolves single prefixes with object values && script key',
-  () => {
-    const config = {
-      scripts: {
+test('getScriptByPrefix resolves single prefixes with object values && script key', () => {
+  const config = {
+    scripts: {
+      foo: {
+        description: 'Foo script',
+        script: 'echo foo',
+      },
+    },
+  }
+  const actual = getScriptByPrefix(config, 'f')
+  const expected = {
+    script: 'echo foo',
+    name: 'foo',
+    description: 'Foo script',
+  }
+  expect(actual).toEqual(expected)
+})
+
+test('getScriptByPrefix resolves nested prefixes with object values && script key', () => {
+  const config = {
+    scripts: {
+      watch: {
         foo: {
           description: 'Foo script',
           script: 'echo foo',
         },
       },
-    }
-    const actual = getScriptByPrefix(config, 'f')
-    const expected = {
-      script: 'echo foo',
-      name: 'foo',
-      description: 'Foo script',
-    }
-    expect(actual).toEqual(expected)
-  },
-)
-
-test(
-  'getScriptByPrefix resolves nested prefixes with object values && script key',
-  () => {
-    const config = {
-      scripts: {
-        watch: {
-          foo: {
-            description: 'Foo script',
-            script: 'echo foo',
-          },
-        },
-      },
-    }
-    const actual = getScriptByPrefix(config, 'w.f')
-    const expected = {
-      script: 'echo foo',
-      name: 'watch.foo',
-      description: 'Foo script',
-    }
-    expect(actual).toEqual(expected)
-  },
-)
+    },
+  }
+  const actual = getScriptByPrefix(config, 'w.f')
+  const expected = {
+    script: 'echo foo',
+    name: 'watch.foo',
+    description: 'Foo script',
+  }
+  expect(actual).toEqual(expected)
+})
 
 test('getScriptByPrefix resolves ambiguities with single prefix', () => {
   const config = {
@@ -223,56 +217,50 @@ describe('getScriptByPrefix resolves ambiguities with nested prefix', () => {
   })
 })
 
-describe(
-  'getScriptByPrefix resolves ambiguities with defaults correctly',
-  () => {
-    let config
-    beforeEach(() => {
-      config = {
-        scripts: {
-          foo: {
-            bar: {
-              default: 'echo foo.bar',
-              define: 'echo define',
-            },
-            john: {
-              default: 'echo foo.john',
-            },
+describe('getScriptByPrefix resolves ambiguities with defaults correctly', () => {
+  let config
+  beforeEach(() => {
+    config = {
+      scripts: {
+        foo: {
+          bar: {
+            default: 'echo foo.bar',
+            define: 'echo define',
+          },
+          john: {
+            default: 'echo foo.john',
           },
         },
-      }
-    })
-    test('Resolves default when a prefix is not deep enough', () => {
-      const actual = getScriptByPrefix(config, 'f.b')
-      const expected = {
-        script: 'echo foo.bar',
-        name: 'foo.bar.default',
-        description: '',
-      }
-      expect(actual).toEqual(expected)
-    })
-
-    test(
-      'Resolves a script when prefix can match default script as well',
-      () => {
-        const actual = getScriptByPrefix(config, 'f.b.d')
-        const expected = {
-          script: 'echo define',
-          name: 'foo.bar.define',
-          description: '',
-        }
-        expect(actual).toEqual(expected)
       },
-    )
+    }
+  })
+  test('Resolves default when a prefix is not deep enough', () => {
+    const actual = getScriptByPrefix(config, 'f.b')
+    const expected = {
+      script: 'echo foo.bar',
+      name: 'foo.bar.default',
+      description: '',
+    }
+    expect(actual).toEqual(expected)
+  })
 
-    test('Resolves default script when prefix def has no other match', () => {
-      const actual = getScriptByPrefix(config, 'f.j.def')
-      const expected = {
-        script: 'echo foo.john',
-        name: 'foo.john.default',
-        description: '',
-      }
-      expect(actual).toEqual(expected)
-    })
-  },
-)
+  test('Resolves a script when prefix can match default script as well', () => {
+    const actual = getScriptByPrefix(config, 'f.b.d')
+    const expected = {
+      script: 'echo define',
+      name: 'foo.bar.define',
+      description: '',
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('Resolves default script when prefix def has no other match', () => {
+    const actual = getScriptByPrefix(config, 'f.j.def')
+    const expected = {
+      script: 'echo foo.john',
+      name: 'foo.john.default',
+      description: '',
+    }
+    expect(actual).toEqual(expected)
+  })
+})

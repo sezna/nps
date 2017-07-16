@@ -1,25 +1,27 @@
 const {series, concurrent, rimraf} = require('nps-utils')
 
-const transpile = 'babel --copy-files --out-dir dist --ignore *.test.js,fixtures src'
+const transpile = 'babel --copy-files --out-dir dist --ignore __tests__ src'
 const cleanDist = rimraf('dist')
 
 module.exports = {
   scripts: {
     commit: {
-      description: 'This uses commitizen to help us generate beautifully formatted commit messages',
+      description:
+        'This uses commitizen to help us generate beautifully formatted commit messages',
       script: 'git-cz',
     },
     test: {
-      default: 'jest --config=test/jest.src.config.json --coverage',
-      watch: 'jest --config=test/jest.src.config.json --watch',
+      default: 'jest --config=test/jest.src.config.js --coverage',
+      watch: 'jest --config=test/jest.src.config.js --watch',
       cli: {
-        default: 'jest --config=test/jest.cli.config.json',
-        watch: 'jest --config=test/jest.cli.config.json --watch',
+        default: 'jest --config=test/jest.cli.config.js',
+        watch: 'jest --config=test/jest.cli.config.js --watch',
       },
     },
     build: {
       default: {
-        description: 'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
+        description:
+          'deletes the `dist` directory and transpiles all relevant `src` to the `dist`',
         script: series(cleanDist, transpile),
       },
       watch: {
@@ -35,7 +37,8 @@ module.exports = {
       script: 'eslint .',
     },
     validate: {
-      description: 'This runs several scripts to make sure things look good before committing or on clean install',
+      description:
+        'This runs several scripts to make sure things look good before committing or on clean install',
       script: concurrent.nps('test', 'build.andValidate'),
     },
     format: {
