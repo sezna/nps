@@ -130,6 +130,15 @@ build - webpack
 build.prod - webpack -p
 validate - concurrently "nps lint" "nps test" "nps build"
 ```
+You can also use the help command with a script name
+```console
+nps help test.watch
+```
+Which will output the details of the script `test.watch`:
+
+```console
+test.watch - run in the amazingly intelligent Jest watch mode - jest --watch
+```
 
 Now, to run a script, you can run:
 
@@ -143,6 +152,7 @@ But the fun doesn't end there! You can use a prefix:
 
 ```console
 nps b # will run the build script
+nps help b # will display help for the build script
 ```
 
 And these prefixes can go as deep as you like!

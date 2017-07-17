@@ -5,7 +5,13 @@ import {keyInYN} from 'readline-sync'
 import {includes, isEqual} from 'lodash'
 import {oneLine} from 'common-tags'
 import getLogger from '../get-logger'
-import {preloadModule, loadConfig, initialize, help} from '../bin-utils'
+import {
+  preloadModule,
+  loadConfig,
+  initialize,
+  help,
+  specificHelpScript,
+} from '../bin-utils'
 import getCompletionScripts from './autocomplete-get-scripts'
 
 const log = getLogger()
@@ -112,15 +118,22 @@ function parse(rawArgv) {
       return true
     }
     const hasDefaultScript = Boolean(psConfig.scripts.default)
-    const noScriptSpecifiedAndNoDefault = !specifiedScripts.length &&
-      !hasDefaultScript
+    const noScriptSpecifiedAndNoDefault =
+      !specifiedScripts.length && !hasDefaultScript
     const hasHelpScript = Boolean(psConfig.scripts.help)
-    const commandIsHelp = isEqual(specifiedScripts, ['help']) && !hasHelpScript
-    if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
+    const commandIsHelp =
+      isEqual(specifiedScripts[0], 'help') && !hasHelpScript
+    const shouldShowSpecificScriptHelp =
+      commandIsHelp && specifiedScripts.length > 1
+    if (shouldShowSpecificScriptHelp) {
+      log.info(specificHelpScript(psConfig, specifiedScripts[1]))
+      return true
+    } else if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
       parser.showHelp('log')
       log.info(help(psConfig))
       return true
     }
+
     return false
   }
 
@@ -220,8 +233,9 @@ function parse(rawArgv) {
     if (config) {
       return config
     }
-    return findUp.sync('package-scripts.js') ||
-      findUp.sync('package-scripts.yml')
+    return (
+      findUp.sync('package-scripts.js') || findUp.sync('package-scripts.yml')
+    )
   }
 }
 
