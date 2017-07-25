@@ -10,9 +10,9 @@ module.exports = {
       bar: 'echo prefoo:bar'
     },
     foo: {
-      default: 'nps prefoo && echo foo',
+      default: 'nps prefoo && nps "foo --bar=1"',
       bar: {
-        default: 'nps prefoo.bar && echo foo:bar && nps postfoo.bar',
+        default: 'nps prefoo.bar && nps foo.bar && nps postfoo.bar',
         baz: 'echo foo:bar:baz'
       }
     },
