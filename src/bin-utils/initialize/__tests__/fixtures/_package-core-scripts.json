@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "foo": "echo \"foo\"",
+    "precommit": "precommit hook",
+    "postcommit": "postcommit hook",
+    "prepublish": "prepublish hook",
+    "preuninstall": "preuninstall hook"
+  }
+}

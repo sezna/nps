@@ -131,6 +131,33 @@ test(`initialize without any scripts should successfully create an empty package
   })
 })
 
+test('initialize without any core scripts and should not remove any core scripts from package.json', () => {
+  const packageJsonDestination = fixture('_package-core-scripts.json')
+  const mockWriteFileSync = spy()
+  const mockFindUpSync = spy(file => {
+    if (file === 'package.json') {
+      return packageJsonDestination
+    }
+    throw new Error('Should not look for anything but package.json')
+  })
+  jest.resetModules()
+  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
+  const initialize = require('../').default
+
+  initialize()
+  const [, packageJsonStringResult] = mockWriteFileSync.firstCall.args
+  const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
+
+  expect(packageJsonScripts).toEqual({
+    start: 'nps',
+    precommit: 'precommit hook',
+    postcommit: 'postcommit hook',
+    prepublish: 'prepublish hook',
+    preuninstall: 'preuninstall hook',
+  })
+})
+
 function fixture(name) {
   return path.join(__dirname, 'fixtures', name)
 }

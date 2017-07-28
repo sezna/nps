@@ -4,7 +4,7 @@
     "start:stuff": "echo start:stuff",
     "test": "echo test",
     "prefoo": "echo prefoo",
-    "foo": "echo foo",
+    "foo": "npm run foo -- --bar=1",
     "bar": "echo bar",
     "postbar": "echo postbar",
     "prefoo-bar": "echo prefoo-bar",
@@ -12,7 +12,7 @@
     "foobar": "echo \"foo bar\"",
     "baz": "echo 'baz buzz'",
     "prefoo:bar": "echo prefoo:bar",
-    "foo:bar": "echo foo:bar",
+    "foo:bar": "npm run foo:bar",
     "postfoo:bar": "echo postfoo:bar",
     "foo:bar:baz": "echo foo:bar:baz"
   }
