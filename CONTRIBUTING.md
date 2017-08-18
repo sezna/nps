@@ -1,7 +1,5 @@
 # Contributing
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-
 Thanks for being willing to contribute!
 
 **Working on your first Pull Request?** You can learn how from this *free* series
@@ -58,14 +56,6 @@ probably use "Squash and Merge" so we can change the commit message :)
 Please make sure to run the tests before you commit your changes. You can run
 `npm start test.update` which will update any snapshots that need updating.
 Make sure to include those changes (if they exist) in your commit.
-
-### uniform commit messages with commitizen
-
-To start a commit run the command below and use the form so it looks like other people's commits
-
-```
-npm start commit
-```
 
 ### opt into git hooks
 
