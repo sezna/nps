@@ -19,7 +19,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![Code of Conduct][coc-badge]][coc]
 [![Roadmap][roadmap-badge]][roadmap]
 [![Examples][examples-badge]][examples]
-[![nps friendly][nps-badge]](#Badge)
+[![nps friendly][nps-badge]](#badge)
 
 ## Quick Video Intro :tv:
 
