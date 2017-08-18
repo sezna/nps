@@ -61,7 +61,7 @@ Make sure to include those changes (if they exist) in your commit.
 
 ### uniform commit messages with commitizen
 
-To start a commit run the command below and use the form so it looks like other peopls commits
+To start a commit run the command below and use the form so it looks like other people's commits
 
 ```
 npm start commit
