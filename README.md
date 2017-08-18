@@ -19,6 +19,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![Code of Conduct][coc-badge]][coc]
 [![Roadmap][roadmap-badge]][roadmap]
 [![Examples][examples-badge]][examples]
+[![nps friendly][nps-badge]](#Badge)
 
 ## Quick Video Intro :tv:
 
@@ -390,6 +391,20 @@ Log levels available:
 - `warn` - errors and warnings only
 - `info` - info, errors, and warnings (default)
 
+## Badge
+
+Congratulations your repo is nps-friendly. Time to flaunt it! Add the nps-friendly badge to your README using the following markdown:
+
+```markdown
+[![nps friendly](https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square)](https://github.com/kentcdodds/nps)
+```
+
+Your badge will look like this:
+
+[![nps friendly](https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square)](https://github.com/kentcdodds/nps)
+
+It may also make sense to change your README.md or CONTRIBUTING.md to include or link to the nps project so that your new contributors may learn more about installing and using nps.
+
 ## FAQ
 
 ### How do I do ___ ?
@@ -462,6 +477,8 @@ Contributions of any kind welcome!
 
 MIT
 
+[nps-badge]: https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square
+[nps-github]: https://github.com/kentcdodds/nps
 [scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
 [roadmap]: https://github.com/kentcdodds/nps/blob/master/other/ROADMAP.md
