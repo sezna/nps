@@ -1,6 +1,7 @@
 const {series, concurrent, rimraf} = require('nps-utils')
 
-const transpile = 'babel --copy-files --out-dir dist --ignore __tests__ src'
+const transpile =
+  'babel --copy-files --out-dir dist --ignore __tests__,__mocks__ src'
 const cleanDist = rimraf('dist')
 
 module.exports = {
