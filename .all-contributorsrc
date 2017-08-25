@@ -340,6 +340,16 @@
         "doc",
         "tool"
       ]
+    },
+    {
+      "login": "sudo-suhas",
+      "name": "Suhas Karanth",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22251956?v=4",
+      "profile": "https://github.com/sudo-suhas",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
