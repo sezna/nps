@@ -87,7 +87,7 @@ test('options: logLevel sets the log level', () => {
   })
 })
 
-test('options: scripts logs command text', async () => {
+test('options: scripts logs command text', async() => {
   const {runPackageScript, infoSpy} = setup()
   const scriptConfig = {test: {script: 'echo test'}}
   const options = {scripts: true}
@@ -100,7 +100,7 @@ test('options: scripts logs command text', async () => {
   expect(infoSpy).toHaveBeenCalledWith(expect.stringMatching(/echo test/))
 })
 
-test('options: scripts does not log command text when false', async () => {
+test('options: scripts does not log command text when false', async() => {
   const {runPackageScript, infoSpy} = setup()
   const scriptConfig = {test: {script: 'echo test'}}
   const options = {scripts: false}
