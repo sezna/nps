@@ -214,20 +214,6 @@ test('if help is called with a script, it shows the help for that script', () =>
   expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(1)
 })
 
-test('if help is called with a script, it shows the help for that script', () => {
-  mockBinUtils.mock.psConfig = {
-    scripts: {
-      specific: {
-        description: 'the specific script',
-        script: 'echo "specific"',
-      },
-    },
-  }
-  expect(parse('help specific')).toBe(undefined)
-  expect(mockBinUtils.specificHelpScript).toHaveBeenCalledTimes(1)
-  expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(1)
-})
-
 // https://github.com/yargs/yargs/issues/782
 // we can't test this functionality reasonably with unit tests
 // so we've got an e2e test for it
