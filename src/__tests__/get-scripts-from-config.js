@@ -1,4 +1,3 @@
-import {spy} from 'sinon'
 import getScriptsFromConfig from '../get-scripts-from-config'
 
 test('returns empty object by default', () => {
@@ -7,11 +6,10 @@ test('returns empty object by default', () => {
 
 test('passes input to the scripts if it is a function', () => {
   const input = 'hello'
-  const scripts = spy()
+  const scripts = jest.fn()
   getScriptsFromConfig(scripts, input)
-  expect(scripts.calledOnce).toBe(true)
-  const [firstArg] = scripts.firstCall.args
-  expect(firstArg).toBe(input)
+  expect(scripts).toHaveBeenCalledTimes(1)
+  expect(scripts).toHaveBeenCalledWith(input)
 })
 
 test('just uses the scripts object if it is an object', () => {

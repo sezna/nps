@@ -1,7 +1,6 @@
 /* eslint import/newline-after-import:0, global-require:0 */
 import path from 'path'
 import chalk from 'chalk'
-import {spy} from 'sinon'
 import {oneLine} from 'common-tags'
 import {help, preloadModule, loadConfig, specificHelpScript} from '../'
 
@@ -25,14 +24,14 @@ test('preloadModule: resolves a node_module', () => {
 })
 
 test('preloadModule: logs a warning when the module cannot be required', () => {
-  const mockWarn = spy()
+  const mockWarn = jest.fn()
   jest.resetModules()
   jest.mock('../../get-logger', () => () => ({warn: mockWarn}))
   const {preloadModule: proxiedPreloadModule} = require('../')
   const val = proxiedPreloadModule('./module-that-does-exist')
   expect(val).toBeUndefined()
-  expect(mockWarn.calledOnce).toBe(true)
-  const [{message}] = mockWarn.firstCall.args
+  expect(mockWarn).toHaveBeenCalledTimes(1)
+  const [[{message}]] = mockWarn.mock.calls
   expect(message).toMatch(/Unable to preload "\.\/module-that-does-exist"/)
 })
 
@@ -147,14 +146,14 @@ test(
 )
 
 test('loadConfig: logs a warning when the JS module cannot be required', () => {
-  const mockError = spy()
+  const mockError = jest.fn()
   jest.resetModules()
   jest.mock('../../get-logger', () => () => ({error: mockError}))
   const {loadConfig: proxiedReloadConfig} = require('../')
   const val = proxiedReloadConfig('./config-that-does-exist')
   expect(val).toBeUndefined()
-  expect(mockError.calledOnce).toBe(true)
-  const [{message}] = mockError.firstCall.args
+  expect(mockError).toHaveBeenCalledTimes(1)
+  const [[{message}]] = mockError.mock.calls
   expect(message).toMatch(
     /Unable to find JS config at "\.\/config-that-does-exist"/,
   )
@@ -197,14 +196,14 @@ test('loadConfig: does not swallow YAML syntax errors', () => {
 })
 
 test('loadConfig: logs a warning when the YAML file cannot be located', () => {
-  const mockError = spy()
+  const mockError = jest.fn()
   jest.resetModules()
   jest.mock('../../get-logger', () => () => ({error: mockError}))
   const {loadConfig: proxiedReloadConfig} = require('../')
   const val = proxiedReloadConfig('./config-that-does-not-exist.yml')
   expect(val).toBeUndefined()
-  expect(mockError.calledOnce).toBe(true)
-  const [{message}] = mockError.firstCall.args
+  expect(mockError).toHaveBeenCalledTimes(1)
+  const [[{message}]] = mockError.mock.calls
   expect(message).toMatch(
     /Unable to find YML config at "\.\/config-that-does-not-exist.yml"/,
   )

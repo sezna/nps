@@ -1,7 +1,15 @@
 /* eslint global-require:0 */
 import path from 'path'
 import {readFileSync} from 'fs'
-import {spy} from 'sinon'
+
+function mockFindUpSync(packageJsonDestination) {
+  return file => {
+    if (file === 'package.json') {
+      return packageJsonDestination
+    }
+    throw new Error('Should not look for anything but package.json')
+  }
+}
 
 test('initialize JS normally', () => {
   const packageScriptsDestination = fixture('package-scripts.js')
@@ -10,31 +18,24 @@ test('initialize JS normally', () => {
     fixture('_package-scripts.js'),
     'utf-8',
   ).replace(/\r?\n/g, '\n')
-  const mockWriteFileSync = spy()
-  const mockFindUpSync = spy(file => {
-    if (file === 'package.json') {
-      return packageJsonDestination
-    }
-    throw new Error('Should not look for anything but package.json')
-  })
+  const mockWriteFileSync = jest.fn()
   jest.resetModules()
-  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.doMock('find-up', () => ({
+    sync: mockFindUpSync(packageJsonDestination),
+  }))
   jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
   const initialize = require('../').default
 
   initialize()
 
   const [
-    packageScriptsDestinationResult,
-    packageScriptsStringResult,
-  ] = mockWriteFileSync.secondCall.args
-  const [
-    packageJsonDestinationResult,
-    packageJsonStringResult,
-  ] = mockWriteFileSync.firstCall.args
+    [packageJsonDestinationResult, packageJsonStringResult],
+    [packageScriptsDestinationResult, packageScriptsStringResult],
+  ] = mockWriteFileSync.mock.calls
+
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
-  expect(mockWriteFileSync.calledTwice).toBe(true)
+  expect(mockWriteFileSync).toHaveBeenCalledTimes(2)
   expect(packageScriptsDestinationResult).toBe(packageScriptsDestination)
   expect(packageScriptsStringResult).toBe(expectedPackageScripts)
   expect(packageJsonDestinationResult).toBe(packageJsonDestination)
@@ -51,31 +52,23 @@ test('initialize YML normally', () => {
     fixture('_package-scripts.yml'),
     'utf-8',
   ).replace(/\r?\n/g, '\n')
-  const mockWriteFileSync = spy()
-  const mockFindUpSync = spy(file => {
-    if (file === 'package.json') {
-      return packageJsonDestination
-    }
-    throw new Error('Should not look for anything but package.json')
-  })
+  const mockWriteFileSync = jest.fn()
   jest.resetModules()
-  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.doMock('find-up', () => ({
+    sync: mockFindUpSync(packageJsonDestination),
+  }))
   jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
   const initialize = require('../').default
 
   initialize('yaml')
 
   const [
-    packageScriptsDestinationResult,
-    packageScriptsStringResult,
-  ] = mockWriteFileSync.secondCall.args
-  const [
-    packageJsonDestinationResult,
-    packageJsonStringResult,
-  ] = mockWriteFileSync.firstCall.args
+    [packageJsonDestinationResult, packageJsonStringResult],
+    [packageScriptsDestinationResult, packageScriptsStringResult],
+  ] = mockWriteFileSync.mock.calls
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
-  expect(mockWriteFileSync.calledTwice).toBe(true)
+  expect(mockWriteFileSync).toHaveBeenCalledTimes(2)
   expect(packageScriptsDestinationResult).toBe(packageScriptsDestination)
   expect(packageScriptsStringResult).toBe(expectedPackageScripts)
   expect(packageJsonDestinationResult).toBe(packageJsonDestination)
@@ -87,20 +80,16 @@ test('initialize YML normally', () => {
 
 test('initialize without a test script should not add a test to the package.json', () => {
   const packageJsonDestination = fixture('_package-no-test.json')
-  const mockWriteFileSync = spy()
-  const mockFindUpSync = spy(file => {
-    if (file === 'package.json') {
-      return packageJsonDestination
-    }
-    throw new Error('Should not look for anything but package.json')
-  })
+  const mockWriteFileSync = jest.fn()
   jest.resetModules()
-  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.doMock('find-up', () => ({
+    sync: mockFindUpSync(packageJsonDestination),
+  }))
   jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
   const initialize = require('../').default
 
   initialize()
-  const [, packageJsonStringResult] = mockWriteFileSync.firstCall.args
+  const [[, packageJsonStringResult]] = mockWriteFileSync.mock.calls
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
   expect(packageJsonScripts).toEqual({
@@ -110,20 +99,16 @@ test('initialize without a test script should not add a test to the package.json
 
 test(`initialize without any scripts should successfully create an empty package-scripts.js file`, () => {
   const packageJsonDestination = fixture('_package-no-scripts.json')
-  const mockWriteFileSync = spy()
-  const mockFindUpSync = spy(file => {
-    if (file === 'package.json') {
-      return packageJsonDestination
-    }
-    throw new Error('Should not look for anything but package.json')
-  })
+  const mockWriteFileSync = jest.fn()
   jest.resetModules()
-  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.doMock('find-up', () => ({
+    sync: mockFindUpSync(packageJsonDestination),
+  }))
   jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
   const initialize = require('../').default
 
   initialize()
-  const [, packageJsonStringResult] = mockWriteFileSync.firstCall.args
+  const [[, packageJsonStringResult]] = mockWriteFileSync.mock.calls
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
   expect(packageJsonScripts).toEqual({
@@ -133,20 +118,16 @@ test(`initialize without any scripts should successfully create an empty package
 
 test('initialize without any core scripts and should not remove any core scripts from package.json', () => {
   const packageJsonDestination = fixture('_package-core-scripts.json')
-  const mockWriteFileSync = spy()
-  const mockFindUpSync = spy(file => {
-    if (file === 'package.json') {
-      return packageJsonDestination
-    }
-    throw new Error('Should not look for anything but package.json')
-  })
+  const mockWriteFileSync = jest.fn()
   jest.resetModules()
-  jest.mock('find-up', () => ({sync: mockFindUpSync}))
+  jest.doMock('find-up', () => ({
+    sync: mockFindUpSync(packageJsonDestination),
+  }))
   jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
   const initialize = require('../').default
 
   initialize()
-  const [, packageJsonStringResult] = mockWriteFileSync.firstCall.args
+  const [[, packageJsonStringResult]] = mockWriteFileSync.mock.calls
   const {scripts: packageJsonScripts} = JSON.parse(packageJsonStringResult)
 
   expect(packageJsonScripts).toEqual({

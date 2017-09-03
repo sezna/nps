@@ -1,6 +1,5 @@
 /* eslint import/newline-after-import:0, global-require:0 */
 import {oneLine} from 'common-tags'
-import {spy} from 'sinon'
 import chalk from 'chalk'
 import managePath from 'manage-path'
 
@@ -48,9 +47,10 @@ test('spawn called and appends options to default', () => {
 
 test('spawn.on called with "close" and "error"', () => {
   return testSpawnCallWithDefaults().then(({onSpy}) => {
-    expect(onSpy.calledTwice).toBe(true)
-    expect(onSpy.calledWith('close')).toBe(true)
-    expect(onSpy.calledWith('error')).toBe(true)
+    expect(onSpy).toHaveBeenCalledTimes(2)
+    const [[arg1], [arg2]] = onSpy.mock.calls
+    expect(arg1).toEqual('error')
+    expect(arg2).toEqual('close')
   })
 })
 
@@ -74,16 +74,16 @@ test('returns a log object when no script is found', () => {
 test('options: silent sets the logLevel to disable', () => {
   const options = {silent: true}
   return testSpawnCallWithDefaults(options).then(({mockGetLogger}) => {
-    expect(mockGetLogger.calledOnce).toBe(true)
-    expect(mockGetLogger.calledWith('disable')).toBe(true)
+    expect(mockGetLogger).toHaveBeenCalledTimes(1)
+    expect(mockGetLogger).toHaveBeenCalledWith('disable')
   })
 })
 
 test('options: logLevel sets the log level', () => {
   const options = {logLevel: 'warn'}
   return testSpawnCallWithDefaults(options).then(({mockGetLogger}) => {
-    expect(mockGetLogger.calledOnce).toBe(true)
-    expect(mockGetLogger.calledWith('warn')).toBe(true)
+    expect(mockGetLogger).toHaveBeenCalledTimes(1)
+    expect(mockGetLogger).toHaveBeenCalledWith('warn')
   })
 })
 
@@ -120,10 +120,9 @@ test('runs scripts serially if given an array of input', () => {
   const scripts = ['lint src/ scripts/', 'build src/ scripts/']
   const scriptConfig = {build: buildCommand, lint: lintCommand}
   const options = {}
-  runPackageScript({scriptConfig, scripts, options}).then(() => {
-    expect(mockSpawnStubSpy.calledTwice).toBe(true)
-    const [command1] = mockSpawnStubSpy.firstCall.args
-    const [command2] = mockSpawnStubSpy.secondCall.args
+  return runPackageScript({scriptConfig, scripts, options}).then(() => {
+    expect(mockSpawnStubSpy).toHaveBeenCalledTimes(2)
+    const [[command1], [command2]] = mockSpawnStubSpy.mock.calls
     expect(command1).toBe('eslint src/ scripts/')
     expect(command2).toBe('babel src/ scripts/')
   })
@@ -152,7 +151,7 @@ test('stops running scripts when running serially if any given script fails', ()
       kill() {},
     }
   }
-  const mockSpawnStubSpy = spy(spawnStub)
+  const mockSpawnStubSpy = jest.fn(spawnStub)
   const {runPackageScript} = setup(mockSpawnStubSpy)
   return runPackageScript({scriptConfig, scripts}).then(
     () => {
@@ -163,9 +162,9 @@ test('stops running scripts when running serially if any given script fails', ()
       expect(typeof ref === 'string').toBe(true)
       expect(typeof message === 'string').toBe(true)
       // only called with the bad script, not for the good one
-      expect(mockSpawnStubSpy.calledOnce).toBe(true)
-      const [command1] = mockSpawnStubSpy.firstCall.args
-      expect(command1).toBe('bad')
+      expect(mockSpawnStubSpy).toHaveBeenCalledTimes(1)
+      const [[command1]] = mockSpawnStubSpy.mock.calls
+      expect(command1).toBe(badCommand)
     },
   )
 })
@@ -247,8 +246,8 @@ function testSpawnCall(
     scripts,
   }).then(
     result => {
-      expect(mockSpawnStubSpy.calledOnce).toBe(true)
-      const [command, options] = mockSpawnStubSpy.firstCall.args
+      expect(mockSpawnStubSpy).toHaveBeenCalledTimes(1)
+      const [[command, options]] = mockSpawnStubSpy.mock.calls
       return Promise.resolve({
         result,
         command,
@@ -258,8 +257,8 @@ function testSpawnCall(
       })
     },
     error => {
-      expect(mockSpawnStubSpy.calledOnce).toBe(true)
-      const [command, options] = mockSpawnStubSpy.firstCall.args
+      expect(mockSpawnStubSpy).toHaveBeenCalledTimes(1)
+      const [[command, options]] = mockSpawnStubSpy.mock.calls
       return Promise.reject({
         error,
         command,
@@ -272,18 +271,17 @@ function testSpawnCall(
 }
 
 function setup(mockSpawnStubSpy) {
-  const killSpy = spy()
-  const onSpy = spy((event, cb) => {
+  const onSpy = jest.fn((event, cb) => {
     if (event === 'close') {
       cb(0)
     }
   })
   const infoSpy = jest.fn()
-  const mockGetLogger = spy(() => ({info: infoSpy}))
+  const mockGetLogger = jest.fn(() => ({info: infoSpy}))
   mockGetLogger.getLogLevel = require.requireActual(
     '../get-logger',
   ).getLogLevel
-  mockSpawnStubSpy = mockSpawnStubSpy || spy(spawnStub)
+  mockSpawnStubSpy = mockSpawnStubSpy || jest.fn(spawnStub)
   jest.resetModules()
   jest.mock('spawn-command-with-kill', () => mockSpawnStubSpy)
   jest.mock('../get-logger', () => mockGetLogger)
@@ -293,10 +291,9 @@ function setup(mockSpawnStubSpy) {
     infoSpy,
     mockGetLogger,
     onSpy,
-    killSpy,
     runPackageScript,
   }
   function spawnStub() {
-    return {on: onSpy, kill: killSpy}
+    return {on: onSpy, kill() {}}
   }
 }
