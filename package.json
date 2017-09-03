@@ -12,7 +12,9 @@
   "bin": {
     "nps": "./dist/bin/nps.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
@@ -51,17 +53,23 @@
     "nps": "^5.4.0",
     "nps-utils": "^1.2.0",
     "opt-cli": "^1.5.1",
-    "prettier-eslint-cli": "^4.1.1",
-    "sinon": "^3.2.1"
+    "prettier-eslint-cli": "^4.1.1"
   },
   "eslintConfig": {
-    "extends": ["kentcdodds", "kentcdodds/jest", "kentcdodds/prettier"],
+    "extends": [
+      "kentcdodds",
+      "kentcdodds/jest",
+      "kentcdodds/prettier"
+    ],
     "rules": {
       "max-len": "off"
     }
   },
   "lint-staged": {
-    "*.js": ["prettier-eslint --write", "git add"]
+    "*.js": [
+      "prettier-eslint --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
