@@ -356,7 +356,9 @@
       "name": "Eric Skram",
       "avatar_url": "https://avatars3.githubusercontent.com/u/1228867?v=4",
       "profile": "http://www.ericskram.com",
-      "contributions": []
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
