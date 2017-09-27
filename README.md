@@ -64,7 +64,7 @@ module.exports = {
       prod: 'webpack -p',
     },
     // learn more about npsUtils here: https://npm.im/nps-utils
-    validate: npsUtils.concurrently.nps('lint', 'test', 'build'),
+    validate: npsUtils.concurrent.nps('lint', 'test', 'build'),
   },
 }
 ```
@@ -84,7 +84,7 @@ scripts:
     build:
         default: webpack
         prod: webpack -p
-    validate: concurrently "nps lint" "nps test" "nps build"
+    validate: concurrent "nps lint" "nps test" "nps build"
 ```
 
 To use `nps`, it's recommended that you either install it globally (`npm i -g nps`) or add `./node_modules/bin` to your
@@ -131,7 +131,7 @@ test - jest
 test.watch - run in the amazingly intelligent Jest watch mode - jest --watch
 build - webpack
 build.prod - webpack -p
-validate - concurrently "nps lint" "nps test" "nps build"
+validate - concurrent "nps lint" "nps test" "nps build"
 ```
 You can also use the help command with a script name
 ```console
