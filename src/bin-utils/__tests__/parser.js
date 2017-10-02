@@ -195,7 +195,7 @@ test('init without an existing config will initialize package-scripts.js', () =>
 })
 
 test('if there is a help script in the psConfig, does not show the help', () => {
-  mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
+  mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}, options: {}}
   expect(parse('help')).not.toBe(undefined)
   expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
 })
