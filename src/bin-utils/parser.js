@@ -53,6 +53,12 @@ function parse(rawArgv) {
       type: 'boolean',
       default: true,
     },
+    'help-style': {
+      describe: 'Choose the level of detail displayed by the help command',
+      choices: ['all', 'scripts', 'basic'],
+      alias: 'hs',
+      default: 'all',
+    },
   }
 
   const yargsInstance = yargs(rawArgv)
@@ -117,6 +123,11 @@ function parse(rawArgv) {
       log.info(help(psConfig))
       return true
     }
+    const options = psConfig.options
+    console.log('psConfig:', options)
+    const helpStyle = options.hasOwnProperty('help-style') ?
+      options['help-style'] :
+      'all'
     const hasDefaultScript = Boolean(psConfig.scripts.default)
     const noScriptSpecifiedAndNoDefault =
       !specifiedScripts.length && !hasDefaultScript
@@ -129,7 +140,9 @@ function parse(rawArgv) {
       log.info(specificHelpScript(psConfig, specifiedScripts[1]))
       return true
     } else if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
-      parser.showHelp('log')
+      if (helpStyle === 'all') {
+        parser.showHelp('log')
+      }
       log.info(help(psConfig))
       return true
     }

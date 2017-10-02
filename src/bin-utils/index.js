@@ -171,24 +171,31 @@ function requireDefaultFromModule(modulePath) {
   }
 }
 
-function scriptObjectToChalk({name, description, script}) {
+function scriptObjectToChalk(options, {name, description, script}) {
   const coloredName = chalk.green(name)
   const coloredScript = chalk.gray(script)
-  let line
+  const line = [coloredName]
+  let showScript = true
+  if (typeof options !== 'undefined' && options['help-style'] === 'basic') {
+    showScript = false
+  }
   if (description) {
-    line = [coloredName, chalk.white(description), coloredScript]
-  } else {
-    line = [coloredName, coloredScript]
+    line.push(chalk.white(description))
+  }
+  if (showScript) {
+    line.push(coloredScript)
   }
   return line.join(' - ').trim()
 }
 
-function help({scripts}) {
+function help({scripts, options}) {
   const availableScripts = getAvailableScripts(scripts)
   const filteredScripts = availableScripts.filter(
     script => !script.hiddenFromHelp,
   )
-  const scriptLines = filteredScripts.map(scriptObjectToChalk)
+  const scriptLines = filteredScripts.map(
+    scriptObjectToChalk.bind(null, options || {}),
+  )
   if (scriptLines.length) {
     const topMessage = 'Available scripts (camel or kebab case accepted)'
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
