@@ -106,15 +106,17 @@ Commands:
   completion  generate bash completion script
 
 Options:
-  --config, -c     Config file to use (defaults to nearest package-scripts.yml
-                   or package-scripts.js)
-                     [default: "<path-to-your-project>/package-scripts.js"]
-  --silent, -s     Silent nps output                  [boolean] [default: false]
-  --log-level, -l  The log level to use
-                   [choices: "error", "warn", "info", "debug"] [default: "info"]
-  --require, -r    Module to preload
-  -h, --help       Show help                                           [boolean]
-  -v, --version    Show version number                                 [boolean]
+  --config, -c      Config file to use (defaults to nearest package-scripts.yml
+                    or package-scripts.js)
+                      [default: "<path-to-your-project>/package-scripts.js"]
+  --silent, -s      Silent nps output                  [boolean] [default: false]
+  --log-level, -l   The log level to use
+                    [choices: "error", "warn", "info", "debug"] [default: "info"]
+  --require, -r     Module to preload
+  -h, --help        Show help                                           [boolean]
+  -v, --version     Show version number                                 [boolean]
+  --help-style, -hs Style of help to use
+                    [choices: "all", "scripts", "basic"] [default: "all"]
 
 Examples:
   nps.js test build                         Runs the `test` script then the
@@ -308,6 +310,25 @@ And you can pass arguments to scripts by putting the scripts in quotes:
 
 ```console
 nps "test --cover" check-coverage
+```
+
+##### -hs, --help-style
+
+By default, `nps` will dump a very long help documentation to the screen based on your package-scripts.js file. You can modify this output with one of three help-style options:
+
+`all` gives you the normal default output:
+```console
+nps help "--help-style all"
+```
+
+`scripts` will give you only the help information built from your package-scripts.js file
+```console
+nps help "--help-style scripts"
+```
+
+`basic` will give you only the name and description of the scripts from your package-scripts.js file
+```console
+nps help "--help-style basic"
 ```
 
 That's all for the CLI.
