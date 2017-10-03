@@ -71,6 +71,8 @@ const valid = [
   '',
   '--help',
   '-h',
+  // '--help-style',
+  // '-hs',
   '--version',
   '-v',
   '--silent',
@@ -208,6 +210,7 @@ test('if help is called with a script, it shows the help for that script', () =>
         script: 'echo "specific"',
       },
     },
+    options: {},
   }
   expect(parse('help specific')).toBe(undefined)
   expect(mockBinUtils.specificHelpScript).toHaveBeenCalledTimes(1)

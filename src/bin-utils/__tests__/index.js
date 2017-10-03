@@ -494,9 +494,9 @@ Available scripts (camel or kebab case accepted)
 ${chalk.green('default')} - ${chalk.white('the default script')}
 ${chalk.green('foo')} - ${chalk.white('the foo script')}
 ${chalk.green('bar')} - ${chalk.white('stuff')}
-${chalk.green('bar.baz')} - ${chalk.gray('echo "baz"')}
-${chalk.green('bar.barBub')} - ${chalk.gray('echo "barBub"')}
-${chalk.green('build')} - ${chalk.gray('webpack')}
+${chalk.green('bar.baz')}
+${chalk.green('bar.barBub')}
+${chalk.green('build')}
 ${chalk.green('build.x')} - ${chalk.white('webpack with x env')}
 ${chalk.green('build.x.y')} - ${chalk.white('build X-Y')}
 ${chalk.green('foobar')}

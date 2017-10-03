@@ -193,10 +193,10 @@ function help({scripts, options}) {
   const filteredScripts = availableScripts.filter(
     script => !script.hiddenFromHelp,
   )
-  const scriptLines = filteredScripts.map(
-    scriptObjectToChalk.bind(null, options || {}),
-  )
-  if (scriptLines.length) {
+  if (filteredScripts.length > 0) {
+    const scriptLines = filteredScripts.map(
+      scriptObjectToChalk.bind(null, options || {}),
+    )
     const topMessage = 'Available scripts (camel or kebab case accepted)'
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
     return message
@@ -210,7 +210,7 @@ function specificHelpScript(config, scriptName) {
   if (isNull(script)) {
     return chalk.yellow(`Script matching name ${scriptName} was not found.`)
   } else {
-    return scriptObjectToChalk(script)
+    return scriptObjectToChalk({}, script)
   }
 }
 
