@@ -56,7 +56,7 @@ function parse(rawArgv) {
     'help-style': {
       describe: 'Choose the level of detail displayed by the help command',
       choices: ['all', 'scripts', 'basic'],
-      alias: 'hs',
+      alias: 'y',
       default: 'all',
     },
   }

@@ -72,7 +72,7 @@ const valid = [
   '--help',
   '-h',
   '--help-style scripts',
-  '-hs basic',
+  '-y basic',
   '--version',
   '-v',
   '--silent',
