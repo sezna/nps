@@ -115,7 +115,7 @@ Options:
   --require, -r     Module to preload
   -h, --help        Show help                                           [boolean]
   -v, --version     Show version number                                 [boolean]
-  --help-style, -hs Style of help to use
+  --help-style, -y  Style of help to use
                     [choices: "all", "scripts", "basic"] [default: "all"]
 
 Examples:
@@ -312,7 +312,7 @@ And you can pass arguments to scripts by putting the scripts in quotes:
 nps "test --cover" check-coverage
 ```
 
-##### -hs, --help-style
+##### -y, --help-style
 
 By default, `nps` will dump a very long help documentation to the screen based on your package-scripts.js file. You can modify this output with one of three help-style options:
 

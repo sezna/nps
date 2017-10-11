@@ -123,7 +123,7 @@ function parse(rawArgv) {
       log.info(help(psConfig))
       return true
     }
-    const helpStyle = String(psConfig.options['help-style'] || 'all')
+    const helpStyle = String(psConfig.options['help-style'])
     const hasDefaultScript = Boolean(psConfig.scripts.default)
     const noScriptSpecifiedAndNoDefault =
       !specifiedScripts.length && !hasDefaultScript

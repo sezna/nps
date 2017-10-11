@@ -171,7 +171,10 @@ function requireDefaultFromModule(modulePath) {
   }
 }
 
-function scriptObjectToChalk(options, {name, description, script}) {
+function scriptObjectToChalk(
+  options = {'help-style': 'all'},
+  {name, description, script},
+) {
   const coloredName = chalk.green(name)
   const coloredScript = chalk.gray(script)
   const line = [coloredName]
