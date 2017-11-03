@@ -136,7 +136,7 @@ function parse(rawArgv) {
       log.info(specificHelpScript(psConfig, specifiedScripts[1]))
       return true
     } else if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
-      if (helpStyle === 'all') {
+      if (helpStyle === 'all' || helpStyle === 'undefined') {
         parser.showHelp('log')
       }
       log.info(help(psConfig))
