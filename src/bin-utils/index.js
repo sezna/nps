@@ -171,10 +171,7 @@ function requireDefaultFromModule(modulePath) {
   }
 }
 
-function scriptObjectToChalk(
-  options = {'help-style': 'all'},
-  {name, description, script},
-) {
+function scriptObjectToChalk(options, {name, description, script}) {
   const coloredName = chalk.green(name)
   const coloredScript = chalk.gray(script)
   const line = [coloredName]
@@ -198,7 +195,7 @@ function help({scripts, options}) {
   )
   if (filteredScripts.length > 0) {
     const scriptLines = filteredScripts.map(
-      scriptObjectToChalk.bind(null, options || {}),
+      scriptObjectToChalk.bind(null, options || {'help-style': 'all'}),
     )
     const topMessage = 'Available scripts (camel or kebab case accepted)'
     const message = `${topMessage}\n\n${scriptLines.join('\n')}`
@@ -213,7 +210,7 @@ function specificHelpScript(config, scriptName) {
   if (isNull(script)) {
     return chalk.yellow(`Script matching name ${scriptName} was not found.`)
   } else {
-    return scriptObjectToChalk({}, script)
+    return scriptObjectToChalk({'help-style': 'all'}, script)
   }
 }
 
