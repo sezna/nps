@@ -99,7 +99,14 @@ function loadConfig(configPath, input) {
     })
     throw new Error(typeMessage)
   }
-  return config
+
+  const defaultConfig = {
+    options: {
+      'help-style': 'all',
+    },
+  }
+
+  return {...defaultConfig, ...config}
 }
 
 export {

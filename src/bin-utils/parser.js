@@ -123,7 +123,7 @@ function parse(rawArgv) {
       log.info(help(psConfig))
       return true
     }
-    const helpStyle = String(psConfig.options['help-style'] || 'all')
+    const helpStyle = String(psConfig.options['help-style'])
     const hasDefaultScript = Boolean(psConfig.scripts.default)
     const noScriptSpecifiedAndNoDefault =
       !specifiedScripts.length && !hasDefaultScript
@@ -138,7 +138,7 @@ function parse(rawArgv) {
     } else if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
       // Can't achieve 100% branch coverage without refactoring this showHelp()
       // function into ./index.js and re-working existing tests and such. Branch
-      // options aren't relevant here either, so ignoring branch check.
+      // options aren't relevant here either, so telling Istanbul to ignore.
       /* istanbul ignore next */
       if (helpStyle === 'all') {
         parser.showHelp('log')

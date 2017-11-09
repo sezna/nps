@@ -43,6 +43,9 @@ test('loadConfig: calls the config function if it is a function', () => {
     scripts: {
       functionConfig: 'echo worked!',
     },
+    options: {
+      'help-style': 'all',
+    },
   })
 })
 
