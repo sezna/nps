@@ -53,6 +53,12 @@ function parse(rawArgv) {
       type: 'boolean',
       default: true,
     },
+    'help-style': {
+      describe: 'Choose the level of detail displayed by the help command',
+      choices: ['all', 'scripts', 'basic'],
+      alias: 'y',
+      default: 'all',
+    },
   }
 
   const yargsInstance = yargs(rawArgv)
@@ -117,6 +123,7 @@ function parse(rawArgv) {
       log.info(help(psConfig))
       return true
     }
+    const helpStyle = String(psConfig.options['help-style'])
     const hasDefaultScript = Boolean(psConfig.scripts.default)
     const noScriptSpecifiedAndNoDefault =
       !specifiedScripts.length && !hasDefaultScript
@@ -129,7 +136,13 @@ function parse(rawArgv) {
       log.info(specificHelpScript(psConfig, specifiedScripts[1]))
       return true
     } else if (commandIsHelp || noScriptSpecifiedAndNoDefault) {
-      parser.showHelp('log')
+      // Can't achieve 100% branch coverage without refactoring this showHelp()
+      // function into ./index.js and re-working existing tests and such. Branch
+      // options aren't relevant here either, so telling Istanbul to ignore.
+      /* istanbul ignore next */
+      if (helpStyle === 'all') {
+        parser.showHelp('log')
+      }
       log.info(help(psConfig))
       return true
     }

@@ -71,6 +71,8 @@ const valid = [
   '',
   '--help',
   '-h',
+  '--help-style scripts',
+  '-y basic',
   '--version',
   '-v',
   '--silent',
@@ -195,7 +197,7 @@ test('init without an existing config will initialize package-scripts.js', () =>
 })
 
 test('if there is a help script in the psConfig, does not show the help', () => {
-  mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}}
+  mockBinUtils.mock.psConfig = {scripts: {help: 'hi'}, options: {}}
   expect(parse('help')).not.toBe(undefined)
   expect(mockGetLogger.mock.info).toHaveBeenCalledTimes(0)
 })
@@ -208,6 +210,7 @@ test('if help is called with a script, it shows the help for that script', () =>
         script: 'echo "specific"',
       },
     },
+    options: {},
   }
   expect(parse('help specific')).toBe(undefined)
   expect(mockBinUtils.specificHelpScript).toHaveBeenCalledTimes(1)

@@ -15,7 +15,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -106,15 +106,17 @@ Commands:
   completion  generate bash completion script
 
 Options:
-  --config, -c     Config file to use (defaults to nearest package-scripts.yml
-                   or package-scripts.js)
-                     [default: "<path-to-your-project>/package-scripts.js"]
-  --silent, -s     Silent nps output                  [boolean] [default: false]
-  --log-level, -l  The log level to use
-                   [choices: "error", "warn", "info", "debug"] [default: "info"]
-  --require, -r    Module to preload
-  -h, --help       Show help                                           [boolean]
-  -v, --version    Show version number                                 [boolean]
+  --config, -c      Config file to use (defaults to nearest package-scripts.yml
+                    or package-scripts.js)
+                      [default: "<path-to-your-project>/package-scripts.js"]
+  --silent, -s      Silent nps output                  [boolean] [default: false]
+  --log-level, -l   The log level to use
+                    [choices: "error", "warn", "info", "debug"] [default: "info"]
+  --require, -r     Module to preload
+  -h, --help        Show help                                           [boolean]
+  -v, --version     Show version number                                 [boolean]
+  --help-style, -y  Style of help to use
+                    [choices: "all", "scripts", "basic"] [default: "all"]
 
 Examples:
   nps.js test build                         Runs the `test` script then the
@@ -310,6 +312,25 @@ And you can pass arguments to scripts by putting the scripts in quotes:
 nps "test --cover" check-coverage
 ```
 
+##### -y, --help-style
+
+By default, `nps` will dump a very long help documentation to the screen based on your package-scripts.js file. You can modify this output with one of three help-style options:
+
+`all` gives you the normal default output:
+```console
+nps help "--help-style all"
+```
+
+`scripts` will give you only the help information built from your package-scripts.js file
+```console
+nps help "--help-style scripts"
+```
+
+`basic` will give you only the name and description of the scripts from your package-scripts.js file
+```console
+nps help "--help-style basic"
+```
+
 That's all for the CLI.
 
 ### package-scripts.js
@@ -470,6 +491,7 @@ Thanks goes to these people ([emoji key][emojis]):
 | [<img src="https://avatars.githubusercontent.com/u/1155589?v=3" width="100px;"/><br /><sub>Sorin Muntean</sub>](https://github.com/sxn)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=sxn "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=sxn "Tests") [📖](https://github.com/kentcdodds/p-s/commits?author=sxn "Documentation") | [<img src="https://avatars.githubusercontent.com/u/1970063?v=3" width="100px;"/><br /><sub>Keith Gunn</sub>](https://github.com/gunnx)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Agunnx "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=gunnx "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=gunnx "Tests") | [<img src="https://avatars.githubusercontent.com/u/1019478?v=3" width="100px;"/><br /><sub>Joe Martella</sub>](http://martellaj.github.io)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Amartellaj "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=martellaj "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=martellaj "Tests") | [<img src="https://avatars.githubusercontent.com/u/1887854?v=3" width="100px;"/><br /><sub>Martin Segado</sub>](https://github.com/msegado)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=msegado "Documentation") | [<img src="https://avatars.githubusercontent.com/u/36491?v=3" width="100px;"/><br /><sub>Bram Borggreve</sub>](http://colmena.io/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Abeeman "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=beeman "Code") | [<img src="https://avatars.githubusercontent.com/u/86454?v=3" width="100px;"/><br /><sub>Elijah Manor</sub>](http://elijahmanor.com)<br />[📹](#video-elijahmanor "Videos") | [<img src="https://avatars.githubusercontent.com/u/10691183?v=3" width="100px;"/><br /><sub>Ragu Ramaswamy</sub>](https://github.com/rrag)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=rrag "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=rrag "Tests") [🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Arrag "Bug reports") |
 | [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub>Erik Fox</sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=erikfox "Code") [📖](https://github.com/kentcdodds/p-s/commits?author=erikfox "Documentation") [⚠️](https://github.com/kentcdodds/p-s/commits?author=erikfox "Tests") | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub>Aditya Pratap Singh</sub>](http://blog.adityapsingh.com)<br />[👀](#review-addityasingh "Reviewed Pull Requests") | [<img src="https://avatars.githubusercontent.com/u/7687132?v=3" width="100px;"/><br /><sub>bumbleblym</sub>](https://github.com/bumbleblym)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=bumbleblym "Code") [📖](https://github.com/kentcdodds/p-s/commits?author=bumbleblym "Documentation") | [<img src="https://avatars.githubusercontent.com/u/7091543?v=3" width="100px;"/><br /><sub>Islam Attrash</sub>](https://twitter.com/IslamAttrash)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=Attrash-Islam "Code") | [<img src="https://avatars.githubusercontent.com/u/7215306?v=3" width="100px;"/><br /><sub>JasonSooter</sub>](https://github.com/JasonSooter)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=JasonSooter "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/116871?v=3" width="100px;"/><br /><sub>Nate Cavanaugh</sub>](http://alterform.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=natecavanaugh "Code") | [<img src="https://avatars2.githubusercontent.com/u/3534924?v=3" width="100px;"/><br /><sub>Wissam Abirached</sub>](https://designingforscale.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=wabirached "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=wabirached "Tests") |
 | [<img src="https://avatars1.githubusercontent.com/u/12592677?v=3" width="100px;"/><br /><sub>Paweł Mikołajczyk</sub>](https://github.com/Miklet)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=Miklet "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=Miklet "Tests") | [<img src="https://avatars0.githubusercontent.com/u/1295580?v=3" width="100px;"/><br /><sub>Kyle Welch</sub>](http://www.krwelch.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kwelch "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=kwelch "Tests") | [<img src="https://avatars3.githubusercontent.com/u/22868432?v=3" width="100px;"/><br /><sub>Lufty Wiranda</sub>](http://instagram.com/luftywiranda13)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=luftywiranda13 "Code") | [<img src="https://avatars6.githubusercontent.com/u/2936644?v=4" width="100px;"/><br /><sub>Bhargav Ponnapalli</sub>](http://imbhargav5.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=imbhargav5 "Code") | [<img src="https://avatars0.githubusercontent.com/u/1538572?v=4" width="100px;"/><br /><sub>falieson</sub>](https://github.com/Falieson)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=Falieson "Documentation") [🔧](#tool-Falieson "Tools") | [<img src="https://avatars2.githubusercontent.com/u/22251956?v=4" width="100px;"/><br /><sub>Suhas Karanth</sub>](https://github.com/sudo-suhas)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Asudo-suhas "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=sudo-suhas "Code") | [<img src="https://avatars3.githubusercontent.com/u/1228867?v=4" width="100px;"/><br /><sub>Eric Skram</sub>](http://www.ericskram.com)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=Vpr99 "Documentation") |
+| [<img src="https://avatars2.githubusercontent.com/u/11901111?v=4" width="100px;"/><br /><sub>Kether Saturnius</sub>](http://www.k3th3r.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=iamkether "Code") [📖](https://github.com/kentcdodds/p-s/commits?author=iamkether "Documentation") |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.

@@ -359,6 +359,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "iamkether",
+      "name": "Kether Saturnius",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11901111?v=4",
+      "profile": "http://www.k3th3r.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ]
 }

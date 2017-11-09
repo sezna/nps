@@ -43,6 +43,9 @@ test('loadConfig: calls the config function if it is a function', () => {
     scripts: {
       functionConfig: 'echo worked!',
     },
+    options: {
+      'help-style': 'all',
+    },
   })
 })
 
@@ -373,6 +376,136 @@ test('specificHelpScript : help: shows script not found when no match found', ()
   const actual = specificHelpScript(config, 'w')
   const expected = chalk.yellow('Script matching name w was not found.')
   expect(actual).toBe(expected)
+})
+
+test('helpStyle: output help with trailing scripts', () => {
+  const config = {
+    options: {
+      'help-style': 'scripts',
+    },
+    scripts: {
+      default: {
+        description: 'the default script',
+        script: 'echo "default"',
+      },
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+      },
+      bar: {
+        default: {
+          description: 'stuff',
+          script: 'echo "bar default"',
+        },
+        baz: 'echo "baz"',
+        barBub: {
+          script: 'echo "barBub"',
+        },
+      },
+      build: {
+        default: 'webpack',
+        x: {
+          default: {
+            script: 'webpack --env.x',
+            description: 'webpack with x env',
+          },
+          y: {
+            description: 'build X-Y',
+            script: 'echo "build x-y"',
+          },
+        },
+      },
+      foobar: 'echo "foobar"',
+      extra: 42,
+    },
+  }
+
+  const message = help(config)
+  const expected = `
+Available scripts (camel or kebab case accepted)
+
+${chalk.green('default')} - ${chalk.white('the default script')} - ${chalk.gray(
+  'echo "default"',
+)}
+${chalk.green('foo')} - ${chalk.white('the foo script')} - ${chalk.gray(
+  'echo "foo"',
+)}
+${chalk.green('bar')} - ${chalk.white('stuff')} - ${chalk.gray(
+  'echo "bar default"',
+)}
+${chalk.green('bar.baz')} - ${chalk.gray('echo "baz"')}
+${chalk.green('bar.barBub')} - ${chalk.gray('echo "barBub"')}
+${chalk.green('build')} - ${chalk.gray('webpack')}
+${chalk.green('build.x')} - ${chalk.white('webpack with x env')} - ${chalk.gray(
+  'webpack --env.x',
+)}
+${chalk.green('build.x.y')} - ${chalk.white('build X-Y')} - ${chalk.gray(
+  'echo "build x-y"',
+)}
+${chalk.green('foobar')} - ${chalk.gray('echo "foobar"')}
+`.trim()
+
+  expect(message).toBe(expected)
+})
+
+test('helpStyle: output help without trailing scripts', () => {
+  const config = {
+    options: {
+      'help-style': 'basic',
+    },
+    scripts: {
+      default: {
+        description: 'the default script',
+        script: 'echo "default"',
+      },
+      foo: {
+        description: 'the foo script',
+        script: 'echo "foo"',
+      },
+      bar: {
+        default: {
+          description: 'stuff',
+          script: 'echo "bar default"',
+        },
+        baz: 'echo "baz"',
+        barBub: {
+          script: 'echo "barBub"',
+        },
+      },
+      build: {
+        default: 'webpack',
+        x: {
+          default: {
+            script: 'webpack --env.x',
+            description: 'webpack with x env',
+          },
+          y: {
+            description: 'build X-Y',
+            script: 'echo "build x-y"',
+          },
+        },
+      },
+      foobar: 'echo "foobar"',
+      extra: 42,
+    },
+  }
+
+  const message = help(config)
+  const expected = `
+Available scripts (camel or kebab case accepted)
+
+${chalk.green('default')} - ${chalk.white('the default script')}
+${chalk.green('foo')} - ${chalk.white('the foo script')}
+${chalk.green('bar')} - ${chalk.white('stuff')}
+${chalk.green('bar.baz')}
+${chalk.green('bar.barBub')}
+${chalk.green('build')}
+${chalk.green('build.x')} - ${chalk.white('webpack with x env')}
+${chalk.green('build.x.y')} - ${chalk.white('build X-Y')}
+${chalk.green('foobar')}
+`.trim()
+
+  expect(message).toBe(expected)
 })
 
 function getAbsoluteFixturePath(fixture) {
