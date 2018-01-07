@@ -2,8 +2,6 @@
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
 
-<a href="https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/nps" rel="nofollow"><img src="https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/nps.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
-
 > `nps` is short for `npm-package-scripts`
 
 > [What happened to p-s?](#what-happened-to-p-s)
