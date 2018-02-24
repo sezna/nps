@@ -12,8 +12,8 @@ before_install:
 script:
   - npm start validate
 after_success:
-  - npx codecov
-  - npx semantic-release pre && npm publish && npx semantic-release post
+  - npx codecov@^3
+  - npx -p semantic-release@6 -c "semantic-release pre && npm publish && semantic-release post"
 branches:
   only:
     - master
