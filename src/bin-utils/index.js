@@ -65,11 +65,13 @@ const loadJSConfig = getAttemptModuleRequireFn(function onFail(
  */
 // eslint-disable-next-line complexity
 function loadConfig(configPath, input) {
+  let config
   if (configPath.endsWith('.yml')) {
-    return loadYAMLConfig(configPath)
+    config = loadYAMLConfig(configPath)
+  } else {
+    config = loadJSConfig(configPath)
   }
 
-  let config = loadJSConfig(configPath)
   if (isUndefined(config)) {
     // let the caller deal with this
     return config
