@@ -117,6 +117,7 @@ function parse(rawArgv) {
 
   // util functions
 
+  // eslint-disable-next-line complexity
   function showHelp(specifiedScripts) {
     if (parsedArgv.help) {
       // if --help was specified, then yargs will show the default help

@@ -212,14 +212,16 @@ test('loadConfig: logs a warning when the YAML file cannot be located', () => {
   )
 })
 
-test('loadConfig: can load config from YML file', () => {
+test('loadConfig: can load config from a YML file', () => {
   const relativePath = './src/bin-utils/__tests__/fixtures/fake-config.yml'
   const val = loadConfig(relativePath)
   expect(val).toEqual({
     scripts: {
       skywalker: `echo "That's impossible!!"`,
     },
-    options: {},
+    options: {
+      'help-style': 'all',
+    },
   })
 })
 

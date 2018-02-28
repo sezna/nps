@@ -1,7 +1,7 @@
 module.exports = {
   rootDir: '../src',
+  collectCoverage: true,
   testEnvironment: 'node',
-  collectCoverageFrom: ['src/**/*.js'],
   testPathIgnorePatterns: ['/node_modules/', '/fixtures/', '/helpers/'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
