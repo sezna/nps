@@ -39,6 +39,27 @@ testScenario(
   'deep objects',
 )
 
+testScenario(
+  {
+    default: 'nps _default foo',
+    _default: 'echo "default"',
+    foo: 'echo "foo"',
+    _a: 'echo "a"',
+    _: 'echo "this script name will be an empty string after conversion"',
+    '-': 'echo "this script name will be an empty string after conversion"',
+  },
+  {
+    default: 'nps _default foo',
+    _default: 'echo "default"',
+    foo: 'echo "foo"',
+    _a: 'echo "a"',
+    a: 'echo "a"',
+    _: 'echo "this script name will be an empty string after conversion"',
+    '-': 'echo "this script name will be an empty string after conversion"',
+  },
+  "won't overwrite existing scripts",
+)
+
 function testUnchanged(input, message = 'no change needed') {
   testScenario(input, input, message)
 }

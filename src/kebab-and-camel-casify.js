@@ -7,15 +7,20 @@ function kebabAndCamelCasify(obj) {
     const camel = camelCase(key)
     const kebab = kebabCase(key)
     let val = obj[key]
+
     if (isPlainObject(obj[key])) {
       val = kebabAndCamelCasify(val)
     }
-    if (key !== camel || key !== kebab) {
-      result[camel] = val
-      result[kebab] = val
-    } else {
-      result[key] = val
-    }
+
+    setIfPossible(result, camel, val)
+    setIfPossible(result, kebab, val)
+
     return result
   }, obj)
+}
+
+function setIfPossible(obj, key, val) {
+  if (String(key).length && !(key in obj)) {
+    obj[key] = val
+  }
 }
