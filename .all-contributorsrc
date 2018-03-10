@@ -369,6 +369,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "SleepWalker",
+      "name": "Sviatoslav",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2536916?v=4",
+      "profile": "https://github.com/SleepWalker",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
