@@ -66,7 +66,7 @@ const loadJSConfig = getAttemptModuleRequireFn(function onFail(
 // eslint-disable-next-line complexity
 function loadConfig(configPath, input) {
   let config
-  if (configPath.endsWith('.yml')) {
+  if (configPath.endsWith('.yml') || configPath.endsWith('.yaml')) {
     config = loadYAMLConfig(configPath)
   } else {
     config = loadJSConfig(configPath)
