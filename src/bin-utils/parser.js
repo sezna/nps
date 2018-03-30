@@ -248,7 +248,9 @@ function parse(rawArgv) {
       return config
     }
     return (
-      findUp.sync('package-scripts.js') || findUp.sync('package-scripts.yml')
+      findUp.sync('package-scripts.js') ||
+      findUp.sync('package-scripts.yml') ||
+      findUp.sync('package-scripts.yaml')
     )
   }
 }
