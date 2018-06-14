@@ -462,6 +462,7 @@ called [`npmsearch-cli`](https://www.npmjs.com/package/npmsearch-cli).
 
 - [`nps-utils`][nps-utils] - a collection of utilities to make cross-platform scripts and many other patterns
 (like running concurrent/parallel scripts)
+- [`nps-i`](https://github.com/siddharthkp/nps-i) - interactive mode for nps
 
 ## Other Solutions
 
