@@ -185,7 +185,12 @@ function parse(rawArgv) {
           return
         }
       }
-      const {packageScriptsPath} = initialize(initArgv.type)
+      const init = initialize(initArgv.type)
+      if (!packageScriptsPath) {
+        log.error(chalk.red('Unable to to find an existing package.json'))
+        return
+      }
+      const packageScriptsPath = init.packageScriptsPath
       log.info(
         `Your scripts have been saved at ${chalk.green(packageScriptsPath)}`,
       )

@@ -60,6 +60,9 @@ const CORE_SCRIPTS = [
 function initialize(configType = 'js') {
   /* eslint global-require:0,import/no-dynamic-require:0 */
   const packageJsonPath = findUpSync('package.json')
+  if (packageJsonPath === null) {
+    return
+  }
   const packageJson = require(packageJsonPath)
   const {scripts = {}} = packageJson
   packageJson.scripts = getCoreScripts(packageJson.scripts)
