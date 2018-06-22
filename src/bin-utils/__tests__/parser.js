@@ -21,6 +21,9 @@ jest.mock('../../bin-utils', () => {
       return defaultPsConfig
     }),
     initialize: jest.fn(() => {
+      if (mockFindUp.mock.syncFail) {
+        return undefined
+      }
       return {
         packageScriptsPath: '/path/to/package-scripts.js',
         packageJsonPath: '/path/to/package.json',
@@ -192,6 +195,22 @@ test('init without an existing config will initialize package-scripts.js', () =>
     expect.stringMatching(/saved/),
   )
 
+  delete mockReadLine.mock.keyInYNReturn
+  delete mockFindUp.mock.syncReturn
+})
+
+test('init without an existing package.json will fail', () => {
+  mockFindUp.mock.syncFail = true
+  mockFindUp.mock.syncReturn = undefined
+
+  const result = parse('init')
+  expect(result).toBe(undefined)
+  expect(mockReadLine.keyInYN).toHaveBeenCalledTimes(0)
+  expect(mockGetLogger.mock.error).toHaveBeenCalledWith(
+    expect.stringMatching(/Unable/),
+  )
+
+  delete mockFindUp.mock.syncFail
   delete mockReadLine.mock.keyInYNReturn
   delete mockFindUp.mock.syncReturn
 })
