@@ -60,7 +60,7 @@ test('initialize YML normally', () => {
   jest.mock('fs', () => ({writeFileSync: mockWriteFileSync}))
   const initialize = require('../').default
 
-  initialize('yaml')
+  initialize('yml')
 
   const [
     [packageJsonDestinationResult, packageJsonStringResult],

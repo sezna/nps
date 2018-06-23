@@ -69,7 +69,7 @@ function initialize(configType = 'js') {
   packageJson.scripts = getCoreScripts(packageJson.scripts)
   writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
-  if (configType === 'yaml') {
+  if (configType === 'yml') {
     return dumpYAMLConfig(packageJsonPath, scripts)
   }
 
