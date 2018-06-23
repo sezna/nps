@@ -60,6 +60,7 @@ const CORE_SCRIPTS = [
 function initialize(configType = 'js') {
   /* eslint global-require:0,import/no-dynamic-require:0 */
   const packageJsonPath = findUpSync('package.json')
+  /* istanbul ignore next */
   if (packageJsonPath === null) {
     return
   }
