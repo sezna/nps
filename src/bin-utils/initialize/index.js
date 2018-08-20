@@ -113,14 +113,16 @@ function structureScripts(scripts) {
       const keyParts = scriptKey.split(':')
       const isKeyScriptHook = isScriptHook(keyParts[0])
       const deepKey = convertToNpsScript(keyParts)
-      let defaultDeepKey = `${deepKey}.default`
-      if (scriptKey.indexOf('start') === 0) {
-        defaultDeepKey = [
+
+      const isStartScript = scriptKey.indexOf('start') === 0
+      const defaultDeepKey = isStartScript ?
+        convertToNpsScript([
           'default',
           ...keyParts.slice(1, keyParts.length),
           'default',
-        ].join('.')
-      }
+        ]) :
+        `${deepKey}.default`
+
       let script = scripts[scriptKey]
       if (!isKeyScriptHook) {
         const {preHook, postHook} = getPrePostHooks(

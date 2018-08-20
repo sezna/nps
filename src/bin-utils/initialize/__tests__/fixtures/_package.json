@@ -2,6 +2,7 @@
   "scripts": {
     "start": "echo start",
     "start:stuff": "echo start:stuff",
+    "start:foo-bar": "echo start:foo-bar",
     "test": "echo test",
     "prefoo": "echo prefoo",
     "foo": "npm run foo -- --bar=1",

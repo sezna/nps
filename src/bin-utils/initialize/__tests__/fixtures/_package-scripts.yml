@@ -2,6 +2,7 @@ scripts:
   default:
     default: echo start
     stuff: 'echo start:stuff'
+    fooBar: 'echo start:foo-bar'
   test: echo test
   prefoo:
     default: echo prefoo

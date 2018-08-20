@@ -2,7 +2,8 @@ module.exports = {
   scripts: {
     default: {
       default: 'echo start',
-      stuff: 'echo start:stuff'
+      stuff: 'echo start:stuff',
+      fooBar: 'echo start:foo-bar'
     },
     test: 'echo test',
     prefoo: {

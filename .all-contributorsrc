@@ -388,6 +388,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "samijaber",
+      "name": "Sami Jaber",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1393142?v=4",
+      "profile": "http://twitter.com/samjabz",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "repoType": "github"
