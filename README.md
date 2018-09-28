@@ -252,6 +252,8 @@ Normally `<your-bash-profile-file>` will be `~/.bash_profile`, `~/.bashrc`, or `
 Note: you should probably only do this if you have the package installed globally. In that case you should probably also
 normally use the `nps` alias rather than `nps` because it's easier to type.
 
+Note: for zsh support, you must [enable zsh's bash completion script compatibility mode](https://stackoverflow.com/a/8492043/5932012).
+
 #### CLI options
 
 ##### -h, --help
