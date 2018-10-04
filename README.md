@@ -21,14 +21,6 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![Examples][examples-badge]][examples]
 [![nps friendly][nps-badge]](#badge)
 
-## Quick Video Intro :tv:
-
-<a href="http://kcd.im/nps-video" title="Pull out npm scripts into another file with nps">
-  <img src="https://github.com/kentcdodds/nps/raw/master/other/video-screenshot.png" alt="Video Screenshot" title="Video Screenshot" width="700" />
-</a>
-
-[Pull out npm scripts into another file with nps][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
-
 ## The problem
 
 Even though npm scripts have a ton of advantages ([learn more][scripts-advantages]), it can grow into an
@@ -450,6 +442,10 @@ the `test` script and then type even less: `npm t build`, but thats just... odd.
 Note, often servers are configured to run `npm start` by default to start the server. To allow for this case, you can
 provide a `default` script at the root of your scripts which will be run when `npm start` is run without any arguments.
 Effectively this will allow you to have a script run when `npm start` is executed.
+
+## Resources / Tutorials
+
+* [Pull out npm scripts into another file with nps][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
 
 ## Inspiration
 
