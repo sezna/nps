@@ -21,8 +21,17 @@ function getScriptToRun(config, input) {
 }
 
 function getScript(config, input) {
-  const [script] = prefixMatches(input, config)
-  if (script) {
+  // will always return an empty array if no result where found
+  const matchingScripts = prefixMatches(input, config)
+
+  if (matchingScripts.length !== 0) {
+    const script = matchingScripts.reduce((script, possibleScript) => {
+      if (possibleScript[input]) {
+        return possibleScript
+      }
+      return script
+    })
+
     const scriptName = Object.keys(script).shift()
     let scriptToRun = script[scriptName]
     if (scriptName && isPlainObject(scriptToRun)) {

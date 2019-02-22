@@ -51,3 +51,11 @@ test('fallsback to `default` if no prefix is found', () => {
   })
   expect(script).toEqual({scriptName: 'foo.dee', script: 'echo "dee"'})
 })
+
+test('finds the right script if the names are similar', () => {
+  const script = getScriptToRun(
+    {testX: 'stuff', test: 'moreStuff', btest: 'buildStuff'},
+    'test',
+  )
+  expect(script).toEqual({scriptName: 'test', script: 'moreStuff'})
+})
