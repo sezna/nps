@@ -398,6 +398,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "schottilol",
+      "name": "Florian Löchle",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/28313487?v=4",
+      "profile": "https://github.com/schottilol",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github"
