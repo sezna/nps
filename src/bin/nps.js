@@ -12,11 +12,14 @@ if (argv && psConfig) {
   runPackageScript({
     scriptConfig: psConfig.scripts,
     scripts: argv._,
-    options: merge(psConfig.options, {
-      silent: argv.silent,
-      logLevel: argv.logLevel,
-      scripts: argv.scripts,
-    }),
+    options: merge(
+      {
+        silent: argv.silent,
+        logLevel: argv.logLevel,
+        scripts: argv.scripts,
+      },
+      psConfig.options,
+    ),
   }).then(
     () => {
       // make this explicit
