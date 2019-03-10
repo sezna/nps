@@ -9,7 +9,8 @@ test('with config with default script', () =>
 test('with a missing config', () =>
   snapshot('-c ./something-that-does-not-exist.js'))
 
-test('with --silent', () => snapshot('test --silent'))
+test('with silent option set true', () =>
+  snapshot('-c ./package-script-silent.js'))
 
 test('with --require', () =>
   snapshot('--config ./es6-package-scripts.js --require babel-register log'))
