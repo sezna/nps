@@ -29,10 +29,10 @@ log
 }
 `;
 
-exports[`with --silent 1`] = `
+exports[`with silent option set true 1`] = `
 Object {
   "stderr": "",
-  "stdout": "test script
+  "stdout": "silent
 ",
 }
 `;

@@ -12,11 +12,14 @@ if (argv && psConfig) {
   runPackageScript({
     scriptConfig: psConfig.scripts,
     scripts: argv._,
-    options: merge(psConfig.options, {
-      silent: argv.silent,
-      logLevel: argv.logLevel,
-      scripts: argv.scripts,
-    }),
+    options: merge(
+      {
+        silent: argv.silent,
+        logLevel: argv.logLevel,
+        scripts: argv.scripts,
+      },
+      psConfig.options,
+    ),
   }).then(
     () => {
       // make this explicit
@@ -25,11 +28,16 @@ if (argv && psConfig) {
       process.exitCode = 0
     },
     error => {
-      const logLevel = getLogLevel({
-        silent: argv.silent,
-        logLevel: argv.logLevel,
-        scripts: argv.scripts,
-      })
+      const logLevel = getLogLevel(
+        merge(
+          {
+            silent: argv.silent,
+            logLevel: argv.logLevel,
+            scripts: argv.scripts,
+          },
+          psConfig.options,
+        ),
+      )
       const log = getLogger(logLevel)
       log.error(error)
       process.exitCode = error.code || FAIL_CODE
