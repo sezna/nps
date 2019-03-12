@@ -1,4 +1,11 @@
-import {each, cloneDeep, isPlainObject, isUndefined, isString} from 'lodash'
+import {
+  each,
+  cloneDeep,
+  isPlainObject,
+  isUndefined,
+  isString,
+  isFunction,
+} from 'lodash'
 import prefixMatches from 'prefix-matches'
 import resolveScriptObjectToString from './resolve-script-object-to-string'
 import kebabAndCamelCasify from './kebab-and-camel-casify'
@@ -20,6 +27,10 @@ function getScriptToRun(config, input) {
   }
 }
 
+function resolveFunctionalValue(value) {
+  return isFunction(value) ? value() : value
+}
+
 function getScript(config, input) {
   // will always return an empty array if no result where found
   const matchingScripts = prefixMatches(input, config)
@@ -39,7 +50,7 @@ function getScript(config, input) {
     }
     return {
       scriptName,
-      script: scriptToRun,
+      script: resolveFunctionalValue(scriptToRun),
     }
   }
   return undefined

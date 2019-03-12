@@ -1,4 +1,4 @@
-import {isString, isPlainObject, isUndefined} from 'lodash'
+import {isString, isPlainObject, isUndefined, isFunction} from 'lodash'
 
 export {resolveScriptObjectToString as default, resolveScriptObjectToScript}
 
@@ -15,6 +15,8 @@ function resolveScriptObjectToScript(script) {
     return resolvePlainObjectToScript(script)
   } else if (isString(script)) {
     return {script}
+  } else if (isFunction(script)) {
+    return {script: script()}
   }
   return undefined
 }
