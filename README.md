@@ -371,6 +371,12 @@ module.exports = {
     // 3. nps kebabCase
     'kebab-case': 'echo "kebab-case"',
     series: 'nps simple,test,kebabCase', // runs these other scripts in series
+    // functional scripts will behave like any other script, but they can be a function
+    'functional-script': () => 'echo "scripts can be defined as a dynamic function"',
+    funcScript: () {
+      console.log('each functional script must return a command');
+      return `echo "${'nps is great!'.repeat(10)}"`;
+    },
   },
 }
 ```
