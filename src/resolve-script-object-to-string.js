@@ -13,10 +13,8 @@ function resolveScriptObjectToString(script) {
 function resolveScriptObjectToScript(script) {
   if (isPlainObject(script)) {
     return resolvePlainObjectToScript(script)
-  } else if (isString(script)) {
+  } else if (isString(script) || isFunction(script)) {
     return {script}
-  } else if (isFunction(script)) {
-    return {script: script()}
   }
   return undefined
 }

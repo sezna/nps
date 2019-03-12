@@ -1,5 +1,5 @@
 module.exports = {
   scripts: {
-    default: 'echo "default script"',
+    default: () => 'echo "default script"',
   },
 }

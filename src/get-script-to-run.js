@@ -19,7 +19,7 @@ function getScriptToRun(config, input) {
   const defaultlessConfig = removeDefaults(cloneDeep(config))
   const scriptToRun = getScript(defaultlessConfig, input)
   if (!isUndefined(scriptToRun) && isString(scriptToRun.script)) {
-    return scriptToRun
+    return resolveFunctionalValue(scriptToRun)
   } else {
     // fallback to the defaults if no other script was
     // found with the given input
