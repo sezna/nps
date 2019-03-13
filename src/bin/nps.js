@@ -17,6 +17,7 @@ if (argv && psConfig) {
         silent: argv.silent,
         logLevel: argv.logLevel,
         scripts: argv.scripts,
+        args: argv.args,
       },
       psConfig.options,
     ),

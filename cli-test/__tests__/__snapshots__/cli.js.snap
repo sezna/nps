@@ -29,14 +29,6 @@ log
 }
 `;
 
-exports[`with silent option set true 1`] = `
-Object {
-  "stderr": "",
-  "stdout": "silent
-",
-}
-`;
-
 exports[`with a missing config 1`] = `
 Object {
   "stderr": "Unable to find JS config at \\"./something-that-does-not-exist.js\\". https://github.com/kentcdodds/nps/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
@@ -54,11 +46,37 @@ default script
 }
 `;
 
+exports[`with functional script 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`default\` : echo \\"default script\\"
+default script
+",
+}
+`;
+
+exports[`with functional script and arguments 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "nps is executing \`withArguments\` : echo \\"hello world\\"
+hello world
+",
+}
+`;
+
 exports[`with prefix 1`] = `
 Object {
   "stderr": "",
   "stdout": "nps is executing \`lint.sub.thing.script\` : echo \\"deeply nested thing\\"
 deeply nested thing
+",
+}
+`;
+
+exports[`with silent option set true 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "silent
 ",
 }
 `;

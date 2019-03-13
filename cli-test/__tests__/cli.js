@@ -22,6 +22,14 @@ test('with prefix', () => snapshot('--config ./package-scripts.js lint.s.t.s'))
 
 test('with --no-scripts', () => snapshot('test --no-scripts'))
 
+test('with functional script', () =>
+  snapshot('-c ./package-scripts-with-functional.js'))
+
+test('with functional script and arguments', () =>
+  snapshot(
+    '-c ./package-scripts-with-functional.js "withArguments" -a "hello" -a "world"',
+  ))
+
 function snapshot(args) {
   return runNPS(fixturesPath, args).then(results => {
     const snapshottableResults = convertResultToLinuxSpecific(results)

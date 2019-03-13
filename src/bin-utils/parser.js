@@ -59,6 +59,12 @@ function parse(rawArgv) {
       alias: 'y',
       default: 'all',
     },
+    args: {
+      describe: 'arguments to pass to functional scripts',
+      default: '',
+      type: 'array',
+      alias: 'a',
+    },
   }
 
   const yargsInstance = yargs(rawArgv)

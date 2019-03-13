@@ -97,3 +97,18 @@ test('allows a multi-level prefix to be provided and resolved for functional scr
     script: 'watch stuff',
   })
 })
+
+test('functional scripts accept arguments', () => {
+  const script = getScriptToRun(
+    {
+      testX: 'stuff',
+      test: ([message]) => {
+        return `echo "${message}"`
+      },
+      btest: 'buildStuff',
+    },
+    'test',
+    ['hello'],
+  )
+  expect(script).toEqual({scriptName: 'test', script: 'echo "hello"'})
+})

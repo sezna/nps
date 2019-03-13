@@ -12,23 +12,26 @@ import kebabAndCamelCasify from './kebab-and-camel-casify'
 
 export default getScriptToRun
 
-function getScriptToRun(config, input) {
+function getScriptToRun(config, input, args) {
   config = kebabAndCamelCasify(config)
-  // remove the default objects/strings so we cancheck
-  // if the prefix works with another script first
   const defaultlessConfig = removeDefaults(cloneDeep(config))
   const scriptToRun = getScript(defaultlessConfig, input)
+
   if (!isUndefined(scriptToRun) && isString(scriptToRun.script)) {
-    return resolveFunctionalValue(scriptToRun)
+    return resolveFunctionalScript(scriptToRun, args)
   } else {
     // fallback to the defaults if no other script was
     // found with the given input
-    return getScript(config, input)
+    const defaultScript = getScript(config, input)
+    return resolveFunctionalScript(defaultScript, args)
   }
 }
 
-function resolveFunctionalValue(value) {
-  return isFunction(value) ? value() : value
+function resolveFunctionalScript(scriptToRun, args) {
+  if (!isUndefined(scriptToRun) && isFunction(scriptToRun.script)) {
+    scriptToRun.script = scriptToRun.script(args)
+  }
+  return scriptToRun
 }
 
 function getScript(config, input) {
@@ -50,7 +53,7 @@ function getScript(config, input) {
     }
     return {
       scriptName,
-      script: resolveFunctionalValue(scriptToRun),
+      script: scriptToRun,
     }
   }
   return undefined
