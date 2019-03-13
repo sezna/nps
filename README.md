@@ -371,8 +371,8 @@ module.exports = {
     // 3. nps kebabCase
     'kebab-case': 'echo "kebab-case"',
     series: 'nps simple,test,kebabCase', // runs these other scripts in series
-    // functional scripts will behave like any other script, but they can be a function
-    // when calling log, the function will be called to resolve the script text
+    // functional scripts behave like any other script, but they can be a function
+    // when calling log, the function will be called to resolve the script text.
     'functional-script': () => 'echo "scripts can be defined as a dynamic function"',
     funcScript: () {
       console.log('each functional script must return a command');
@@ -380,8 +380,9 @@ module.exports = {
     },
     // functional scripts can be called with arguments, passed by the flag --args or -a
     // the arguments are passed to the function as an array
-    // example: `nps scriptWithArguments -a "hello" -a "world"`
-    scriptWithArguments: (args) => `echo "${args[0], args[1]}"`,
+    // example: `nps scriptWithArguments -a "hello" -a "world"` 
+    // results in the array ["hello", "world"]
+    scriptWithArguments: (args) => `echo "${args[0]} ${args[1]}"`,
   },
 }
 ```
