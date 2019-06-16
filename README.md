@@ -11,7 +11,7 @@ All the benefits of npm scripts without the cost of a bloated package.json and l
 [![Dependencies][dependencyci-badge]][dependencyci]
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npm-stat]
-[![MIT License][license-badge]][LICENSE]
+[![MIT License][license-badge]][license]
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-41-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
@@ -34,47 +34,47 @@ this file is a JavaScript file, you can do a lot more with your project scripts.
 `package-scripts.js` file:
 
 ```javascript
-const npsUtils = require('nps-utils') // not required, but handy!
+const npsUtils = require("nps-utils"); // not required, but handy!
 
 module.exports = {
   scripts: {
-    default: 'node index.js',
-    lint: 'eslint .',
+    default: "node index.js",
+    lint: "eslint .",
     test: {
       // learn more about Jest here: https://facebook.github.io/jest
-      default: 'jest',
+      default: "jest",
       watch: {
-        script: 'jest --watch',
-        description: 'run in the amazingly intelligent Jest watch mode'
+        script: "jest --watch",
+        description: "run in the amazingly intelligent Jest watch mode"
       }
     },
     build: {
       // learn more about Webpack here: https://webpack.js.org/
-      default: 'webpack',
-      prod: 'webpack -p',
+      default: "webpack",
+      prod: "webpack -p"
     },
     // learn more about npsUtils here: https://npm.im/nps-utils
-    validate: npsUtils.concurrent.nps('lint', 'test', 'build'),
-  },
-}
+    validate: npsUtils.concurrent.nps("lint", "test", "build")
+  }
+};
 ```
 
 Or in case you prefer YAML, here's an example of how that would look in a `package-scripts.yml` file:
 
 ```yml
 scripts:
-    default: node index.js
-    lint: eslint .
-    test:
-        # learn more about Jest here: https://kcd.im/egghead-jest
-        default: jest
-        watch:
-            script: jest --watch
-            description: run in the amazingly intelligent Jest watch mode
-    build:
-        default: webpack
-        prod: webpack -p
-    validate: concurrent "nps lint" "nps test" "nps build"
+  default: node index.js
+  lint: eslint .
+  test:
+    # learn more about Jest here: https://kcd.im/egghead-jest
+    default: jest
+    watch:
+      script: jest --watch
+      description: run in the amazingly intelligent Jest watch mode
+  build:
+    default: webpack
+    prod: webpack -p
+  validate: concurrent "nps lint" "nps test" "nps build"
 ```
 
 To use `nps`, it's recommended that you either install it globally (`npm i -g nps`) or add `./node_modules/bin` to your
@@ -125,10 +125,13 @@ build - webpack
 build.prod - webpack -p
 validate - concurrent "nps lint" "nps test" "nps build"
 ```
+
 You can also use the help command with a script name
+
 ```console
 nps help test.watch
 ```
+
 Which will output the details of the script `test.watch`:
 
 ```console
@@ -208,7 +211,9 @@ If you're already using npm scripts, you can get up and going really quickly wit
 ```
 ./node_modules/.bin/nps init
 ```
+
 or
+
 ```
 ./node_modules/.bin/nps init --type yml
 ```
@@ -274,7 +279,6 @@ Normally, `nps` will look for a `package-scripts.js` file and load that to get t
 have this at the root of your project (next to the `package.json`). But by specifying `-c` or `--config`, `nps` will
 use that file instead.
 
-
 ##### -l, --log-level
 
 Specify the log level to use
@@ -309,18 +313,43 @@ nps "test --cover" check-coverage
 By default, `nps` will dump a very long help documentation to the screen based on your package-scripts.js file. You can modify this output with one of three help-style options:
 
 `all` gives you the normal default output:
+
 ```console
 nps help "--help-style all"
 ```
 
 `scripts` will give you only the help information built from your package-scripts.js file
+
 ```console
 nps help "--help-style scripts"
 ```
 
 `basic` will give you only the name and description of the scripts from your package-scripts.js file
+
 ```console
 nps help "--help-style basic"
+```
+
+#### CLI Configuration File
+
+Some of the options accepted by CLI can also be provided in a `.npsrc` or `.npsrc.json` JSON configuration file.
+It will search upwards starting in the directory the `nps` command was invoked from.
+
+The accepted options are:
+
+- `require`
+- `config`
+
+The other options can be provided in the specified configuration file (or the default `package-scripts.js`) once it is loaded, but these
+options need to be provided in order to find and parse the configuration file.
+
+This is can be useful when you have a reqular set of options you need to pass to `nps`, especially when using `series.nps()` or `concurrent.nps()` from `nps-utils`.
+
+```json
+{
+  "require": "ts-node/register/transpileOnly",
+  "config": "package-scripts.ts"
+}
 ```
 
 That's all for the CLI.
@@ -345,13 +374,13 @@ module.exports = {
     simple: 'echo "this is easy"', // nps simple
     // you can specify whether some scripts should be excluded from the help list
     hidden: {
-      script: 'debugging script',
-      hiddenFromHelp: true,
+      script: "debugging script",
+      hiddenFromHelp: true
     },
     test: {
       default: {
-        script: 'jest', // nps test
-        description: 'Run tests with jest',
+        script: "jest", // nps test
+        description: "Run tests with jest"
         // your scripts will be run with node_modules/.bin in the PATH, so you can use locally installed packages.
         // this is done in a cross-platform way, so your scripts will work on Mac and Windows :)
         // NOTE: if you need to set environment variables, I recommend you check out the cross-env package, which works
@@ -362,17 +391,17 @@ module.exports = {
         // 1. nps test.otherStuff
         // 2. nps test.other-stuff
         script: 'echo "testing other things"',
-        description: 'this is a handy description',
-      },
+        description: "this is a handy description"
+      }
     },
     // this one can be executed a few different ways:
     // 1. nps k
     // 2. nps kebab-case
     // 3. nps kebabCase
-    'kebab-case': 'echo "kebab-case"',
-    series: 'nps simple,test,kebabCase', // runs these other scripts in series
-  },
-}
+    "kebab-case": 'echo "kebab-case"',
+    series: "nps simple,test,kebabCase" // runs these other scripts in series
+  }
+};
 ```
 
 ```console
@@ -422,7 +451,7 @@ It may also make sense to change your README.md or CONTRIBUTING.md to include or
 
 ## FAQ
 
-### How do I do ___ ?
+### How do I do \_\_\_ ?
 
 Have you looked at the examples in [other/EXAMPLES.md][examples]?
 
@@ -445,7 +474,7 @@ Effectively this will allow you to have a script run when `npm start` is execute
 
 ## Resources / Tutorials
 
-* [Pull out npm scripts into another file with nps][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
+- [Pull out npm scripts into another file with nps][video] by [Elijah Manor](https://github.com/elijahmanor) (5:53)
 
 ## Inspiration
 
@@ -459,14 +488,14 @@ called [`npmsearch-cli`](https://www.npmjs.com/package/npmsearch-cli).
 ## Related Packages
 
 - [`nps-utils`][nps-utils] - a collection of utilities to make cross-platform scripts and many other patterns
-(like running concurrent/parallel scripts)
+  (like running concurrent/parallel scripts)
 - [`nps-i`](https://github.com/siddharthkp/nps-i) - interactive mode for nps
 
 ## Other Solutions
 
 - [scripty][scripty] has a solution for this problem as well. The reason I didn't go with that though is you still need
-a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
-benefits of npm scripts I wanted to keep).
+  a line for every script (one of the pains I'm trying to solve) and a each script requires its own file (one of the
+  benefits of npm scripts I wanted to keep).
 - [nabs][nabs] is a compiler that turns a nicely structured YAML file into script entries in your package.json
 
 ### FAQ
@@ -490,6 +519,7 @@ Thanks goes to these people ([emoji key][emojis]):
 | [<img src="https://avatars.githubusercontent.com/u/2915616?v=3" width="100px;"/><br /><sub><b>Erik Fox</b></sub>](http://www.erikfox.co/)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Aerikfox "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=erikfox "Code") [📖](https://github.com/kentcdodds/p-s/commits?author=erikfox "Documentation") [⚠️](https://github.com/kentcdodds/p-s/commits?author=erikfox "Tests") | [<img src="https://avatars.githubusercontent.com/u/5351262?v=3" width="100px;"/><br /><sub><b>Aditya Pratap Singh</b></sub>](http://blog.adityapsingh.com)<br />[👀](#review-addityasingh "Reviewed Pull Requests") | [<img src="https://avatars.githubusercontent.com/u/7687132?v=3" width="100px;"/><br /><sub><b>bumbleblym</b></sub>](https://github.com/bumbleblym)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=bumbleblym "Code") [📖](https://github.com/kentcdodds/p-s/commits?author=bumbleblym "Documentation") | [<img src="https://avatars.githubusercontent.com/u/7091543?v=3" width="100px;"/><br /><sub><b>Islam Attrash</b></sub>](https://twitter.com/IslamAttrash)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=Attrash-Islam "Code") | [<img src="https://avatars.githubusercontent.com/u/7215306?v=3" width="100px;"/><br /><sub><b>JasonSooter</b></sub>](https://github.com/JasonSooter)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=JasonSooter "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/116871?v=3" width="100px;"/><br /><sub><b>Nate Cavanaugh</b></sub>](http://alterform.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=natecavanaugh "Code") | [<img src="https://avatars2.githubusercontent.com/u/3534924?v=3" width="100px;"/><br /><sub><b>Wissam Abirached</b></sub>](https://designingforscale.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=wabirached "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=wabirached "Tests") |
 | [<img src="https://avatars1.githubusercontent.com/u/12592677?v=3" width="100px;"/><br /><sub><b>Paweł Mikołajczyk</b></sub>](https://github.com/Miklet)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=Miklet "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=Miklet "Tests") | [<img src="https://avatars0.githubusercontent.com/u/1295580?v=3" width="100px;"/><br /><sub><b>Kyle Welch</b></sub>](http://www.krwelch.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kwelch "Code") [⚠️](https://github.com/kentcdodds/p-s/commits?author=kwelch "Tests") | [<img src="https://avatars3.githubusercontent.com/u/22868432?v=3" width="100px;"/><br /><sub><b>Lufty Wiranda</b></sub>](http://instagram.com/luftywiranda13)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=luftywiranda13 "Code") | [<img src="https://avatars6.githubusercontent.com/u/2936644?v=4" width="100px;"/><br /><sub><b>Bhargav Ponnapalli</b></sub>](http://imbhargav5.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=imbhargav5 "Code") | [<img src="https://avatars0.githubusercontent.com/u/1538572?v=4" width="100px;"/><br /><sub><b>falieson</b></sub>](https://github.com/Falieson)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=Falieson "Documentation") [🔧](#tool-Falieson "Tools") | [<img src="https://avatars2.githubusercontent.com/u/22251956?v=4" width="100px;"/><br /><sub><b>Suhas Karanth</b></sub>](https://github.com/sudo-suhas)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Asudo-suhas "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=sudo-suhas "Code") | [<img src="https://avatars3.githubusercontent.com/u/1228867?v=4" width="100px;"/><br /><sub><b>Eric Skram</b></sub>](http://www.ericskram.com)<br />[📖](https://github.com/kentcdodds/p-s/commits?author=Vpr99 "Documentation") |
 | [<img src="https://avatars2.githubusercontent.com/u/11901111?v=4" width="100px;"/><br /><sub><b>Kether Saturnius</b></sub>](http://www.k3th3r.com)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=iamkether "Code") [📖](https://github.com/kentcdodds/p-s/commits?author=iamkether "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/2536916?v=4" width="100px;"/><br /><sub><b>Sviatoslav</b></sub>](https://github.com/SleepWalker)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3ASleepWalker "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=SleepWalker "Code") | [<img src="https://avatars2.githubusercontent.com/u/1470998?v=4" width="100px;"/><br /><sub><b>Wei Wang</b></sub>](https://github.com/onlywei)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=onlywei "Code") | [<img src="https://avatars2.githubusercontent.com/u/1393142?v=4" width="100px;"/><br /><sub><b>Sami Jaber</b></sub>](http://twitter.com/samjabz)<br />[🐛](https://github.com/kentcdodds/p-s/issues?q=author%3Asamijaber "Bug reports") [💻](https://github.com/kentcdodds/p-s/commits?author=samijaber "Code") | [<img src="https://avatars3.githubusercontent.com/u/28313487?v=4" width="100px;"/><br /><sub><b>Florian Löchle</b></sub>](https://github.com/schottilol)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=schottilol "Code") | [<img src="https://avatars2.githubusercontent.com/u/15851351?v=4" width="100px;"/><br /><sub><b>Kevin J</b></sub>](https://github.com/kevjin)<br />[💻](https://github.com/kentcdodds/p-s/commits?author=kevjin "Code") |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
