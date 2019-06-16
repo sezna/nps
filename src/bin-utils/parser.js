@@ -8,6 +8,7 @@ import getLogger from '../get-logger'
 import {
   preloadModule,
   loadConfig,
+  loadCLIConfig,
   initialize,
   help,
   specificHelpScript,
@@ -64,6 +65,7 @@ function parse(rawArgv) {
   const yargsInstance = yargs(rawArgv)
 
   const parser = yargsInstance
+    .config(getCLIConfig())
     .usage('Usage: $0 [options] <script>...')
     .example('$0 test build', 'Runs the `test` script then the `build` script')
     .example(
@@ -258,6 +260,16 @@ function parse(rawArgv) {
       findUp.sync('package-scripts.yaml')
     )
   }
+}
+
+function getCLIConfig() {
+  const configPath = findUp.sync('.npsrc') || findUp.sync('.npsrc.json')
+
+  if (!configPath) {
+    return {}
+  }
+
+  return loadCLIConfig(configPath)
 }
 
 function getPSConfig(parsedArgv) {
