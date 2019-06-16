@@ -20,6 +20,14 @@ jest.mock('../../bin-utils', () => {
       }
       return defaultPsConfig
     }),
+    loadCLIConfig: jest.fn(() => {
+      const {cliConfig: config} = mockUtils.mock
+      if (typeof config !== 'undefined') {
+        mockUtils.mock.cliConfig = undefined
+        return config
+      }
+      return {}
+    }),
     initialize: jest.fn(() => {
       if (mockFindUp.mock.syncFail) {
         return undefined
@@ -121,6 +129,26 @@ test('happy path', () => {
   expect(mockBinUtils.loadConfig).toHaveBeenCalledTimes(1)
   expect(psConfig.isMock).toBe(true)
   expect(argv).toMatchObject({_: ['build --fast']})
+})
+
+test('with CLI config', () => {
+  mockFindUp.mock.cliReturn = '/path/to/.npsrc'
+  mockBinUtils.mock.cliConfig = {
+    require: 'ts-node/register',
+    config: 'package-scripts.ts',
+  }
+  const {argv, psConfig} = parse('"build --fast"')
+  expect(mockBinUtils.loadConfig).toHaveBeenCalledTimes(1)
+  expect(mockBinUtils.loadCLIConfig).toHaveBeenCalledTimes(1)
+  expect(psConfig.isMock).toBe(true)
+  expect(argv).toMatchObject({
+    _: ['build --fast'],
+    require: 'ts-node/register',
+    config: 'package-scripts.ts',
+  })
+
+  delete mockFindUp.mock.cliReturn
+  delete mockBinUtils.mock.cliConfig
 })
 
 test('no psConfig found', () => {

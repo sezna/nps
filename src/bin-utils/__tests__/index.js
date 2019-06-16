@@ -2,7 +2,13 @@
 import path from 'path'
 import chalk from 'chalk'
 import {oneLine} from 'common-tags'
-import {help, preloadModule, loadConfig, specificHelpScript} from '../'
+import {
+  help,
+  preloadModule,
+  loadConfig,
+  loadCLIConfig,
+  specificHelpScript,
+} from '../'
 
 test('preloadModule: resolves a relative path', () => {
   // this is relative to process.cwd() I think...
@@ -223,6 +229,22 @@ test('loadConfig: can load config from a YML file', () => {
       'help-style': 'all',
     },
   })
+})
+
+test('loadCLIConfig: can load from a JSON file', () => {
+  const relativePath = './src/bin-utils/__tests__/fixtures/fake-npsrc.json'
+  const val = loadCLIConfig(relativePath)
+  expect(val).toEqual({
+    require: 'ts-node/register',
+  })
+})
+
+test('loadCLIConfig: throws error on invalid JSON', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/syntax-error-npsrc.json'
+  expect(() => loadCLIConfig(relativePath)).toThrowError(
+    `Failed to parse CLI configuration file: ${relativePath}`,
+  )
 })
 
 test('help: formats a nice message', () => {

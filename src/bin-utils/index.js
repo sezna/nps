@@ -111,12 +111,26 @@ function loadConfig(configPath, input) {
   return {...defaultConfig, ...config}
 }
 
+function loadCLIConfig(configPath) {
+  try {
+    const {config, require} = JSON.parse(readFileSync(configPath))
+
+    return {config, require}
+  } catch (err) {
+    throw new Error(
+      `Failed to parse CLI configuration file: ${configPath}`,
+      err,
+    )
+  }
+}
+
 export {
   initialize,
   help,
   getModuleRequirePath,
   preloadModule,
   loadConfig,
+  loadCLIConfig,
   specificHelpScript,
 }
 
