@@ -416,6 +416,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "effervescentia",
+      "name": "Ben Teichman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3784470?v=4",
+      "profile": "http://www.benteichman.ca",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "repoType": "github"
