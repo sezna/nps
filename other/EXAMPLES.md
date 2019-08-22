@@ -10,7 +10,7 @@ recommended to check it out!
 
 Examples of how people use `nps`:
 
-- **[nps](https://github.com/kentcdodds/nps):** [scripts](https://github.com/kentcdodds/nps/blob/master/package.json), [`package-scripts.js`](https://github.com/kentcdodds/nps/blob/master/package-scripts.js)
+- **[nps](https://github.com/sezna/nps):** [scripts](https://github.com/sezna/nps/blob/master/package.json), [`package-scripts.js`](https://github.com/sezna/nps/blob/master/package-scripts.js)
 - **[react-component-template](https://github.com/nkbt/react-component-template)** uses `nps` to implement shareable npm
 scripts. See then how dependent [react-swap](https://github.com/nkbt/react-swap) can reuse them. (Gotcha: - use
 `process.cwd()` as the base for all paths).
@@ -92,8 +92,8 @@ Thanks for using `nps`! I'm glad/I hope it's been helpful to you. Please add a l
 adding a GitHub link, please make sure you hard-link so future changes in your codebase don't break the link. The
 keyboard shortcut for this is `y`.
 
-Also, if you'd like to be included as a [contributor](https://github.com/kentcdodds/nps#contributors), please follow the
-[Contribution Guidelines](https://github.com/kentcdodds/nps/blob/master/CONTRIBUTING.md) and add yourself as a
+Also, if you'd like to be included as a [contributor](https://github.com/sezna/nps#contributors), please follow the
+[Contribution Guidelines](https://github.com/sezna/nps/blob/master/CONTRIBUTING.md) and add yourself as a
 contributor to the `.all-contributorsrc`. The best way to do this is by running:
 
 ```console
