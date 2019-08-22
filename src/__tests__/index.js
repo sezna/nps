@@ -26,23 +26,20 @@ test('spawn called with the expected command', () => {
 
 test('spawn called and appends options', () => {
   const testCommand = 'jest'
-  return testSpawnCall({test: testCommand}, [
-    'test',
-    '--',
-    '--watch',
-  ]).then(({command}) => {
-    expect(command).toBe(`${testCommand} --watch`)
-  })
+  return testSpawnCall({test: testCommand}, ['test', '--', '--watch']).then(
+    ({command}) => {
+      expect(command).toBe(`${testCommand} --watch`)
+    },
+  )
 })
 
 test('spawn called and appends options to default', () => {
   const testCommand = 'jest'
-  return testSpawnCall({default: testCommand}, [
-    '--',
-    '--watch',
-  ]).then(({command}) => {
-    expect(command).toBe(`${testCommand} --watch`)
-  })
+  return testSpawnCall({default: testCommand}, ['--', '--watch']).then(
+    ({command}) => {
+      expect(command).toBe(`${testCommand} --watch`)
+    },
+  )
 })
 
 test('spawn.on called with "close" and "error"', () => {
