@@ -426,6 +426,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "sezna",
+      "name": "Alex Hansen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12157751?v=4",
+      "profile": "http://alex-hansen.com",
+      "contributions": [
+        "code",
+        "infra",
+        "review"
+      ]
     }
   ],
   "repoType": "github"
