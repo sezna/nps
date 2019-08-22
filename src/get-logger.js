@@ -47,7 +47,7 @@ function getMessage(first, ...rest) {
 
 function getLink(ref) {
   return oneLineTrim`
-    https://github.com/kentcdodds/nps/blob/v
+    https://github.com/sezna/nps/blob/v
     ${version}
     /other/ERRORS_AND_WARNINGS.md#
     ${ref}

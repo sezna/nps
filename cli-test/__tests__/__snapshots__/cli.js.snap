@@ -39,7 +39,7 @@ Object {
 
 exports[`with a missing config 1`] = `
 Object {
-  "stderr": "Unable to find JS config at \\"./something-that-does-not-exist.js\\". https://github.com/kentcdodds/nps/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
+  "stderr": "Unable to find JS config at \\"./something-that-does-not-exist.js\\". https://github.com/sezna/nps/blob/v0.0.0-semantically-released/other/ERRORS_AND_WARNINGS.md#unable-to-find-config
 ",
   "stdout": "",
 }
