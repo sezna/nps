@@ -42,7 +42,7 @@ test('allows you to log warnings/errors with a ref', () => {
     ...message,
     oneLineTrim`
       https://github.com/sezna/nps
-      /blob/v5.9.6
+      /blob/master
       /other/ERRORS_AND_WARNINGS.md#han-solo
     `,
     'this is extra',
