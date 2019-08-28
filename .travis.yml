@@ -24,3 +24,4 @@ deploy:
   email: "alex@alex-hansen.com"
   on:
     all_branches: true
+  skip_cleanup: true
