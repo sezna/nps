@@ -440,12 +440,12 @@ Log levels available:
 Congratulations your repo is nps-friendly. Time to flaunt it! Add the nps-friendly badge to your README using the following markdown:
 
 ```markdown
-[![nps friendly](https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square)](https://github.com/kentcdodds/nps)
+[![nps friendly](https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square)](https://github.com/sezna/nps)
 ```
 
 Your badge will look like this:
 
-[![nps friendly](https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square)](https://github.com/kentcdodds/nps)
+[![nps friendly](https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square)](https://github.com/sezna/nps)
 
 It may also make sense to change your README.md or CONTRIBUTING.md to include or link to the nps project so that your new contributors may learn more about installing and using nps.
 
