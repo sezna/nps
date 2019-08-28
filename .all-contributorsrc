@@ -437,6 +437,16 @@
         "infra",
         "review"
       ]
+    },
+    {
+      "login": "ameobea",
+      "name": "Casey Primozic",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4335849?v=4",
+      "profile": "https://cprimozic.com",
+      "contributions": [
+        "infra",
+        "review"
+      ]
     }
   ],
   "repoType": "github"
