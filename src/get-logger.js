@@ -3,8 +3,6 @@ import arrify from 'arrify'
 import {oneLineTrim} from 'common-tags'
 import {isPlainObject, includes} from 'lodash'
 
-const {version} = require('../package.json')
-
 const shouldLog = {
   // fn called         logLevels
   info: getShouldLogFn('', 'debug', 'info'),
@@ -47,8 +45,7 @@ function getMessage(first, ...rest) {
 
 function getLink(ref) {
   return oneLineTrim`
-    https://github.com/sezna/nps/blob/v
-    ${version}
+    https://github.com/sezna/nps/blob/master
     /other/ERRORS_AND_WARNINGS.md#
     ${ref}
   `

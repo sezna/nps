@@ -21,3 +21,5 @@ deploy:
   provider: npm
   email: "alex@alex-hansen.com"
   skip_cleanup: true
+  on:
+    tags: true
