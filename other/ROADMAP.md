@@ -2,7 +2,7 @@
 
 ## Want to do
 
-- Check [the issues](https://github.com/kentcdodds/nps/issues)
+- Check [the issues](https://github.com/sezna/nps/issues)
 
 ## Might do
 
@@ -12,7 +12,7 @@
 
 - lifecycle hooks. Unfortunately by doing things this way one of the major things we lose is the ability to utilize
 npm script lifecycle hooks. This makes me sad. But it was decided to not do this in
-[#83](https://github.com/kentcdodds/nps/pull/83)
+[#83](https://github.com/sezna/nps/pull/83)
 - Recreate gulp
 - Allow you to specify an individual script as a function to call rather than spawn a process. Instead you should create
 a file and use the script to call into that script file. We want to keep this as simple and straightforward as possible.
