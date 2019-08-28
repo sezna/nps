@@ -12,6 +12,8 @@ script:
 - npm start validate
 after_success:
 - npx codecov@^3
+- npx -p semantic-release@6 -c "semantic-release pre && npm publish && semantic-release
+  post"
 branches:
   only:
   - master
