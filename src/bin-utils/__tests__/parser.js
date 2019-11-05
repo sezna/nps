@@ -128,7 +128,7 @@ test('happy path', () => {
   const {argv, psConfig} = parse('"build --fast"')
   expect(mockBinUtils.loadConfig).toHaveBeenCalledTimes(1)
   expect(psConfig.isMock).toBe(true)
-  expect(argv).toMatchObject({_: ['build --fast']})
+  expect(argv).toEqual(expect.objectContaining({_: [`\"build --fast\"`]}))
 })
 
 test('with CLI config', () => {
@@ -141,11 +141,13 @@ test('with CLI config', () => {
   expect(mockBinUtils.loadConfig).toHaveBeenCalledTimes(1)
   expect(mockBinUtils.loadCLIConfig).toHaveBeenCalledTimes(1)
   expect(psConfig.isMock).toBe(true)
-  expect(argv).toMatchObject({
-    _: ['build --fast'],
-    require: 'ts-node/register',
-    config: 'package-scripts.ts',
-  })
+  expect(argv).toEqual(
+    expect.objectContaining({
+      _: [`\"build --fast\"`],
+      require: 'ts-node/register',
+      config: 'package-scripts.ts',
+    }),
+  )
 
   delete mockFindUp.mock.cliReturn
   delete mockBinUtils.mock.cliConfig

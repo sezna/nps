@@ -30,7 +30,7 @@
     "readline-sync": "^1.4.7",
     "spawn-command-with-kill": "^1.0.0",
     "type-detect": "^4.0.3",
-    "yargs": "^8.0.2"
+    "yargs": "14.2.0"
   },
   "devDependencies": {
     "all-contributors-cli": "^4.3.0",
@@ -63,7 +63,8 @@
     ],
     "rules": {
       "max-len": "off",
-      "max-lines": "off"
+      "max-lines": "off",
+      "no-useless-escape": "off"
     }
   },
   "lint-staged": {

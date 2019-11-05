@@ -447,6 +447,15 @@
         "infra",
         "review"
       ]
+    },
+    {
+      "login": "VivekFitkariwala",
+      "name": "Vivek Fitkariwala",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3822890?v=4",
+      "profile": "https://github.com/VivekFitkariwala",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github"
