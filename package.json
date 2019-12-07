@@ -1,6 +1,6 @@
 {
   "name": "nps",
-  "version": "5.9.9",
+  "version": "5.9.10",
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
   "scripts": {
