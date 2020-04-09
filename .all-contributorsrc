@@ -456,6 +456,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dannycoates",
+      "name": "Danny Coates",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/87619?v=4",
+      "profile": "http://dannycoates.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github"
