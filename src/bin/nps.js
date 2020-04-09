@@ -16,6 +16,7 @@ if (argv && psConfig) {
       {
         silent: argv.silent,
         logLevel: argv.logLevel,
+        prefix: argv.prefix,
         scripts: argv.scripts,
       },
       psConfig.options,

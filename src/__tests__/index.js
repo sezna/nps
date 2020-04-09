@@ -110,6 +110,23 @@ test('options: scripts does not log command text when false', async() => {
   expect(infoSpy).not.toHaveBeenCalledWith(expect.stringMatching(/echo test/))
 })
 
+test('options: prefix adds the prefix to each script name', async() => {
+  const {runPackageScript, mockSpawnStubSpy} = setup()
+  const scriptConfig = {
+    hello: {test: {script: 'echo test'}, foo: {script: 'echo foo'}},
+  }
+  const options = {prefix: 'hello'}
+  await runPackageScript({
+    scriptConfig,
+    scripts: ['test', 'foo'],
+    options,
+  })
+  expect(mockSpawnStubSpy).toHaveBeenCalledTimes(2)
+  const [[command1], [command2]] = mockSpawnStubSpy.mock.calls
+  expect(command1).toBe('echo test')
+  expect(command2).toBe('echo foo')
+})
+
 test('runs scripts serially if given an array of input', () => {
   const lintCommand = 'eslint'
   const buildCommand = 'babel'

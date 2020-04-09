@@ -30,6 +30,11 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
       scriptNames[lastIndex] = `${scriptNames[lastIndex]} ${additionalOptions}`
     }
   }
+  if (options.prefix) {
+    scriptNames = scriptNames.map(
+      scriptName => `${options.prefix}.${scriptName}`,
+    )
+  }
 
   return scriptNames.reduce((res, input) => {
     return res.then(() => runPackageScript({scriptConfig, options, input}))
