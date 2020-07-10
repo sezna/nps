@@ -14,6 +14,7 @@ import {
   specificHelpScript,
 } from '../bin-utils'
 import getCompletionScripts from './autocomplete-get-scripts'
+import getScriptByPrefix from './get-script-by-prefix'
 
 const log = getLogger()
 export default parse
@@ -43,6 +44,11 @@ function parse(rawArgv) {
       choices: ['error', 'warn', 'info', 'debug'],
       alias: 'l',
       default: 'info',
+    },
+    prefix: {
+      describe: 'Prefix for each script name',
+      alias: 'p',
+      default: undefined,
     },
     require: {
       describe: 'Module to preload',
@@ -127,7 +133,9 @@ function parse(rawArgv) {
       return true
     }
     const helpStyle = String(psConfig.options['help-style'])
-    const hasDefaultScript = Boolean(psConfig.scripts.default)
+    const hasDefaultScript = parsedArgv.prefix ?
+      Boolean(getScriptByPrefix(psConfig, parsedArgv.prefix)) :
+      Boolean(psConfig.scripts.default)
     const noScriptSpecifiedAndNoDefault =
       !specifiedScripts.length && !hasDefaultScript
     const hasHelpScript = Boolean(psConfig.scripts.help)

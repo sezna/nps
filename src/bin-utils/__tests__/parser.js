@@ -94,6 +94,8 @@ const valid = [
   '-l warn',
   '--require hey',
   '-r sup',
+  '--prefix hola',
+  '-p howdy',
 ]
 
 const invalid = ['--foo bar', '--baz', '-b']
