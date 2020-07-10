@@ -75,10 +75,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kentcdodds/nps.git"
+    "url": "https://github.com/sezna/nps.git"
   },
   "bugs": {
-    "url": "https://github.com/kentcdodds/nps/issues"
+    "url": "https://github.com/sezna/nps/issues"
   },
-  "homepage": "https://github.com/kentcdodds/nps#readme"
+  "homepage": "https://github.com/sezna/nps#readme"
 }
