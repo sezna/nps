@@ -350,7 +350,7 @@ This is can be useful when you have a reqular set of options you need to pass to
 
 ```json
 {
-  "require": "ts-node/register/transpileOnly",
+  "require": "ts-node/register/transpile-only",
   "config": "package-scripts.ts"
 }
 ```
