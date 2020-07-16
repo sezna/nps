@@ -534,7 +534,7 @@ MIT
 
 [nps-badge]: https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square
 [nps-github]: https://github.com/kentcdodds/nps
-[scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
+[scripts-advantages]: https://www.freecodecamp.org/news/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8/#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
 [roadmap]: https://github.com/sezna/nps/blob/master/other/ROADMAP.md
 [examples]: https://github.com/sezna/nps/blob/master/other/EXAMPLES.md
