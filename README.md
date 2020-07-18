@@ -1,3 +1,9 @@
+
+## Sponsorship
+NPS is being sponsored by the following tool; please help to support us by taking a look and signing up for a free trial.
+
+ <a href="https://tracking.gitads.io/?repo=nps"><img src="https://images.gitads.io/nps" alt="GitAds"/></a>
+
 # nps
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
@@ -573,9 +579,3 @@ MIT
 [video]: http://kcd.im/nps-video
 [releases]: https://github.com/sezna/nps/releases/tag/v5.0.0
 [nps-utils]: https://github.com/kentcdodds/nps-utils
-
-
-
-## Sponsorship
-NPS is being sponsored by the following tool; please help to support [us by taking a look and signing up for a free trial.](https://tracking.gitads.io/?repo=nps)
-![sponsorship](https://images.gitads.io/nps)
