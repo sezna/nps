@@ -1,3 +1,9 @@
+
+## Sponsorship
+NPS is being sponsored by the following tool; please help to support us by taking a look and signing up for a free trial.
+
+ <a href="https://tracking.gitads.io/?repo=nps"><img src="https://images.gitads.io/nps" alt="GitAds"/></a>
+
 # nps
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json
@@ -534,7 +540,7 @@ MIT
 
 [nps-badge]: https://img.shields.io/badge/nps-friendly-blue.svg?style=flat-square
 [nps-github]: https://github.com/kentcdodds/nps
-[scripts-advantages]: https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.9qghcfdr9
+[scripts-advantages]: https://www.freecodecamp.org/news/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8/#.9qghcfdr9
 [mess]: https://github.com/ReactiveX/rxjs/blob/a3ec89605a24a6f54e577d21773dad11f22fdb14/package.json#L14-L96
 [roadmap]: https://github.com/sezna/nps/blob/master/other/ROADMAP.md
 [examples]: https://github.com/sezna/nps/blob/master/other/EXAMPLES.md
@@ -573,9 +579,3 @@ MIT
 [video]: http://kcd.im/nps-video
 [releases]: https://github.com/sezna/nps/releases/tag/v5.0.0
 [nps-utils]: https://github.com/kentcdodds/nps-utils
-
-
-
-## Sponsorship
-NPS is being sponsored by the following tool; please help to support [us by taking a look and signing up for a free trial.](https://tracking.gitads.io/?repo=nps)
-![sponsorship](https://images.gitads.io/nps)
