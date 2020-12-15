@@ -339,27 +339,31 @@ nps help "--help-style scripts"
 nps help "--help-style basic"
 ```
 
-#### CLI Configuration File
+#### `.npsrc` CLI Configuration File
 
-Some of the options accepted by CLI can also be provided in a `.npsrc` or `.npsrc.json` JSON configuration file.
-It will search upwards starting in the directory the `nps` command was invoked from.
+Some of the options accepted by CLI can also be provided in a `.npsrc.json` or `.npsrc.yml`/`.npsrc.yaml` configuration file, in either JSON or YAML format. Alternatively, the file can simply be named `.npsrc`, and the format will be automatically detected.
+The CLI will search upwards, starting in the directory the `nps` command was invoked from, using the first found file that matches one of the possible file names. If multiple `.npsrc` files are located in the same directory, the `.json` file takes precedence over both `.yaml` and `.yml` files, and the `.npsrc` file with no extension takes precedence over all and any others. The behavior as to the precedence between `.yaml` and `.yml` should be regarded as undefined. 
 
-The accepted options are:
+The CLI options that can be specified in the `.npsrc` file are:
 
 - `require`
 - `config`
 
-The other options can be provided in the specified configuration file (or the default `package-scripts.js`) once it is loaded, but these
-options need to be provided in order to find and parse the configuration file.
-
 This is can be useful when you have a reqular set of options you need to pass to `nps`, especially when using `series.nps()` or `concurrent.nps()` from `nps-utils`.
-
+```yaml
+---
+require: ts-node/register/transpile-only
+config: package-scripts.ts
+```
 ```json
 {
   "require": "ts-node/register/transpile-only",
   "config": "package-scripts.ts"
 }
 ```
+
+The other options can be provided in the specified configuration file (or the default `package-scripts.js`) once it is loaded, but these
+options need to be provided in order to find and parse the configuration file.
 
 That's all for the CLI.
 
