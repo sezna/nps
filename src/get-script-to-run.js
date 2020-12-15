@@ -25,11 +25,11 @@ function getScript(config, input) {
   const matchingScripts = prefixMatches(input, config)
 
   if (matchingScripts.length !== 0) {
-    const script = matchingScripts.reduce((script, possibleScript) => {
+    const script = matchingScripts.reduce((returnScript, possibleScript) => {
       if (possibleScript[input]) {
         return possibleScript
       }
-      return script
+      return returnScript
     })
 
     const scriptName = Object.keys(script).shift()

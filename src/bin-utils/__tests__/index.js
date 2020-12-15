@@ -231,7 +231,7 @@ test('loadConfig: can load config from a YML file', () => {
   })
 })
 
-test('loadCLIConfig: can load from a JSON file', () => {
+test('loadCLIConfig: can load from a JSON file with extension .json ', () => {
   const relativePath = './src/bin-utils/__tests__/fixtures/fake-npsrc.json'
   const val = loadCLIConfig(relativePath)
   expect(val).toEqual({
@@ -239,9 +239,75 @@ test('loadCLIConfig: can load from a JSON file', () => {
   })
 })
 
-test('loadCLIConfig: throws error on invalid JSON', () => {
+test('loadCLIConfig: can load from a JSON file with no extension ', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/fake-npsrc-json-no-ext'
+  const val = loadCLIConfig(relativePath)
+  expect(val).toEqual({
+    require: 'ts-node/register',
+  })
+})
+
+test('loadCLIConfig: can load from a YAML file with extension .yaml', () => {
+  const relativePath = './src/bin-utils/__tests__/fixtures/fake-npsrc.yaml'
+  const val = loadCLIConfig(relativePath)
+  expect(val).toEqual({
+    require: 'ts-node/register',
+  })
+})
+
+test('loadCLIConfig: can load from a YAML file with extension .yml', () => {
+  const relativePath = './src/bin-utils/__tests__/fixtures/fake-npsrc.yml'
+  const val = loadCLIConfig(relativePath)
+  expect(val).toEqual({
+    require: 'ts-node/register',
+  })
+})
+
+test('loadCLIConfig: can load from a YAML file with no extension ', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/fake-npsrc-yaml-no-ext'
+  const val = loadCLIConfig(relativePath)
+  expect(val).toEqual({
+    require: 'ts-node/register',
+  })
+})
+
+test('loadCLIConfig: throws error on invalid JSON with extension .json', () => {
   const relativePath =
     './src/bin-utils/__tests__/fixtures/syntax-error-npsrc.json'
+  expect(() => loadCLIConfig(relativePath)).toThrowError(
+    `Failed to parse CLI configuration file: ${relativePath}`,
+  )
+})
+
+test('loadCLIConfig: throws error on invalid JSON with no extension', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/syntax-error-npsrc.json'
+  expect(() => loadCLIConfig(relativePath)).toThrowError(
+    `Failed to parse CLI configuration file: ${relativePath}`,
+  )
+})
+
+test('loadCLIConfig: throws error on invalid YAML with extension .yaml', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/syntax-error-npsrc.yaml'
+  expect(() => loadCLIConfig(relativePath)).toThrowError(
+    `Failed to parse CLI configuration file: ${relativePath}`,
+  )
+})
+
+test('loadCLIConfig: throws error on invalid YAML with extension .yml', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/syntax-error-npsrc.yml'
+  expect(() => loadCLIConfig(relativePath)).toThrowError(
+    `Failed to parse CLI configuration file: ${relativePath}`,
+  )
+})
+
+test('loadCLIConfig: throws error on invalid YAML with no extension', () => {
+  const relativePath =
+    './src/bin-utils/__tests__/fixtures/syntax-error-npsrc-yaml-no-ext'
   expect(() => loadCLIConfig(relativePath)).toThrowError(
     `Failed to parse CLI configuration file: ${relativePath}`,
   )

@@ -271,7 +271,12 @@ function parse(rawArgv) {
 }
 
 function getCLIConfig() {
-  const configPath = findUp.sync('.npsrc') || findUp.sync('.npsrc.json')
+  const _npsrc = '.npsrc'
+  const configPath =
+    findUp.sync(_npsrc) ||
+    findUp.sync(`${_npsrc}.json`) ||
+    findUp.sync(`${_npsrc}.yaml`) ||
+    findUp.sync(`${_npsrc}.yml`)
 
   if (!configPath) {
     return {}

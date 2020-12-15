@@ -1,4 +1,4 @@
-import {resolve} from 'path'
+import {resolve, extname} from 'path'
 import {readFileSync} from 'fs'
 import {
   includes,
@@ -111,16 +111,62 @@ function loadConfig(configPath, input) {
   return {...defaultConfig, ...config}
 }
 
-function loadCLIConfig(configPath) {
-  try {
-    const {config, require} = JSON.parse(readFileSync(configPath))
+function getParserByExtension(fileExt) {
+  if (fileExt === '.json') {
+    return JSON.parse
+  } else if (fileExt === '.yaml' || fileExt === '.yml') {
+    return safeLoad
+  } else {
+    return undefined
+  }
+}
 
+function loadCLIConfigWithParser(configPath, parser) {
+  if (isFunction(parser)) {
+    const {config, require} = parser(readFileSync(configPath))
     return {config, require}
-  } catch (err) {
+  } else {
+    throw new TypeError(
+      'Please call loadCLIConfigWithParser() with a parser function.',
+    )
+  }
+}
+
+function loadCLIConfig(configPath, parser) {
+  const potentialParsers = [
+    parser,
+    getParserByExtension(extname(configPath)),
+    JSON.parse,
+    safeLoad,
+  ]
+
+  const initialState = {
+    errors: [],
+    loadedConfig: undefined,
+  }
+
+  const finalState = potentialParsers.reduce((state, potentialParser) => {
+    if (state.loadedConfig === undefined) {
+      try {
+        state.loadedConfig = loadCLIConfigWithParser(
+          configPath,
+          potentialParser,
+        )
+      } catch (error) {
+        state.loadedConfig = undefined
+        state.errors.push(error)
+      }
+    }
+    return state
+  }, initialState)
+
+  if (finalState.loadedConfig === undefined) {
     throw new Error(
       `Failed to parse CLI configuration file: ${configPath}`,
-      err,
+      ...finalState.errors,
     )
+  } else {
+    return finalState.loadedConfig
   }
 }
 

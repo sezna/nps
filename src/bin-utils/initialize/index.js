@@ -70,10 +70,10 @@ function initialize(configType = 'js') {
   writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
   if (configType === 'yml') {
-    return dumpYAMLConfig(packageJsonPath, scripts)
+    dumpYAMLConfig(packageJsonPath, scripts)
+  } else {
+    dumpJSConfig(packageJsonPath, scripts)
   }
-
-  return dumpJSConfig(packageJsonPath, scripts)
 }
 
 function dumpJSConfig(packageJsonPath, scripts) {
