@@ -9,7 +9,8 @@ const FAIL_CODE = 1
 
 const args = process.argv.slice(2)
 const indexOfCommand = args.findIndex(arg => !arg.startsWith('-'))
-const preCommandFlags = args.slice(0, indexOfCommand + 1)
+const preCommandFlags =
+  indexOfCommand === -1 ? args : args.slice(0, indexOfCommand + 1)
 const postCommandFlags = args.slice(indexOfCommand + 1)
 
 const {argv, psConfig} = parse(preCommandFlags) || {}
