@@ -6,7 +6,13 @@ import runPackageScript from '../index'
 import parse from '../bin-utils/parser'
 
 const FAIL_CODE = 1
-const {argv, psConfig} = parse(process.argv.slice(2)) || {}
+
+const args = process.argv.slice(2)
+const indexOfCommand = args.findIndex(arg => !arg.startsWith('-'))
+const preCommandFlags = args.slice(0, indexOfCommand + 1)
+const postCommandFlags = args.slice(indexOfCommand + 1)
+
+const {argv, psConfig} = parse(preCommandFlags) || {}
 
 if (argv && psConfig) {
   runPackageScript({
@@ -18,6 +24,7 @@ if (argv && psConfig) {
         logLevel: argv.logLevel,
         prefix: argv.prefix,
         scripts: argv.scripts,
+        args: postCommandFlags,
       },
       psConfig.options,
     ),
