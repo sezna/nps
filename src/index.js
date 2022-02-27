@@ -56,7 +56,7 @@ function runPackageScript({scriptConfig, options, input}) {
       ref: 'missing-script',
     })
   }
-  const command = [script, ...args].join(' ').trim()
+  const command = [script, ...args, ...(options.args || [])].join(' ').trim()
   const log = getLogger(getLogLevel(options))
   const showScript = options.scripts
   log.info(
