@@ -162,7 +162,6 @@ test('stops running scripts when running serially if any given script fails', ()
           }
         }
       },
-      kill() {},
     }
   }
   const mockSpawnStubSpy = jest.fn(spawnStub)
@@ -222,7 +221,6 @@ test('an error from the child process logs an error', () => {
           cb(ERROR)
         }
       },
-      kill() {},
     }
   }
   const mockSpawnStubSpy = jest.fn(spawnStub)
@@ -297,7 +295,7 @@ function setup(mockSpawnStubSpy) {
   ).getLogLevel
   mockSpawnStubSpy = mockSpawnStubSpy || jest.fn(spawnStub)
   jest.resetModules()
-  jest.mock('spawn-command-with-kill', () => mockSpawnStubSpy)
+  jest.mock('spawn-command', () => mockSpawnStubSpy)
   jest.mock('../get-logger', () => mockGetLogger)
   const runPackageScript = require('../').default
   return {
@@ -308,6 +306,6 @@ function setup(mockSpawnStubSpy) {
     runPackageScript,
   }
   function spawnStub() {
-    return {on: onSpy, kill() {}}
+    return {on: onSpy}
   }
 }

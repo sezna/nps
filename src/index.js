@@ -1,4 +1,4 @@
-import spawn from 'spawn-command-with-kill'
+import spawn from 'spawn-command'
 import chalk from 'chalk'
 import {oneLine} from 'common-tags'
 import {isString, clone} from 'lodash'
