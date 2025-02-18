@@ -1,5 +1,5 @@
 import path from 'path'
-import spawn from 'spawn-command-with-kill'
+import spawn from 'spawn-command'
 
 const NPS_PATH = path.resolve(__dirname, '../../../dist/bin/nps.js')
 
